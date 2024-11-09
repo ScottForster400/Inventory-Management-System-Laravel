@@ -13,7 +13,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('stock', function (Blueprint $table) {
+        //called stocks due to laravel seeder requiring it
+        Schema::create('stocks', function (Blueprint $table) {
             $table->id('stock_id');
             $table->integer('amount')->default(0);
             $table->foreignIdFor(Branch::class);
