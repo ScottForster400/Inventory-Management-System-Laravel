@@ -14,7 +14,8 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->string('national_insurance_number',9);
-            $table->string('phonenumber',11);
+            //phone number is 20 due to fake() phone number generation length
+            $table->string('phonenumber',20);
             $table->date('dob');
             $table->string('address',50);
             $table->boolean('admin');
