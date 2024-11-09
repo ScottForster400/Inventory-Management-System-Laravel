@@ -21,6 +21,12 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'national_insurance_number',
+        'phonenumber',
+        'dob',
+        'address',
+        'admin',
+        'branch_id'
     ];
 
     /**
