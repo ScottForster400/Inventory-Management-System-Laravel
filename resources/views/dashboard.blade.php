@@ -15,27 +15,38 @@
          <aside id="default-sidebar" class=" flex-1/4 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
             <div class="h-full px-3 py-4 overflow-y-auto bg-white dark:bg-gray-800 ">
                <ul class="space-y-2 font-medium">
-                  <li>
+                    <li>
+                        <x-sidebar-dropdown>Price</x-sidebar-dropdown>
+                        <ul id="dropdown-example" class="hidden py-2 space-y-2">
+                            <li>
+                                <a href="#" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Products</a>
+                            </li>
+                            <li>
+                                <a href="#" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Billing</a>
+                            </li>
+                            <li>
+                                <a href="#" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Invoice</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
 
-                  </li>
-                  <li>
+                    </li>
+                    <li>
 
-                  </li>
-                  <li>
+                    </li>
+                    <li>
 
-                  </li>
-                  <li>
+                    </li>
+                    <li>
 
-                  </li>
-                  <li>
+                    </li>
+                    <li>
 
-                  </li>
-                  <li>
+                    </li>
+                    <li>
 
-                  </li>
-                  <li>
-
-                  </li>
+                    </li>
                </ul>
             </div>
          </aside>
