@@ -17,6 +17,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/generate-reports', function () {
+    $transactions = transaction::all();
     return view('generate-reports');
 })->middleware(['auth', 'verified'])->name('generate-reports');
 
