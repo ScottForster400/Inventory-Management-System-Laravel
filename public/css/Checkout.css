@@ -1,0 +1,6 @@
+.Checkout_Page {
+    color: black;
+    display: flex;
+    justify-content: space-around;
+    padding-top: 3%;
+}
