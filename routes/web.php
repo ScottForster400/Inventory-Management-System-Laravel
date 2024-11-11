@@ -16,6 +16,18 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::get('/generate-reports', function () {
+    return view('generate-reports');
+})->middleware(['auth', 'verified'])->name('generate-reports');
+
+Route::get('/manage-employees', function () {
+    return view('manage-employees');
+})->middleware(['auth', 'verified'])->name('manage-employees');
+
+Route::get('/checkout', function () {
+    return view('checkout');
+})->middleware(['auth', 'verified'])->name('checkout');
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
