@@ -40,9 +40,6 @@
                 <h1 class="text-3xl font-semibold ">Inventory Managment System</h1>
             </div>
         </main>
-
-        <x-application-logo></x-application-logo>
-
         <footer class="flex justify-center items-end basis-1/4 pb-10 text-center text-sm text-black dark:text-white/70  ">
             Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
         </footer>
