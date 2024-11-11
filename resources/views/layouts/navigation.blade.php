@@ -16,6 +16,25 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 </div>
+
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('checkout')" :active="request()->routeIs('checkout')">
+                        {{ __('Checkout') }}
+                    </x-nav-link>
+                </div>
+
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('generate-reports')" :active="request()->routeIs('generate-reports')">
+                        {{ __('Generate Report') }}
+                    </x-nav-link>
+                </div>
+
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('manage-employees')" :active="request()->routeIs('manage-employees')">
+                        {{ __('Manage Employees') }}
+                    </x-nav-link>
+                </div>
+
             </div>
 
             <!-- Settings Dropdown -->
