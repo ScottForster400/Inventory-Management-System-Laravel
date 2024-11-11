@@ -22,16 +22,12 @@
                             </x-tr>
                         </x-table-head>
                         <x-table-body>
-                            <x-tr>
-                                <x-th>
-                                    November
-                                </x-th>
-
-                                <x-th>
-                                    Has Come
-                                </x-th>
-
-                            </x-tr>
+                            @foreach($transaction as $key => $data)
+                                <x-tr>
+                                    <x-th>{{$data->transaction_id}}</x-th>
+                                    <x-th>{{$data->price}}</x-th>
+                                </x-tr>
+                            @endforeach
                         </x-table-body>
                     </x-table>
 
