@@ -16,8 +16,10 @@
             <div class="h-full px-3 py-4 overflow-y-auto bg-white dark:bg-gray-800 ">
                <ul class="space-y-2 font-medium">
                     <li>
-                        <x-sidebar-dropdown>Price</x-sidebar-dropdown>
-                        <ul id="dropdown-example" class="hidden py-2 space-y-2">
+                        <x-sidebar-dropdown-button data-collapse-toggle="test">
+                            <x-sidebar-dropdown-info> Price </x-sidebar-dropdown-info>
+                        </x-sidebar-dropdown-button>
+                        <ul id="test" class="hidden py-2 space-y-2">
                             <li>
                                 <a href="#" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Products</a>
                             </li>
