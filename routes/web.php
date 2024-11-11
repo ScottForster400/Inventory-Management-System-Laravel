@@ -4,9 +4,9 @@ use App\Models\User;
 use App\Models\Stock;
 use App\Models\Branch;
 use App\Models\Product;
+use App\Models\Transaction;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
-use App\Models\Transaction;
 
 Route::get('/', function () {
     return view('welcome');
@@ -25,19 +25,19 @@ Route::middleware('auth')->group(function () {
 require __DIR__ . '/auth.php';
 
 //all branches routes
-Route::resource('branches', Branch::class);
+Route::resource('branches', Branch::class)->middleware('auth');
 
 //all products routes
-Route::resource('products', Product::class);
+Route::resource('products', Product::class)->middleware('auth');
 
 //all user routes
-Route::resource('users',User::class);
+Route::resource('users',User::class)->middleware('auth');
 
 //all stock routes
-Route::resource('stock',Stock::class);
+Route::resource('stock',Stock::class)->middleware('auth');
 
 //all transaction routes
-Route::resource('stock',Transaction::class);
+Route::resource('stock',Transaction::class)->middleware('auth');
 
 
 
