@@ -6,7 +6,9 @@ use App\Models\Branch;
 use App\Models\Product;
 use App\Models\Transaction;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\ProfileController;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -17,7 +19,8 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/generate-reports', function () {
-    return view('generate-reports');
+    $transaction = DB::table('transactions')->get();
+    return view('generate-reports', ['transaction' => $transaction]);
 })->middleware(['auth', 'verified'])->name('generate-reports');
 
 Route::get('/manage-employees', function () {
