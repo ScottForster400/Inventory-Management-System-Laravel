@@ -5,7 +5,7 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
+                    <a href="{{ route('dashboard') }}" class="h-full">
                         <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
                     </a>
                 </div>
@@ -23,18 +23,19 @@
                     </x-nav-link>
                 </div>
 
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('generate-reports')" :active="request()->routeIs('generate-reports')">
-                        {{ __('Generate Report') }}
-                    </x-nav-link>
-                </div>
+                @if(Auth::user()->admin==1)
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link :href="route('generate-reports')" :active="request()->routeIs('generate-reports')">
+                            {{ __('Generate Report') }}
+                        </x-nav-link>
+                    </div>
 
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('manage-employees')" :active="request()->routeIs('manage-employees')">
-                        {{ __('Manage Employees') }}
-                    </x-nav-link>
-                </div>
-
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link :href="route('manage-employees')" :active="request()->routeIs('manage-employees')">
+                            {{ __('Manage Employees') }}
+                        </x-nav-link>
+                    </div>
+                @endif
             </div>
 
             <!-- Settings Dropdown -->
