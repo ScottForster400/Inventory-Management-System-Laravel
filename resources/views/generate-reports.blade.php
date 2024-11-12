@@ -27,14 +27,16 @@
                             </x-tr>
                         </x-table-head>
                         <x-table-body>
-                            @foreach($transaction as $key => $data)
+
+
+                            @foreach($transactions as $transaction)
                                 <x-tr>
-                                    <x-th>{{$data->transaction_id}}</x-th>
+                                    <x-th>{{$transaction->transaction_id}}</x-th>
                                     <x-th>
                                         <x-modal-toggle>Generate Report</x-modal-toggle>
                                         <x-modal>
                                             <x-modal-header>Report</x-modal-header>
-                                            <x-modal-body>{{ $data->price}}</x-modal-body>
+                                            <x-modal-body>{{$transaction->product_id}}</x-modal-body>
                                             <x-modal-footer>Close</x-modal-footer>
                                         </x-modal>
                                     </x-th>
@@ -48,4 +50,4 @@
             </div>
         </div>
     </div>
-</x-app-layout>
+</x-app-layout>   Attempt to read property "name" on null

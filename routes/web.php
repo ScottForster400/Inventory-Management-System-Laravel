@@ -1,8 +1,5 @@
 <?php
 
-
-;
-
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProductController;
@@ -12,6 +9,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AdminController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -25,7 +23,6 @@ Route::get('/generate-reports', function () {
     $transaction = DB::table('transactions')->get();
     return view('generate-reports', ['transaction' => $transaction]);
 })->middleware(['auth', 'verified'])->name('generate-reports');
-
 
 
 Route::get('/manage-employees', function () {
@@ -58,6 +55,8 @@ Route::resource('stocks',StockController::class)->middleware('auth');
 
 //all transaction routes
 Route::resource('transactions',TransactionController::class)->middleware('auth');
+
+Route::resource('admin',AdminController::class)->middleware('auth');
 
 
 

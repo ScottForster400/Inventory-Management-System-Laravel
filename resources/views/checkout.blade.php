@@ -32,16 +32,16 @@
 <section class = "main-checkout">
         
         <div class="checkout-container">
-    <a href="item-checkout.php" class="checkout-box-link">
+    <a href="second-checkout.blade.php" class="checkout-box-link">
         <div class="checkout-box">Board  Games</div>
     </a>
-    <a href="item-checkout.php" class="checkout-box-link">
+    <a href="second-checkout.blade.php" class="checkout-box-link">
         <div class="checkout-box">Card Games</div>
     </a>
-    <a href="item-checkout.php" class="checkout-box-link">
+    <a href="second-checkout.blade.php" class="checkout-box-link">
         <div class="checkout-box">Puzzles</div>
     </a>
-    <a href="item-checkout.php" class="checkout-box-link">
+    <a href="second-checkout.blade.php" class="checkout-box-link">
         <div class="checkout-box">Figures</div>
     </a>
 </div>
@@ -54,22 +54,7 @@
             <a href="receipt.php" class="checkout-main-small-buttons">   
             <div class ="checkout-buttons"> PRINT LAST RECEIPT</div> </a>
             
-            <a href="functions.php" class="checkout-main-small-buttons">   
-            <div class ="checkout-buttons"> FUNCTIONS</div></a>
-</div>
-
   </section>
 
     
-   
-    
-    
-    <!-- <div class="Checkout_Page">
-        <div class="Basket">
-            <h1>Basket</h1>
-        </div>
-        <div class="Basket">
-            <h1>Checkout</h1>
-        </div>
-    </div> -->
 </x-app-layout>
