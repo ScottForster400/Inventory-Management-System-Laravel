@@ -16,10 +16,11 @@
             <div class="h-full px-3 py-4 overflow-y-auto bg-white dark:bg-gray-800 ">
                <ul class="space-y-2 font-medium">
                     <li>
-                        <x-sidebar-dropdown-button data-collapse-toggle="test">
-                            <x-sidebar-dropdown-info> Price </x-sidebar-dropdown-info>
+                        <x-sidebar-dropdown-button data-collapse-toggle="price">
+                           <x-sidebar-img src="{{asset('imgs/price.svg')}}"></x-sidebar-img>
+                            <x-sidebar-dropdown-info>Price</x-sidebar-dropdown-info>
                         </x-sidebar-dropdown-button>
-                        <ul id="test" class="hidden py-2 space-y-2">
+                        <ul id="price" class="hidden py-2 space-y-2">
                             <li>
                                 <a href="#" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Products</a>
                             </li>
@@ -32,19 +33,89 @@
                         </ul>
                     </li>
                     <li>
-
+                        <x-sidebar-dropdown-button data-collapse-toggle="age">
+                            <x-sidebar-img src="{{asset('imgs/age.svg')}}"></x-sidebar-img>
+                            <x-sidebar-dropdown-info>Age</x-sidebar-dropdown-info>
+                         </x-sidebar-dropdown-button>
+                         <ul id="aSge" class="hidden py-2 space-y-2">
+                             <li>
+                                 <a href="#" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Products</a>
+                             </li>
+                             <li>
+                                 <a href="#" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Billing</a>
+                             </li>
+                             <li>
+                                 <a href="#" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Invoice</a>
+                             </li>
+                         </ul>
                     </li>
                     <li>
-
+                        <x-sidebar-dropdown-button data-collapse-toggle="time">
+                            <x-sidebar-img src="{{asset('imgs/time.svg')}}"></x-sidebar-img>
+                            <x-sidebar-dropdown-info>Time</x-sidebar-dropdown-info>
+                         </x-sidebar-dropdown-button>
+                         <ul id="time" class="hidden py-2 space-y-2">
+                             <li>
+                                 <a href="#" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Products</a>
+                             </li>
+                             <li>
+                                 <a href="#" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Billing</a>
+                             </li>
+                             <li>
+                                 <a href="#" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Invoice</a>
+                             </li>
+                         </ul>
                     </li>
                     <li>
-
+                        <x-sidebar-dropdown-button data-collapse-toggle="player-count">
+                            <x-sidebar-img src="{{asset('imgs/player-count.svg')}}"></x-sidebar-img>
+                            <x-sidebar-dropdown-info>Player Count</x-sidebar-dropdown-info>
+                         </x-sidebar-dropdown-button>
+                         <ul id="player-count" class="hidden py-2 space-y-2">
+                             <li>
+                                 <a href="#" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Products</a>
+                             </li>
+                             <li>
+                                 <a href="#" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Billing</a>
+                             </li>
+                             <li>
+                                 <a href="#" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Invoice</a>
+                             </li>
+                         </ul>
                     </li>
                     <li>
-
+                        <x-sidebar-dropdown-button data-collapse-toggle="game-type">
+                            <x-sidebar-img src="{{asset('imgs/game-type.svg')}}"></x-sidebar-img>
+                            <x-sidebar-dropdown-info>Game Type</x-sidebar-dropdown-info>
+                         </x-sidebar-dropdown-button>
+                         <ul id="game-type" class="hidden py-2 space-y-2">
+                             <li>
+                                 <a href="#" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Products</a>
+                             </li>
+                             <li>
+                                 <a href="#" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Billing</a>
+                             </li>
+                             <li>
+                                 <a href="#" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Invoice</a>
+                             </li>
+                         </ul>
                     </li>
                     <li>
-
+                        <x-sidebar-dropdown-button data-collapse-toggle="game-genre">
+                            <x-sidebar-img src="{{asset('imgs/game-genre.svg')}}"></x-sidebar-img>
+                            <x-sidebar-dropdown-info>Game Genre</x-sidebar-dropdown-info>
+                         </x-sidebar-dropdown-button>
+                         <ul id="game-genre" class="hidden py-2 space-y-2">
+                             <li>
+                                 <a href="#" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Products</a>
+                             </li>
+                             <li>
+                                 <a href="#" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Billing</a>
+                             </li>
+                             <li>
+                                 <a href="#" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Invoice</a>
+                             </li>
+                         </ul>
                     </li>
                     <li>
 
