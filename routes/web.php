@@ -1,15 +1,14 @@
 <?php
 
-use App\Http\Controllers\AdminController;
-use App\Models\User;
-use App\Models\Stock;
-use App\Models\Branch;
-use App\Models\Product;
-use App\Models\Transaction;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BranchController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
-
+use App\Http\Controllers\StockController;
+use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\AdminController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -43,19 +42,19 @@ Route::middleware('auth')->group(function () {
 require __DIR__ . '/auth.php';
 
 //all branches routes
-Route::resource('branches', Branch::class)->middleware('auth');
+Route::resource('branches', BranchController::class)->middleware('auth');
 
 //all products routes
-Route::resource('products', Product::class)->middleware('auth');
+Route::resource('products', ProductController::class)->middleware('auth');
 
 //all user routes
-Route::resource('users',User::class)->middleware('auth');
+Route::resource('users',UserController::class)->middleware('auth');
 
 //all stock routes
-Route::resource('stock',Stock::class)->middleware('auth');
+Route::resource('stocks',StockController::class)->middleware('auth');
 
 //all transaction routes
-Route::resource('stock',Transaction::class)->middleware('auth');
+Route::resource('transactions',TransactionController::class)->middleware('auth');
 
 Route::resource('admin',AdminController::class)->middleware('auth');
 
