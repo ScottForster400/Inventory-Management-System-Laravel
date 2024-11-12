@@ -5,9 +5,14 @@
         </h2>
     </x-slot>
 
+
+
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+
+
+
                 <div class="p-6 text-gray-900 dark:text-gray-100">
 
                     <x-table>
@@ -25,7 +30,14 @@
                             @foreach($transaction as $key => $data)
                                 <x-tr>
                                     <x-th>{{$data->transaction_id}}</x-th>
-                                    <x-th>{{$data->price}}</x-th>
+                                    <x-th>
+                                        <x-modal-toggle>Generate Report</x-modal-toggle>
+                                        <x-modal>
+                                            <x-modal-header>Report</x-modal-header>
+                                            <x-modal-body>{{$data->price}}</x-modal-body>
+                                            <x-modal-footer>Close</x-modal-footer>
+                                        </x-modal>
+                                    </x-th>
                                 </x-tr>
                             @endforeach
                         </x-table-body>
