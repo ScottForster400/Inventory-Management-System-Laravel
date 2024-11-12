@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Models\User;
 use App\Models\Stock;
 use App\Models\Branch;
@@ -55,6 +56,8 @@ Route::resource('stock',Stock::class)->middleware('auth');
 
 //all transaction routes
 Route::resource('stock',Transaction::class)->middleware('auth');
+
+Route::resource('admin',AdminController::class)->middleware('auth');
 
 
 

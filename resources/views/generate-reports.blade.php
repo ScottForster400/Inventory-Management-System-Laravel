@@ -1,3 +1,5 @@
+{{dd($transactions)}}
+
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
@@ -27,14 +29,16 @@
                             </x-tr>
                         </x-table-head>
                         <x-table-body>
-                            @foreach($transaction as $key => $data)
+
+
+                            @foreach($transactions as $transaction)
                                 <x-tr>
-                                    <x-th>{{$data->transaction_id}}</x-th>
+                                    <x-th>{{$transaction->transaction_id}}</x-th>
                                     <x-th>
                                         <x-modal-toggle>Generate Report</x-modal-toggle>
                                         <x-modal>
                                             <x-modal-header>Report</x-modal-header>
-                                            <x-modal-body>{{ $data->price}}</x-modal-body>
+                                            <x-modal-body>{{$transaction->products->name}}</x-modal-body>
                                             <x-modal-footer>Close</x-modal-footer>
                                         </x-modal>
                                     </x-th>
