@@ -25,6 +25,7 @@ Route::get('/generate-reports', function () {
 
 
 Route::get('/manage-employees', function () {
+    $user = DB::table('users')->get();
     return view('manage-employees');
 })->middleware(['auth', 'verified'])->name('manage-employees');
 

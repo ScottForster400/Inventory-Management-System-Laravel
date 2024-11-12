@@ -50,4 +50,4 @@
             </div>
         </div>
     </div>
-</x-app-layout>   Attempt to read property "name" on null
+</x-app-layout>
