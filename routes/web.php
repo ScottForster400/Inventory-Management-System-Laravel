@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BranchController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -30,7 +31,7 @@ Route::get('/manage-employees', function () {
 })->middleware(['auth', 'verified'])->name('manage-employees');
 
 Route::get('/checkout', function () {
-    return view('checkout');
+    return view('checkout', [CartController::class, 'index']);
 })->middleware(['auth', 'verified'])->name('checkout');
 
 Route::middleware('auth')->group(function () {
