@@ -12,7 +12,8 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        //
+        $transaction = Transaction::with('product')->get();
+        return view('transactions.index');
     }
 
     /**
