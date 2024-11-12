@@ -2,21 +2,31 @@
 
 namespace App\Http\Controllers;
 
-
-use App\Models\Cart;
-use App\Http\Controllers\Controller;
+use App\Models\User;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class CartController extends Controller
+class AdminController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $user_id = Auth::user()->user_id;
-        $cart = Cart::where('user_id', $user_id)->get();
+        $users = Transaction::with('users')->get();
+        return view('manage-employees')->with('users', $users);
+    }
+
+    public function generate()
+    {
+        $transactions = Transaction::with('products')->get();
+        return view('generate-reports')->with('transactions', $transactions);
+    }
+
+    public function manage()
+    {
+        $users = Transaction::with('users')->get();
+        return view('manage-employees')->with('users', $users);
     }
 
     /**
@@ -38,7 +48,7 @@ class CartController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Cart $cart)
+    public function show(User $user)
     {
         //
     }
@@ -46,7 +56,7 @@ class CartController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Cart $cart)
+    public function edit(User $user)
     {
         //
     }
@@ -54,7 +64,7 @@ class CartController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Cart $cart)
+    public function update(Request $request, User $user)
     {
         //
     }
@@ -62,7 +72,7 @@ class CartController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Cart $cart)
+    public function destroy(User $user)
     {
         //
     }

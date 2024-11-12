@@ -5,11 +5,44 @@
         </h2>
     </x-slot>
 
+
+
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+
+
+
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                    {{ __("manage employees") }}
+
+                    <x-table>
+                        <x-table-head>
+                            <x-tr>
+                                <x-th>
+                                    Employee
+                                </x-th>
+                                <x-th>
+                                    Edit
+                                </x-th>
+                                <x-th>
+                                    Delete
+                                </x-th>
+                            </x-tr>
+                        </x-table-head>
+                        <x-table-body>
+                                <x-tr>
+                                    <x-th>gooner id:</x-th>
+                                    <x-th>
+                                        <x-responsive-nav-link :href="route('profile.edit')">
+                                            {{ __('Profile') }}
+                                        </x-responsive-nav-link>
+                                    </x-th>
+                                </x-tr>
+
+                        </x-table-body>
+                    </x-table>
+
+
                 </div>
             </div>
         </div>

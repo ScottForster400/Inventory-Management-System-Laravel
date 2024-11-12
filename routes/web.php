@@ -1,9 +1,7 @@
 <?php
 
-
-;
-
 use App\Http\Controllers\BranchController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -11,6 +9,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AdminController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -26,13 +25,13 @@ Route::get('/generate-reports', function () {
 })->middleware(['auth', 'verified'])->name('generate-reports');
 
 
-
 Route::get('/manage-employees', function () {
+    $user = DB::table('users')->get();
     return view('manage-employees');
 })->middleware(['auth', 'verified'])->name('manage-employees');
 
 Route::get('/checkout', function () {
-    return view('checkout');
+    return view('checkout', [CartController::class, 'index']);
 })->middleware(['auth', 'verified'])->name('checkout');
 
 Route::middleware('auth')->group(function () {
@@ -57,6 +56,8 @@ Route::resource('stocks',StockController::class)->middleware('auth');
 
 //all transaction routes
 Route::resource('transactions',TransactionController::class)->middleware('auth');
+
+Route::resource('admin',AdminController::class)->middleware('auth');
 
 
 
