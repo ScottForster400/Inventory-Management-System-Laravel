@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id('cart_id');
             $table->foreignIdFor(User::class);
             $table->foreignIdFor(Product::class);
+            $table->integer('amount');
         });
     }
 

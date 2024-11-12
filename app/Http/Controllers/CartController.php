@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Models\Cart;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
@@ -13,7 +15,8 @@ class CartController extends Controller
      */
     public function index()
     {
-        //
+        $user_id = Auth::user()->user_id;
+        $cart = Cart::where('user_id', $user_id)->get();
     }
 
     /**
