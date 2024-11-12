@@ -34,7 +34,7 @@
                                         <x-modal-toggle>Generate Report</x-modal-toggle>
                                         <x-modal>
                                             <x-modal-header>Report</x-modal-header>
-                                            <x-modal-body>{{$data->price}}</x-modal-body>
+                                            <x-modal-body>{{ $data->price}}</x-modal-body>
                                             <x-modal-footer>Close</x-modal-footer>
                                         </x-modal>
                                     </x-th>

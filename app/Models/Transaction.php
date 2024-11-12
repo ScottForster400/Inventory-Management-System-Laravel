@@ -7,13 +7,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Transaction extends Model
 {
+
+    protected $table = 'transactions';
+
     use HasFactory;
     protected $guarded = [];
 
     public function users(){
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(User::class);
     }
-    public function proudcts(){
-        return $this->belongsTo(Transaction::class);
+    public function products(){
+        return $this->belongsTo(Product::class);
     }
 }
