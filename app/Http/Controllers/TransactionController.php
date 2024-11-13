@@ -12,9 +12,10 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        $transaction = Transaction::with('product')->get();
-        return view('transactions.index');
+        $transactions = Transaction::with('products')->get();
+        return view('transactions.index')->with('transaction',$transactions);
     }
+
 
     /**
      * Show the form for creating a new resource.
