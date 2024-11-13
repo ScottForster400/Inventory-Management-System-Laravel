@@ -31,7 +31,7 @@
                         </x-table-head>
                         <x-table-body>
                                 <x-tr>
-                                    <x-th>gooner id:</x-th>
+                                    <x-th>employee id:</x-th>
                                     <x-th>
                                         <x-responsive-nav-link :href="route('profile.edit')">
                                             {{ __('Profile') }}
