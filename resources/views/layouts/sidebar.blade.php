@@ -140,7 +140,7 @@
                         </x-sidebar-list>
                         <x-sidebar-list>
                            <x-primary-input-button-outline id="stratergy" ></x-primary-input-button-outline>
-                           <x-primary-input-button-outline-label for="stratergy" class="w-4/5">Stratergy</x-primary-input-button-outline-label>
+                           <x-primary-input-button-outline-label for="stratergy" class="w-4/5">Strategy</x-primary-input-button-outline-label>
                        </x-sidebar-list>
                     </ul>
                </li>
