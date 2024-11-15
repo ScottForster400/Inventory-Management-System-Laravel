@@ -3,6 +3,7 @@
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
             {{ __('Manage Employees') }}
         </h2>
+        <x-button>Add Employee </x-button>
     </x-slot>
 
 
