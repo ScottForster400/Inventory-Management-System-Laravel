@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use App\Models\Stock;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 class StockController extends Controller
 {
@@ -12,7 +15,16 @@ class StockController extends Controller
      */
     public function index()
     {
-        //
+        $branchId = Auth::user()->branch_id;
+        $productIds = Stock::select('product_id')->where('branch_id',$branchId)->get();
+        $productsIdVals = collect();
+        foreach($productIds as $productId){
+            $productsIdVals->push($productId);
+
+        }
+        $products = Product::whereIn('product_id',$productsIdVals)->get();
+        return view('dashboard')->with('products',$products);
+
     }
 
     /**
