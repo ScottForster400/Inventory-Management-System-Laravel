@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-
+use app\models\Product;
 use App\Models\Cart;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -17,6 +17,7 @@ class CartController extends Controller
     {
         $user_id = Auth::user()->user_id;
         $cart = Cart::where('user_id', $user_id)->get();
+        return view('checkout')->with('Cart', $cart);
     }
 
     /**
