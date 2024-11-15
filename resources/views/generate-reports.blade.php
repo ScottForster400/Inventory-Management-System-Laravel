@@ -38,7 +38,35 @@
                                         <x-modal-toggle>Generate Report</x-modal-toggle>
                                         <x-modal>
                                             <x-modal-header>Report</x-modal-header>
-                                            <x-modal-body>{{$transaction->products->name}}</x-modal-body>
+                                            <x-modal-body>
+
+                                                <x-table>
+                                                    <x-table-head>
+                                                        <x-tr>
+                                                            <x-th>
+                                                                Week
+                                                            </x-th>
+                                                            <x-th>
+                                                                Products Sold
+                                                            </x-th>
+                                                            <x-th>
+                                                                Gross Profit (£)
+                                                            </x-th>
+                                                        </x-tr>
+                                                    </x-table-head>
+                                                    <x-table-body>
+                                                            <x-tr>
+                                                                <x-th>1</x-th>
+                                                                <x-th>
+                                                                    7
+                                                                </x-th>
+                                                                <x-th>
+                                                                    56.11
+                                                                </x-th>
+                                                            </x-tr>
+                                                    </x-table-body>
+                                                </x-table>
+                                            </x-modal-body>
                                             <x-modal-footer>Close</x-modal-footer>
                                         </x-modal>
                                     </x-th>
