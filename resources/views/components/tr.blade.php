@@ -1,3 +1,3 @@
-<tr>
+<tr {{$attributes->merge([])}}>
     {{ $slot }}
 </tr>

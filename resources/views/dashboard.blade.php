@@ -7,19 +7,45 @@
     <div class="flex flex-row w-full">
         @include('layouts.sidebar')
         <div class=" w-full py-12  flex items-center flex-col ">
-            <div class="flex flex-3/4 pl-20 pr-20 max-w-8/10 w-full">
+            @include('layouts.search-mobile')
+            <div class="max-md:w-8/12 w-4/5 flex items-center justify-between py-2">
+                <x-dropdown-button class="float-left !w-24 ">Sort</x-dropdown-button>
+                    <div>
+                        <x-dropdown-button-body>
+                            <x-dropdown-button-li>
+                                <x-dropdown-button-a>A to Z</x-dropdown-button-a>
+                            </x-dropdown-button-li>
+                            <x-dropdown-button-li>
+                                <x-dropdown-button-a>Z to A</x-dropdown-button-a>
+                            </x-dropdown-button-li>
+                            <x-dropdown-button-li>
+                                <x-dropdown-button-a>Low to High</x-dropdown-button-a>
+                            </x-dropdown-button-li>
+                            <x-dropdown-button-li>
+                                <x-dropdown-button-a>High to Low</x-dropdown-button-a>
+                            </x-dropdown-button-li>
+                        </x-dropdown-button-body>
+                    </div>
+                <x-primary-button class="float-right !w-24 flex justify-center items-center "> Add</x-primary-button>
+            </div>
+            <div class="flex flex-3/4 md:pl-20 md:pr-20 max-w-8/10 w-full">
                 <div class=" overflow-hidden w-full">
-                    <div class=" flex flex-row flex-wrap justify-evenly p-6 text-gray-900 dark:text-gray-100 ">
-                        @foreach ($products as $product)
+                    <div class=" flex max-md:flex-col max-md:justify-center max-md:items-center md:flex-row md:flex-wrap md:justify-evenly p-6 text-gray-900 dark:text-gray-100 ">
+                        @forelse ($products as $product)
                             <x-card-main class="flex flex-col mb-5 mx-5 hover:shadow-2xl transition-shadow text-center">
-                                <x-card-img src="{{asset('imgs/logo.png')}}"></x-card-img>
+                                <x-card-img src="{{asset($product->image)}}"></x-card-img>
                                 <x-card-body>
                                     <x-card-title>{{$product->name}}</x-card-title>
                                     <x-card-para>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repellat recusandae aliquid quis animi unde at reprehenderit voluptatibus iste laborum in, voluptas possimus quam quos minima corporis nam error aperiam laboriosam.</x-card-para>
                                     <x-card-links>SAmple links</x-card-links>
                                 </x-card-body>
                             </x-card-main>
-                        @endforeach
+                        @empty
+                            <p>No Stock in the system</p>
+                        @endforelse
+                    </div>
+                    <div class="w-full pt-3">
+                        {{$products->links()}}
                     </div>
                 </div>
             </div>

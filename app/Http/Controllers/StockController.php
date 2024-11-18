@@ -22,7 +22,7 @@ class StockController extends Controller
             $productsIdVals->push($productId);
 
         }
-        $products = Product::whereIn('product_id',$productsIdVals)->get();
+        $products = Product::whereIn('product_id',$productsIdVals)->paginate(6);
         return view('dashboard')->with('products',$products);
 
     }
