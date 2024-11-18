@@ -1,4 +1,4 @@
-<div class=" w-full py-12  flex items-center flex-col ">
+
     <div class="w-8/12 md:hidden md:w-1/2">
         <x-search-bar>Search</x-search-bar>
         <x-accordion-head class="!flex-col !items-end !justify-normal">
