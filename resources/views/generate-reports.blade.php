@@ -1,5 +1,3 @@
-
-
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
@@ -22,6 +20,9 @@
                                 </x-th>
                                 <x-th>
                                     Generate Report
+                                </x-th>
+                                <x-th>
+                                    Graph Based Report
                                 </x-th>
                             </x-tr>
                         </x-table-head>
@@ -84,6 +85,22 @@
                                             <x-modal-footer>Close</x-modal-footer>
                                         </x-modal>
                                     </x-th>
+
+
+
+                                    <x-th>
+                                        <x-modal-toggle data-modal-target = "graph" data-modal-toggle="graph" >Graph Based Report</x-modal-toggle>
+                                        <x-modal id="graph">
+                                            <x-modal-header>Report</x-modal-header>
+                                            <x-modal-body>
+                                                big sigma
+                                            </x-modal-body>
+                                            <x-modal-footer>Close</x-modal-footer>
+                                        </x-modal>
+                                    </x-th>
+
+
+
                                 </x-tr>
                             @endforeach
                         </x-table-body>
