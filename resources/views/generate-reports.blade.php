@@ -1,5 +1,3 @@
-
-
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
@@ -12,9 +10,6 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-
-
-
                 <div class="p-6 text-gray-900 dark:text-gray-100">
 
                     <x-table>
@@ -25,6 +20,9 @@
                                 </x-th>
                                 <x-th>
                                     Generate Report
+                                </x-th>
+                                <x-th>
+                                    Graph Based Report
                                 </x-th>
                             </x-tr>
                         </x-table-head>
@@ -64,12 +62,45 @@
                                                                     56.11
                                                                 </x-th>
                                                             </x-tr>
+
+                                                            <x-tr>
+                                                                <x-th>2</x-th>
+                                                                <x-th>
+                                                                    7
+                                                                </x-th>
+                                                                <x-th>
+                                                                    91.92
+                                                                </x-th>
+                                                            </x-tr>
                                                     </x-table-body>
+                                                    <tfoot>
+                                                        <tr class="font-semibold text-gray-900 dark:text-white">
+                                                            <th scope="row" class="px-6 py-3 text-base">Total</th>
+                                                            <td class="px-6 py-3">3</td>
+                                                            <td class="px-6 py-3">21,000</td>
+                                                        </tr>
+                                                    </tfoot>
                                                 </x-table>
                                             </x-modal-body>
                                             <x-modal-footer>Close</x-modal-footer>
                                         </x-modal>
                                     </x-th>
+
+
+
+                                    <x-th>
+                                        <x-modal-toggle data-modal-target = "graph" data-modal-toggle="graph" >Graph Based Report</x-modal-toggle>
+                                        <x-modal id="graph">
+                                            <x-modal-header>Report</x-modal-header>
+                                            <x-modal-body>
+                                                big sigma
+                                            </x-modal-body>
+                                            <x-modal-footer>Close</x-modal-footer>
+                                        </x-modal>
+                                    </x-th>
+
+
+
                                 </x-tr>
                             @endforeach
                         </x-table-body>

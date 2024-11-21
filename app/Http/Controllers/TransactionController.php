@@ -12,9 +12,11 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        $transactions = Transaction::with('products')->get();
+        $transactions = Transaction::all();
         return view('transactions.index')->with('transaction',$transactions);
     }
+
+
 
 
     /**
