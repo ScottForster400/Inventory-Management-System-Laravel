@@ -142,8 +142,8 @@
                            <x-primary-input-button-outline-label for="competitive" class="w-4/5">Competitive</x-primary-input-button-outline-label>
                         </x-sidebar-list>
                         <x-sidebar-list>
-                           <x-primary-input-button-outline id="stratergy" ></x-primary-input-button-outline>
-                           <x-primary-input-button-outline-label for="stratergy" class="w-4/5">Strategy</x-primary-input-button-outline-label>
+                           <x-primary-input-button-outline id="strategy" ></x-primary-input-button-outline>
+                           <x-primary-input-button-outline-label for="strategy" class="w-4/5">Strategy</x-primary-input-button-outline-label>
                        </x-sidebar-list>
                     </ul>
                </li>
