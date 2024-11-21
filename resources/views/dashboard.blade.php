@@ -12,21 +12,21 @@
                 <x-dropdown-button class="float-left !w-24 ">Sort</x-dropdown-button>
                     <div>
                         <x-dropdown-button-body>
-                            <x-dropdown-button-li>
+                            <x-dropdown-button-li class="w-full">
                                 <x-dropdown-button-a>A to Z</x-dropdown-button-a>
                             </x-dropdown-button-li>
-                            <x-dropdown-button-li>
+                            <x-dropdown-button-li class="w-full">
                                 <x-dropdown-button-a>Z to A</x-dropdown-button-a>
                             </x-dropdown-button-li>
-                            <x-dropdown-button-li>
+                            <x-dropdown-button-li class="w-full">
                                 <x-dropdown-button-a>Low to High</x-dropdown-button-a>
                             </x-dropdown-button-li>
-                            <x-dropdown-button-li>
+                            <x-dropdown-button-li class="w-full">
                                 <x-dropdown-button-a>High to Low</x-dropdown-button-a>
                             </x-dropdown-button-li>
                         </x-dropdown-button-body>
                     </div>
-                <x-primary-button class="float-right !w-24 flex justify-center items-center "> Add</x-primary-button>
+                <x-modal-toggle class="float-right !w-24 flex justify-center items-center "> Add</x-modal-toggle>
             </div>
             <div class="flex flex-3/4 md:pl-20 md:pr-20 max-w-8/10 w-full">
                 <div class=" overflow-hidden w-full">
@@ -37,7 +37,10 @@
                                 <x-card-body>
                                     <x-card-title>{{$product->name}}</x-card-title>
                                     <x-card-para>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repellat recusandae aliquid quis animi unde at reprehenderit voluptatibus iste laborum in, voluptas possimus quam quos minima corporis nam error aperiam laboriosam.</x-card-para>
-                                    <x-card-links>SAmple links</x-card-links>
+                                    <x-card-links>
+                                        <x-primary-button class="w-1/3 h-12 flex justify-center items-center !rounded-full !bg-blue-700 hover:!bg-blue-800 !transition-colors">Edit</x-primary-button>
+                                        <x-primary-button class="w-1/3 h-12 flex justify-center items-center !rounded-full !bg-blue-700 hover:!bg-blue-800 !transition-colors"><img src="{{asset('imgs/cart.png')}}" alt="Cart" class="w-1/2"></img></x-primary-button>
+                                    </x-card-links>
                                 </x-card-body>
                             </x-card-main>
                         @empty
