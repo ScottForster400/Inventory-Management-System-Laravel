@@ -12,11 +12,30 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
 
+
+                    <x-dropdown-button class="float-left !w-24 " >Sort</x-dropdown-button>
+                    <div>
+                        <x-dropdown-button-body>
+                            <x-dropdown-button-li class="w-full">
+                                <x-dropdown-button-a>Today</x-dropdown-button-a>
+                            </x-dropdown-button-li>
+                            <x-dropdown-button-li class="w-full">
+                                <x-dropdown-button-a>Last Week</x-dropdown-button-a>
+                            </x-dropdown-button-li>
+                            <x-dropdown-button-li class="w-full">
+                                <x-dropdown-button-a>Last Month</x-dropdown-button-a>
+                            </x-dropdown-button-li>
+                            <x-dropdown-button-li class="w-full">
+                                <x-dropdown-button-a>Last Year</x-dropdown-button-a>
+                            </x-dropdown-button-li>
+                        </x-dropdown-button-body>
+                    </div>
+
                     <x-table>
                         <x-table-head>
                             <x-tr>
                                 <x-th>
-                                    Month
+                                    Day
                                 </x-th>
                                 <x-th>
                                     Generate Report
@@ -31,7 +50,7 @@
 
                             @foreach($transactions as $transaction)
                                 <x-tr>
-                                    <x-th>{{$transaction->transaction_id}}</x-th>
+                                    <x-th>{{$transaction->created_at}}</x-th>
                                     <x-th>
                                         <x-modal-toggle>Generate Report</x-modal-toggle>
                                         <x-modal>
@@ -76,7 +95,7 @@
                                                     <tfoot>
                                                         <tr class="font-semibold text-gray-900 dark:text-white">
                                                             <th scope="row" class="px-6 py-3 text-base">Total</th>
-                                                            <td class="px-6 py-3">3</td>
+                                                            <td class="px-6 py-3">14</td>
                                                             <td class="px-6 py-3">21,000</td>
                                                         </tr>
                                                     </tfoot>
@@ -89,8 +108,8 @@
 
 
                                     <x-th>
-                                        <x-modal-toggle data-modal-target = "graph" data-modal-toggle="graph" >Graph Based Report</x-modal-toggle>
-                                        <x-modal id="graph">
+                                        <x-modal-toggle>Graph Based Report</x-modal-toggle>
+                                        <x-modal>
                                             <x-modal-header>Report</x-modal-header>
                                             <x-modal-body>
                                                 big sigma
