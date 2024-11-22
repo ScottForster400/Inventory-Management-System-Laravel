@@ -61,10 +61,10 @@
                                                     <x-table-head>
                                                         <x-tr>
                                                             <x-th>
-                                                                Week
+                                                                Stock
                                                             </x-th>
                                                             <x-th>
-                                                                Products Sold
+                                                                Amount
                                                             </x-th>
                                                             <x-th>
                                                                 Gross Profit (£)
