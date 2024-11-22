@@ -10,6 +10,7 @@ use App\Http\Controllers\StockController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\DashboardController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -56,6 +57,9 @@ Route::resource('stocks',StockController::class)->middleware('auth');
 Route::resource('transactions',TransactionController::class)->middleware('auth');
 
 Route::resource('admin',AdminController::class)->middleware('auth');
+
+Route::resource('dashboard',DashboardController::class)->middleware('auth');
+Route::resource('checkout',CartController::class)->middleware('auth');
 
 
 

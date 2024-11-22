@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use app\models\Product;
+use App\Models\Product;
 use App\Models\Cart;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -15,9 +15,22 @@ class CartController extends Controller
      */
     public function index()
     {
-        $user_id = Auth::user()->user_id;
-        $cart = Cart::where('user_id', $user_id)->get();
-        return view('checkout')->with('Cart', $cart);
+        $user_id = Auth::user()->id;
+        $carts = Cart::where('user_id', $user_id)->get();
+        $productIDs = Cart::select('product_id')->where('user_id', $user_id)->get();
+        $productIDvals = collect();
+
+        foreach($productIDs as $productID){
+            $productIDvals->push($productID);
+        }
+
+        $products = Product::whereIn('product_id',$productIDvals)->get();
+
+        $amount = 0;
+        foreach($products as $product){
+            $amount = $amount + $product->Price;
+        }
+        return view('checkout')->with('carts', $carts)->with('products', $products)->with('amount', $amount);
     }
 
     /**

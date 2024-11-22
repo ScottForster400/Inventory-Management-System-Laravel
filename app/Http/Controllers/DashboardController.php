@@ -2,32 +2,29 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use App\Models\Transaction;
+use App\Models\Product;
+use App\Models\Stock;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
-class AdminController extends Controller
+class DashboardController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $users = Transaction::with('users')->get();
-        return view('manage-employees')->with('users', $users);
+        $branchId = Auth::user()->branch_id;
+        $productIds = Stock::select('product_id')->where('branch_id',$branchId)->get();
+        $productsIdVals = collect();
+        foreach($productIds as $productId){
+            $productsIdVals->push($productId);
 
-    }
+        }
+        $products = Product::whereIn('product_id',$productsIdVals)->paginate(6);
+        return view('dashboard')->with('products',$products);
 
-    public function generate()
-    {
-        $transactions = Transaction::with('products')->get();
-        return view('generate-reports')->with('transactions', $transactions);
-    }
-
-    public function manage()
-    {
-        $users = Transaction::with('users')->get();
-        return view('manage-employees')->with('users', $users);
     }
 
     /**
@@ -49,7 +46,7 @@ class AdminController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(User $user)
+    public function show(Stock $stock)
     {
         //
     }
@@ -57,7 +54,7 @@ class AdminController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(User $user)
+    public function edit(Stock $stock)
     {
         //
     }
@@ -65,7 +62,7 @@ class AdminController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, Stock $stock)
     {
         //
     }
@@ -73,7 +70,7 @@ class AdminController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user)
+    public function destroy(Stock $stock)
     {
         //
     }
