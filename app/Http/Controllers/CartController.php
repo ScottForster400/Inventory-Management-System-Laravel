@@ -25,7 +25,6 @@ class CartController extends Controller
         }
 
         $products = Product::whereIn('product_id',$productIDvals)->get();
-        dd($products);
         return view('checkout')->with('carts', $carts)->with('products', $products);
     }
 
