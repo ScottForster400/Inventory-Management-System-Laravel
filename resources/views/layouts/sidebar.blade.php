@@ -2,6 +2,9 @@
     <aside id="default-sidebar" class=" sticky top-0 left-0 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
        <div class="h-full px-3 py-4 overflow-y-auto bg-white dark:bg-gray-800 ">
           <ul class="space-y-2 font-medium w-full max-w-full">
+                <x-sidebar-list class="pb-3" >
+                    <x-search-bar class="w-11/12">Search</x-search-bar>
+                </x-sidebar-list>
                <li>
                    <x-sidebar-dropdown-button data-collapse-toggle="price">
                       <x-sidebar-img src="{{asset('imgs/price.svg')}}"></x-sidebar-img>
@@ -139,8 +142,8 @@
                            <x-primary-input-button-outline-label for="competitive" class="w-4/5">Competitive</x-primary-input-button-outline-label>
                         </x-sidebar-list>
                         <x-sidebar-list>
-                           <x-primary-input-button-outline id="stratergy" ></x-primary-input-button-outline>
-                           <x-primary-input-button-outline-label for="stratergy" class="w-4/5">Strategy</x-primary-input-button-outline-label>
+                           <x-primary-input-button-outline id="strategy" ></x-primary-input-button-outline>
+                           <x-primary-input-button-outline-label for="strategy" class="w-4/5">Strategy</x-primary-input-button-outline-label>
                        </x-sidebar-list>
                     </ul>
                </li>
