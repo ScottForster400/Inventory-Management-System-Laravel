@@ -25,7 +25,12 @@ class CartController extends Controller
         }
 
         $products = Product::whereIn('product_id',$productIDvals)->get();
-        return view('checkout')->with('carts', $carts)->with('products', $products);
+
+        $amount = 0;
+        foreach($products as $product){
+            $amount = $amount + $product->Price;
+        }
+        return view('checkout')->with('carts', $carts)->with('products', $products)->with('amount', $amount);
     }
 
     /**

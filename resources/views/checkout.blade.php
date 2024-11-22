@@ -24,7 +24,7 @@
         </ul>
         <div class="total">
         <span>Total:</span>
-        <span class="total-amount">£6</span>
+        <span class="total-amount">{{$amount}}</span>
         </div>
         <button class="pay-button">Pay</button>
     </div>
