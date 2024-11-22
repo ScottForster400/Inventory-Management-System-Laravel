@@ -13,8 +13,8 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $transactions = Transaction::with('products')->get();
-        return view('generate-reports')->with('transactions', $transactions);
+        $users = Transaction::with('users')->get();
+        return view('manage-employees')->with('users', $users);
 
     }
 

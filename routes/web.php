@@ -59,6 +59,7 @@ Route::resource('transactions',TransactionController::class)->middleware('auth')
 Route::resource('admin',AdminController::class)->middleware('auth');
 
 Route::resource('dashboard',DashboardController::class)->middleware('auth');
+Route::resource('checkout',CartController::class)->middleware('auth');
 
 
 
