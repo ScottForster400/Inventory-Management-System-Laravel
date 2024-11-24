@@ -16,7 +16,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
+Route::get('/stock', function () {
+    $user = DB::table('users')->get();
+    return view('stock');
+})->middleware(['auth', 'verified'])->name('stock');
 
 Route::get('/generate-reports', function () {
     $transaction = DB::table('transactions')->get();
