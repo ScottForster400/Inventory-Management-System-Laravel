@@ -5,6 +5,8 @@
         </h2>
     </x-slot>
 
+    <x-stocktable> </x-stocktable>
+
 
 
 
