@@ -26,8 +26,8 @@
                                 <x-text-input id="age-rating" type="number" name="age-rating" min=0  class="w-full basis-1/2"></x-text-input>
                             </x-td>
                             <x-td>
-                                <x-input-label for="player-count" :value="__('Player Count')">Player Count</x-input-label>
-                                <x-text-input id="player-count" type="number" name="player-count" min=0 class="w-full basis-1/2"></x-text-input>
+                                <x-input-label for="amount" :value="__('Amount')">Amount</x-input-label>
+                                <x-text-input id="amount" type="number" name="player-count" min=0 class="w-full basis-1/2"></x-text-input>
                             </x-td>
                             <x-td>
                                 <x-input-label for="game-length" :value="__('Game Length')" >Game Length</x-input-label>
@@ -38,15 +38,17 @@
                             <x-td>
                                 <x-input-label for="game-type" :value="__('Game Type')" >Game Type</x-input-label>
                                 <x-select id="game-type"  class="w-full basis-1/2">
-                                    <option value="board-game">Board Game</option>
-                                    <option value="puzzle-game">Puzzles</option>
+                                    <option value="">Choose an option...</option>
+                                    <option value="board_game">Board Game</option>
+                                    <option value="puzzle_game">Puzzles</option>
                                     <option value="figures">Figures</option>
-                                    <option value="card-game">Card Game</option>
+                                    <option value="card_game">Card Game</option>
                                 </x-select>
                             </x-td>
-                            <x-td class="!py-2">
+                            <x-td class="">
                                 <x-input-label for="game-genre" :value="__('Game Genre')" >Game Genre</x-input-label>
                                 <x-select id="game-genre"  class="w-full basis-1/2">
+                                    <option value="">Choose an option...</option>
                                     <option value="adventure">Adventure</option>
                                     <option value="puzzle">Puzzle</option>
                                     <option value="competitive">Competitive</option>
@@ -54,15 +56,21 @@
                                 </x-select>
                             </x-td>
                             <x-td>
-                                <x-input-label for="amount" :value="__('Amount')">Amount</x-input-label>
-                                <x-text-input id="amount" type="number" name="player-count" min=0 class="w-full basis-1/2"></x-text-input>
+                                <x-input-label for="player-count" :value="__('Min Players')">Min Players</x-input-label>
+                                <x-text-input id="player-count" type="number" name="player-count" min=0 class="w-full basis-1/2"></x-text-input>
+                            </x-td>
+                        </x-tr>
+                        <x-tr class="max-sm:flex max-sm:flex-col">
+                            <x-td>
+                                <x-input-label for="player-count" :value="__('Max Players')">Max Players</x-input-label>
+                                <x-text-input id="player-count" type="number" name="player-count" min=0 class="w-full basis-1/2"></x-text-input>
                             </x-td>
                         </x-tr>
                     </x-table-body>
                 </x-table>
                 <div class="w-full">
                     <x-input-label for="description" :value="__('Description')" >Description</x-input-label>
-                    <textarea id="description" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Description..."></textarea>
+                    <textarea id="description" rows="4" class="block resize-none p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Description..."></textarea>
                 </div>
             </x-modal-body>
         <x-modal-footer>

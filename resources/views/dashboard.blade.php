@@ -1,3 +1,4 @@
+
 <x-app-layout>
     <x-slot name="header" >
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
@@ -32,27 +33,24 @@
             <div class="flex flex-3/4 md:pl-20 md:pr-20 max-w-8/10 w-full">
                 <div class=" overflow-hidden w-full">
                     <div class=" flex max-md:flex-col max-md:justify-center max-md:items-center md:flex-row md:flex-wrap md:justify-evenly p-6 text-gray-900 dark:text-gray-100 ">
+                        @php
+                        $int = 0;
+                        @endphp
                         @forelse ($products as $product)
                             <x-card-main class="flex flex-col mb-5 mx-5 hover:shadow-2xl transition-shadow text-center">
                                 <x-card-img src="{{asset($product->image)}}"></x-card-img>
                                 <x-card-body>
                                     <x-card-title>{{$product->name}}</x-card-title>
-                                    <x-card-para>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repellat recusandae aliquid quis animi unde at reprehenderit voluptatibus iste laborum in, voluptas possimus quam quos minima corporis nam error aperiam laboriosam.</x-card-para>
+                                    <x-card-para>{{$product->description}}</x-card-para>
                                     <x-card-links>
-                                        <x-modal-toggle data-modal-target="add-stock" data-modal-toggle="add-stock" class="w-1/3 h-12 flex justify-center items-center !rounded-full !bg-blue-700 hover:!bg-blue-800 !transition-colors">Edit</x-modal-toggle>
-                                        <x-modal id="add-stock" class="bg-gray-500 bg-opacity-75 h-full">
-                                            <x-modal-header data-modal-hide="add-stock">
-                                                Edit Stock
-                                            </x-modal-header>
-                                            <form action="">
-                                                <x-modal-body>
-                                                </x-modal-body>
-                                            </form>
-                                        </x-modal>
+                                        @include('layouts.edit-stock-modal')
                                         <x-primary-button class="w-1/3 h-12 flex justify-center items-center !rounded-full !bg-blue-700 hover:!bg-blue-800 !transition-colors"><img src="{{asset('imgs/cart.png')}}" alt="Cart" class="w-1/2"></img></x-primary-button>
                                     </x-card-links>
                                 </x-card-body>
                             </x-card-main>
+                            @php
+                            $int++;
+                            @endphp
                         @empty
                             <p>No Stock in the system</p>
                         @endforelse

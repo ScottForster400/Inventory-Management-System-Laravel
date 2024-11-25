@@ -16,14 +16,14 @@ class DashboardController extends Controller
     public function index()
     {
         $branchId = Auth::user()->branch_id;
-        $productIds = Stock::select('product_id')->where('branch_id',$branchId)->get();
+        $stocks = Stock::where('branch_id',$branchId)->get();
         $productsIdVals = collect();
-        foreach($productIds as $productId){
-            $productsIdVals->push($productId);
+        foreach($stocks as $stock){
+            $productsIdVals->push($stock->product_id);
 
         }
         $products = Product::whereIn('product_id',$productsIdVals)->paginate(6);
-        return view('dashboard')->with('products',$products);
+        return view('dashboard')->with('stock', $stocks)->with('products',$products);
 
     }
 
