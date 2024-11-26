@@ -21,9 +21,9 @@ return new class extends Migration
             $table->integer('maximum_player_count');
             $table->integer('game_length');
             $table->float('Price');
-            $table->char('game_type',10);
-            $table->char('game_genre',10);
-            $table->string('image',250);
+            $table->char('game_type',20);
+            $table->char('game_genre',20);
+            $table->string('image',250)->nullable()->default('imgs/logo.png');
             $table->timestamps();
         });
     }
