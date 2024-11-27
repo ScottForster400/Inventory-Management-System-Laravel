@@ -48,7 +48,7 @@
                         <x-table-body>
 
 
-                            @foreach($transactions as $transaction)
+                            @foreach($transactions->sortBy('created_at') as $transaction)
                                 <x-tr>
                                     <x-th>
                                         {{$transaction->created_at->toDateString()}}</x-th>
