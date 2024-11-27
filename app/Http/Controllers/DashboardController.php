@@ -16,14 +16,14 @@ class DashboardController extends Controller
     public function index()
     {
         $branchId = Auth::user()->branch_id;
-        $productIds = Stock::select('product_id')->where('branch_id',$branchId)->get();
+        $stocks = Stock::where('branch_id',$branchId)->get();
         $productsIdVals = collect();
-        foreach($productIds as $productId){
-            $productsIdVals->push($productId);
+        foreach($stocks as $stock){
+            $productsIdVals->push($stock->product_id);
 
         }
         $products = Product::whereIn('product_id',$productsIdVals)->paginate(6);
-        return view('dashboard')->with('products',$products);
+        return view('dashboard')->with('stock', $stocks)->with('products',$products);
 
     }
 
@@ -40,7 +40,35 @@ class DashboardController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $request->validate([
+            'name' => 'required|Max:50',
+            'price' => 'required',
+            'manufacturer' => 'required',
+            'age_rating' => 'required',
+            'amount' => 'required',
+            'game_length' => 'required',
+            'min_players' => 'required',
+            'max_players' => 'required',
+
+        ]);
+
+        $product = new Product([
+            'name' =>  $request->name,
+            'price' => $request->price,
+            'manufacturer' => $request->manufacturer,
+            'age_rating' => $request->age_rating,
+            'game_length' => $request->game_length,
+            'minimum_player_count' => $request->min_players,
+            'maximum_player_count' => $request->max_players,
+            'description' => $request->description,
+            'game_type' => $request->game_type,
+            'game_genre' => $request->game_genre
+        ]);
+        $product->save();
+
+        return to_route('dashboard.index');
+
     }
 
     /**

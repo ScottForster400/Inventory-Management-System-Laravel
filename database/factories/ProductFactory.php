@@ -27,7 +27,7 @@ class ProductFactory extends Factory
             'Price'=>fake()->randomFloat(2,0.01,100),
             'game_type'=>'Board Game',
             'game_genre'=>'Puzzle',
-            'image'=>fake()->image()
+            'image'=>'imgs/logo.png'
 
         ];
     }
