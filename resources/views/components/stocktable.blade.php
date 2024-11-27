@@ -57,7 +57,8 @@
                     £14.99
                 </td>
                 <td class="px-6 py-4">
-                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit |</a>
+                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Remove</a>
                 </td>
             </tr>
             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
@@ -80,7 +81,8 @@
                     £14.99
                 </td>
                 <td class="px-6 py-4">
-                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit |</a>
+                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Remove</a>
                 </td>
             </tr>
             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
@@ -103,7 +105,8 @@
                     £14.99
                 </td>
                 <td class="px-6 py-4">
-                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit |</a>
+                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Remove</a>
                 </td>
             </tr>
             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
@@ -126,7 +129,8 @@
                     £14.99
                 </td>
                 <td class="px-6 py-4">
-                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit |</a>
+                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Remove</a>
                 </td>
             </tr>
             <tr class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
@@ -149,7 +153,8 @@
                     £14.99
                 </td>
                 <td class="px-6 py-4">
-                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit |</a>
+                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Remove</a>
                 </td>
             </tr>
         </tbody>
