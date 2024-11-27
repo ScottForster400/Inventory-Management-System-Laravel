@@ -50,7 +50,8 @@
 
                             @foreach($transactions as $transaction)
                                 <x-tr>
-                                    <x-th>{{$transaction->created_at}}</x-th>
+                                    <x-th>{{
+                                        $transaction->created_at->toDateString()}}</x-th>
                                     <x-th>
                                         <x-modal-toggle>Generate Report</x-modal-toggle>
                                         <x-modal>
