@@ -18,6 +18,7 @@ return new class extends Migration
             $table->float('price');
             $table->foreignIdFor(User::class);
             $table->foreignIdFor(Product::class);
+            $table->integer('amount')->default(1);
             $table->timestamps();
         });
     }

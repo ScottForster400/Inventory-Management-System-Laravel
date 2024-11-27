@@ -89,9 +89,9 @@
                                                     @endforeach
                                                     <tfoot>
                                                         <tr class="font-semibold text-gray-900 dark:text-white">
-                                                            <th scope="row" class="px-6 py-3 text-base">Total</th>
-                                                            <td class="px-6 py-3">14</td>
-                                                            <td class="px-6 py-3">21,000</td>
+                                                            <th scope="row" class="px-6 py-3 text-base">Total (£)</th>
+                                                            <td class="px-6 py-3">{{$transactions->sum('price');}}</td>
+                                                            <td class="px-6 py-3"></td>
                                                         </tr>
                                                     </tfoot>
                                                 </x-table>

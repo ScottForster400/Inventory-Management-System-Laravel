@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use App\Models\User;
 use Carbon\Carbon;
 use App\Models\Transaction;
@@ -27,8 +28,12 @@ class AdminController extends Controller
     public function generate()
     {
         $transactions = Transaction::all();
-        //$transactions = $transactions->groupBy('created_at');
-        return view('generate-reports')->with('transaction',$transactions);
+
+        $groupedTransactions = $transactions->groupBy(function($transaction) {
+            return $transaction->created_at->format('Y-m-d');
+        });
+
+        return view('generate-reports', compact('groupedTransactions'));
     }
 
     public function manage()
