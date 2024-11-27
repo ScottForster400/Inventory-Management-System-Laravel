@@ -9,6 +9,8 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use PhpParser\Node\Expr\Cast\Array_;
+use PhpParser\Node\Expr\Cast\String_;
+use Ramsey\Uuid\Type\Integer;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 class DashboardController extends Controller
@@ -73,18 +75,22 @@ class DashboardController extends Controller
         ]);
         $product->save();
 
-        //Creates a stock model with necessary data and saves it to db
-        $productId = Product::where('uuid',$uuid)->get();
+        $productIds = Product::where('uuid',$uuid)->get();
+
+        foreach($productIds as $productId){
+            $selectedProductId = $productId->product_id;
+        }
+
         $stock = new Stock([
             'amount' => $request->amount,
             'branch_id' => Auth::user()->branch_id,
-            'product_id' => $productId,
+            'product_id' => $selectedProductId
         ]);
 
         $stock->save();
 
         //Returns user to main dashboard view
-        return to_route('dashboard.stock')->with();
+        return to_route('dashboard.index');
 
     }
 
@@ -121,6 +127,8 @@ class DashboardController extends Controller
     }
 
     public function stock(){
-        dd("ruh");
+        //Creates a stock model with necessary data and saves it to db
+
+        return to_route('dashboard.index');
     }
 }
