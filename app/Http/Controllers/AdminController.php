@@ -16,8 +16,11 @@ class AdminController extends Controller
     {
         $transactions = Transaction::all();
 
+        $groupedTransactions = $transactions->groupBy(function($transaction) {
+            return $transaction->created_at->format('Y-m-d');
+        });
 
-        return view('generate-reports')->with('transactions', $transactions);
+        return view('generate-reports', compact('groupedTransactions'));
 
     }
 
