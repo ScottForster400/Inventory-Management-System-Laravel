@@ -14,14 +14,16 @@ class AdminController extends Controller
     public function index()
     {
         $transactions = Transaction::with('products')->get();
+
         return view('generate-reports')->with('transactions', $transactions);
 
     }
 
     public function generate()
     {
-        $transactions = Transaction::with('products')->get();
-        return view('generate-reports')->with('transactions', $transactions);
+        $transactions = Transaction::all();
+        //$transactions = $transactions->groupBy('created_at');
+        return view('generate-reports')->with('transaction',$transactions);
     }
 
     public function manage()
