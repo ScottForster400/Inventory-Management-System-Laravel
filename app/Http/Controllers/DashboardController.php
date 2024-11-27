@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
+use PhpOption\None;
 use App\Models\Stock;
+use App\Models\Product;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use PhpParser\Node\Expr\Cast\Array_;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 class DashboardController extends Controller
@@ -40,7 +43,7 @@ class DashboardController extends Controller
      */
     public function store(Request $request)
     {
-
+        //make sure request contains all relevant info
         $request->validate([
             'name' => 'required|Max:50',
             'price' => 'required',
@@ -53,8 +56,11 @@ class DashboardController extends Controller
 
         ]);
 
+        //Creates a new Product model with inputted data and saves it to database
+        $uuid = Str::uuid();
         $product = new Product([
             'name' =>  $request->name,
+            'uuid' => $uuid,
             'price' => $request->price,
             'manufacturer' => $request->manufacturer,
             'age_rating' => $request->age_rating,
@@ -67,7 +73,18 @@ class DashboardController extends Controller
         ]);
         $product->save();
 
-        return to_route('dashboard.index');
+        //Creates a stock model with necessary data and saves it to db
+        $productId = Product::where('uuid',$uuid)->get();
+        $stock = new Stock([
+            'amount' => $request->amount,
+            'branch_id' => Auth::user()->branch_id,
+            'product_id' => $productId,
+        ]);
+
+        $stock->save();
+
+        //Returns user to main dashboard view
+        return to_route('dashboard.stock')->with();
 
     }
 
@@ -101,5 +118,9 @@ class DashboardController extends Controller
     public function destroy(Stock $stock)
     {
         //
+    }
+
+    public function stock(){
+        dd("ruh");
     }
 }
