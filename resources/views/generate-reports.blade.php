@@ -62,13 +62,13 @@
                                                     <x-table-head>
                                                         <x-tr>
                                                             <x-th>
-                                                                Stock
+                                                                Stock ID
                                                             </x-th>
                                                             <x-th>
-                                                                Price (£)
+                                                                Amount
                                                             </x-th>
                                                             <x-th>
-                                                                Employee
+                                                                Price(£)
                                                             </x-th>
                                                         </x-tr>
                                                     </x-table-head>
@@ -79,10 +79,10 @@
                                                                         {{$transaction->product_id}}
                                                                     </x-th>
                                                                     <x-th>
-                                                                        {{$transaction->price}}
+                                                                        {{$transaction->amount}}
                                                                     </x-th>
                                                                     <x-th>
-                                                                        {{$transaction->user_id}}
+                                                                        {{$transaction->price}}
                                                                     </x-th>
                                                                 </x-tr>
                                                         </x-table-body>
@@ -90,8 +90,9 @@
                                                     <tfoot>
                                                         <tr class="font-semibold text-gray-900 dark:text-white">
                                                             <th scope="row" class="px-6 py-3 text-base">Total</th>
-                                                            <td class="px-6 py-3">14</td>
-                                                            <td class="px-6 py-3">21,000</td>
+                                                            <td class="px-6 py-3">{{$transactions->sum('amount')}}</td>
+                                                            <td class="px-6 py-3">{{$transactions->sum('price');}}</td>
+
                                                         </tr>
                                                     </tfoot>
                                                 </x-table>
