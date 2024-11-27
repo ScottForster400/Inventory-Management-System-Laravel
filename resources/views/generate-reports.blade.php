@@ -48,9 +48,10 @@
                         <x-table-body>
 
 
-                            @foreach($transactions as $transaction)
+                            @foreach($groupedTransactions as $date => $transactions)
                                 <x-tr>
-                                    <x-th>{{$transaction->created_at}}</x-th>
+                                    <x-th>
+                                        {{Carbon\Carbon::parse($date)->format('Y/m/d') }}</x-th>
                                     <x-th>
                                         <x-modal-toggle>Generate Report</x-modal-toggle>
                                         <x-modal>
@@ -64,34 +65,28 @@
                                                                 Stock
                                                             </x-th>
                                                             <x-th>
-                                                                Amount
+                                                                Price (£)
                                                             </x-th>
                                                             <x-th>
-                                                                Gross Profit (£)
+                                                                Employee
                                                             </x-th>
                                                         </x-tr>
                                                     </x-table-head>
-                                                    <x-table-body>
-                                                            <x-tr>
-                                                                <x-th>1</x-th>
-                                                                <x-th>
-                                                                    7
-                                                                </x-th>
-                                                                <x-th>
-                                                                    56.11
-                                                                </x-th>
-                                                            </x-tr>
-
-                                                            <x-tr>
-                                                                <x-th>2</x-th>
-                                                                <x-th>
-                                                                    7
-                                                                </x-th>
-                                                                <x-th>
-                                                                    91.92
-                                                                </x-th>
-                                                            </x-tr>
-                                                    </x-table-body>
+                                                    @foreach ($transactions as $transaction)
+                                                        <x-table-body>
+                                                                <x-tr>
+                                                                    <x-th>
+                                                                        {{$transaction->product_id}}
+                                                                    </x-th>
+                                                                    <x-th>
+                                                                        {{$transaction->price}}
+                                                                    </x-th>
+                                                                    <x-th>
+                                                                        {{$transaction->user_id}}
+                                                                    </x-th>
+                                                                </x-tr>
+                                                        </x-table-body>
+                                                    @endforeach
                                                     <tfoot>
                                                         <tr class="font-semibold text-gray-900 dark:text-white">
                                                             <th scope="row" class="px-6 py-3 text-base">Total</th>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Carbon\Carbon;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 
@@ -13,15 +14,21 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $transactions = Transaction::with('products')->get();
-        return view('generate-reports')->with('transactions', $transactions);
+        $transactions = Transaction::all();
+
+        $groupedTransactions = $transactions->groupBy(function($transaction) {
+            return $transaction->created_at->format('Y-m-d');
+        });
+
+        return view('generate-reports', compact('groupedTransactions'));
 
     }
 
     public function generate()
     {
-        $transactions = Transaction::with('products')->get();
-        return view('generate-reports')->with('transactions', $transactions);
+        $transactions = Transaction::all();
+        //$transactions = $transactions->groupBy('created_at');
+        return view('generate-reports')->with('transaction',$transactions);
     }
 
     public function manage()

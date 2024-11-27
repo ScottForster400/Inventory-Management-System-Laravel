@@ -14,6 +14,7 @@ class TransactionController extends Controller
     {
 
         $transactions = Transaction::all();
+        $transactions = $transactions->groupBy('created_at');
         return view('transactions.index')->with('transaction',$transactions);
     }
 
