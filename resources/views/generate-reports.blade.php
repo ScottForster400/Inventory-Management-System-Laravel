@@ -62,7 +62,7 @@
                                                     <x-table-head>
                                                         <x-tr>
                                                             <x-th>
-                                                                Stock
+                                                                Stock ID
                                                             </x-th>
                                                             <x-th>
                                                                 Amount

@@ -21,6 +21,7 @@ class AdminController extends Controller
             return $transaction->created_at->format('Y-m-d');
         });
 
+
         return view('generate-reports', compact('groupedTransactions'));
 
     }
