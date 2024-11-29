@@ -31,6 +31,16 @@
                         </x-dropdown-button-body>
                     </div>
 
+
+                    <x-modal-toggle>Generate Graph</x-modal-toggle>
+                    <x-modal>
+                        <x-modal-header>Graph Based Report</x-modal-header>
+                        <x-modal-body>
+                            graph
+                        </x-modal-body>
+
+                    </x-modal>
+
                     <x-table>
                         <x-table-head>
                             <x-tr>
@@ -39,9 +49,6 @@
                                 </x-th>
                                 <x-th>
                                     Generate Report
-                                </x-th>
-                                <x-th>
-                                    Graph Based Report
                                 </x-th>
                             </x-tr>
                         </x-table-head>
@@ -100,22 +107,6 @@
                                             <x-modal-footer>Close</x-modal-footer>
                                         </x-modal>
                                     </x-th>
-
-
-
-                                    <x-th>
-                                        <x-modal-toggle>Graph Based Report</x-modal-toggle>
-                                        <x-modal>
-                                            <x-modal-header>Report</x-modal-header>
-                                            <x-modal-body>
-                                                big sigma
-                                            </x-modal-body>
-                                            <x-modal-footer>Close</x-modal-footer>
-                                        </x-modal>
-                                    </x-th>
-
-
-
                                 </x-tr>
                             @endforeach
                         </x-table-body>
