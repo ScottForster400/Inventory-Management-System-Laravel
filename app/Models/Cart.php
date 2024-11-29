@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Cart extends Model
 {
+
+     public function getRouteKeyName(){
+        return null;
+     }
     public function products() {
         return $this->hasMany(Product::class);
     }

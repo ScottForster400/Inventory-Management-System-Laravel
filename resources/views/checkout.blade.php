@@ -26,8 +26,12 @@
         <span>Total:</span>
         <span class="total-amount">{{$amount}}</span>
         </div>
-        <button class="pay-button">Pay</button>
-    </div>
+            <form method="POST" action="{{ route('checkout.destroy' , $user)}}">
+                @method('delete')
+                @csrf
+                <input class="pay-button" type="submit" value="Checkout">
+            </form>
+        </div>
 
 
 <section class = "main-checkout">

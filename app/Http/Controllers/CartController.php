@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Dashboard;
 use App\Models\Cart;
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use App\Models\Stock;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -28,9 +31,45 @@ class CartController extends Controller
 
         $amount = 0;
         foreach($products as $product){
-            $amount = $amount + $product->Price;
+            $productAmounts = Cart::select('amount')->where('product_id', $product->product_id)->where('user_id', $user_id)->get();
         }
-        return view('checkout')->with('carts', $carts)->with('products', $products)->with('amount', $amount);
+        foreach($productAmounts as $productAmount) {
+            $productPrice = floatval($productAmount->amount) * $product->Price;
+            $amount = $amount + $productPrice;
+        }
+        return view('checkout')->with('carts', $carts)->with('products', $products)->with('amount', $amount)->with('user', $user_id);
+    }
+
+    /**
+    * Remove the specified resource from storage.
+    */
+    public function destroy(User $user)
+    {
+        $carts = Cart::where('user_id', $user)->get();
+        $productIDs = Cart::select('product_id')->where('user_id', $user)->get();
+        $productIDvals = collect();
+        foreach($productIDs as $productID){
+            $productIDvals->push($productID);
+        }
+
+        $products = Product::whereIn('product_id',$productIDvals)->get();
+
+        $amount = 0;
+        foreach($products as $product){
+            $stockProductID = $product->product_id;
+            $productAmounts = Cart::select('amount')->where('product_id', $product->product_id)->where('user_id', $user)->get();
+            $stock = Stock::where('product_id', $stockProductID);
+            $stock->update([
+                'amount' => $stock->amount - $productAmounts,
+            ]);
+            $stock->save();
+            foreach($productAmounts as $productAmount) {
+                $productPrice = floatval($productAmount->amount) * $product->Price;
+                $amount = $amount + $productPrice;
+
+            }
+        }
+        return to_route('dashboard.index');
     }
 
     /**
@@ -38,7 +77,7 @@ class CartController extends Controller
      */
     public function create()
     {
-        //
+        dd("create");
     }
 
     /**
@@ -46,7 +85,7 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd("store");
     }
 
     /**
@@ -54,15 +93,15 @@ class CartController extends Controller
      */
     public function show(Cart $cart)
     {
-        //
+        dd("show");
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Cart $cart)
+    public function edit(Cart $carts)
     {
-        //
+        dd("edit");
     }
 
     /**
@@ -70,14 +109,8 @@ class CartController extends Controller
      */
     public function update(Request $request, Cart $cart)
     {
-        //
+        dd("update");
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Cart $cart)
-    {
-        //
-    }
+
 }
