@@ -41,7 +41,7 @@
                                 <x-card-img src="{{asset($product->image)}}"></x-card-img>
                                 <x-card-body>
                                     <x-card-title>{{$product->name}}</x-card-title>
-                                    <x-card-para>{{$product->description}}</x-card-para>
+                                    <x-card-para class="whitespace-pre-wrap">{{ Str::limit($product->description,40, '...')}}</x-card-para>
                                     <x-card-links>
                                         @include('layouts.edit-stock-modal')
                                         <x-primary-button class="w-1/3 h-12 flex justify-center items-center !rounded-full !bg-blue-700 hover:!bg-blue-800 !transition-colors"><img src="{{asset('imgs/cart.png')}}" alt="Cart" class="w-1/2"></img></x-primary-button>
