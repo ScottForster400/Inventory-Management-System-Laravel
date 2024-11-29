@@ -10,12 +10,16 @@ use App\Http\Controllers\StockController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\DashboardController;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-
+Route::get('/stock', function () {
+    $user = DB::table('users')->get();
+    return view('stock');
+})->middleware(['auth', 'verified'])->name('stock');
 
 Route::get('/generate-reports', function () {
     $transaction = DB::table('transactions')->get();
@@ -38,6 +42,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('/dashboard/stock', [DashboardController::class, 'stock'])->name('dashboard.stock')->middleware('auth');
+
 require __DIR__ . '/auth.php';
 
 //all branches routes
@@ -57,6 +63,7 @@ Route::resource('transactions',TransactionController::class)->middleware('auth')
 
 Route::resource('admin',AdminController::class)->middleware('auth');
 
+Route::resource('dashboard',DashboardController::class)->middleware('auth');
 Route::resource('checkout',CartController::class)->middleware('auth');
 
 

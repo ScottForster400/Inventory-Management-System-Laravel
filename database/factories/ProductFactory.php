@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,6 +19,7 @@ class ProductFactory extends Factory
     {
         return [
             'name'=>'Sample Product',
+            'uuid'=> Str::uuid(),
             'manufacturer'=> fake('en_GB')->company(),
             'description'=>fake('en_GB')->text(),
             'age_rating'=>fake()->numberBetween(0,10),
@@ -27,7 +29,7 @@ class ProductFactory extends Factory
             'Price'=>fake()->randomFloat(2,0.01,100),
             'game_type'=>'Board Game',
             'game_genre'=>'Puzzle',
-            'image'=>fake()->image()
+            'image'=>'imgs/logo.png'
 
         ];
     }
