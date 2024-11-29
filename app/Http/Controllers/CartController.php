@@ -45,24 +45,33 @@ class CartController extends Controller
     */
     public function destroy(User $user)
     {
-        $carts = Cart::where('user_id', $user)->get();
-        $productIDs = Cart::select('product_id')->where('user_id', $user)->get();
+        $user_id = Auth::user()->id;
+        $carts = Cart::where('user_id', $user_id)->get();
+        $productIDs = Cart::select('product_id')->where('user_id', $user_id)->get();
         $productIDvals = collect();
         foreach($productIDs as $productID){
             $productIDvals->push($productID);
         }
 
         $products = Product::whereIn('product_id',$productIDvals)->get();
-
         $amount = 0;
         foreach($products as $product){
             $stockProductID = $product->product_id;
-            $productAmounts = Cart::select('amount')->where('product_id', $product->product_id)->where('user_id', $user)->get();
-            $stock = Stock::where('product_id', $stockProductID);
-            $stock->update([
-                'amount' => $stock->amount - $productAmounts,
-            ]);
-            $stock->save();
+            $productAmounts = Cart::select('amount')->where('product_id', $stockProductID)->where('user_id', $user_id)->get();
+            $stocks = Stock::where('product_id', $stockProductID)->get();
+
+            foreach($stocks as $stock) {
+                $stockUpdate = $stock->amount;
+                foreach($productAmounts as $productAmount) {
+                    $toUpdate = $productAmount->amount;
+                }
+
+                $updatedStock = $stockUpdate - $toUpdate;
+                $stock->update([
+                    'amount' => $updatedStock,
+                ]);
+                $stock->save();
+            }
             foreach($productAmounts as $productAmount) {
                 $productPrice = floatval($productAmount->amount) * $product->Price;
                 $amount = $amount + $productPrice;
