@@ -11,7 +11,7 @@ class Product extends Model
 {
     use HasFactory;
     protected $guarded = [];
-
+    protected $primaryKey = 'product_id';
     public function getRouteKeyName(){
         return 'product_id';
     }

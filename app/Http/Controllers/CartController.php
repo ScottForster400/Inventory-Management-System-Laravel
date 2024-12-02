@@ -52,7 +52,6 @@ class CartController extends Controller
         foreach($productIDs as $productID){
             $productIDvals->push($productID);
         }
-
         $products = Product::whereIn('product_id',$productIDvals)->get();
         $amount = 0;
         foreach($products as $product){
@@ -64,12 +63,12 @@ class CartController extends Controller
                 $stockUpdate = $stock->amount;
                 foreach($productAmounts as $productAmount) {
                     $toUpdate = $productAmount->amount;
+                    $updatedStock = $stockUpdate - $toUpdate;
+                    $stock->amount = $updatedStock;
+                    $stock->update([
+                        'amount'=> $updatedStock,
+                    ]);
                 }
-                $updatedStock = $stockUpdate - $toUpdate;
-                $stock->amount = $updatedStock;
-                $stock->update([
-                    'amount'=> $updatedStock,
-                ]);
             }
             foreach($productAmounts as $productAmount) {
                 $productPrice = floatval($productAmount->amount) * $product->Price;

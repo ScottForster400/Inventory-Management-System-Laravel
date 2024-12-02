@@ -11,8 +11,7 @@ class Stock extends Model
 {
     use HasFactory;
     protected $guarded = [];
-
-    protected $fillable = ['amount'];
+    protected $primaryKey = 'stock_id';
 
     public function branches(){
         return $this->belongsTo(Branch::class);
