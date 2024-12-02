@@ -32,11 +32,15 @@ class AdminController extends Controller
 
     public function generate()
     {
-        $transactions = Transaction::all();
+        $user_branch_id = Auth::user()->branch_id;
+        $branch_id = User::where('branch_id', $user_branch_id)->pluck('id');
+        $transactions = Transaction::whereIn('user_id',$branch_id)->get();
+
 
         $groupedTransactions = $transactions->groupBy(function($transaction) {
             return $transaction->created_at->format('Y-m-d');
         });
+
 
         return view('generate-reports', compact('groupedTransactions'));
     }
