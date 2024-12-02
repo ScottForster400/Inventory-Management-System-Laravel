@@ -113,8 +113,14 @@ class DashboardController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, int $product)
     {
+        $selectedProductArray = Product::where('product_id',$product)->get();
+        foreach($selectedProductArray as $p){
+            $selectedProduct =$p;
+        }
+
+
         $request->validate([
             'name' => 'required|Max:50',
             'price' => 'required',
@@ -124,11 +130,11 @@ class DashboardController extends Controller
             'game_length' => 'required',
             'min_players' => 'required',
             'max_players' => 'required',
-
+            'game_type' => 'required',
+            'game_genre' => 'required'
         ]);
 
-        dd($request);
-        $product->update([
+        $selectedProduct->update([
             'name' =>  $request->name,
             'price' => $request->price,
             'manufacturer' => $request->manufacturer,
@@ -140,6 +146,13 @@ class DashboardController extends Controller
             'game_type' => $request->game_type,
             'game_genre' => $request->game_genre
         ]);
+
+        // dd($product);
+
+        // $product->save();
+
+         //Returns user to main dashboard view
+         return to_route('dashboard.index');
     }
 
     /**

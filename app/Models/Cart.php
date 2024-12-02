@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Cart extends Model
 {
 
+
      public function getRouteKeyName(){
         return null;
      }
