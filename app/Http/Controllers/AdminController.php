@@ -7,6 +7,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
@@ -15,7 +16,10 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $transactions = Transaction::all();
+        $user_branch_id = Auth::user()->branch_id;
+        $branch_id = User::where('branch_id', $user_branch_id)->pluck('id');
+        $transactions = Transaction::whereIn('user_id',$branch_id)->get();
+
 
         $groupedTransactions = $transactions->groupBy(function($transaction) {
             return $transaction->created_at->format('Y-m-d');

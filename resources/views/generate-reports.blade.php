@@ -9,10 +9,21 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+
+
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
 
 
+
+                    i am a graph
+
+
+                </div>
+            </div>
+
+            <div class="grid grid-cols-3 gap-4 pb-4 pt-4 pl-4">
+                <div class="">
                     <x-dropdown-button class="float-left !w-24 " >Sort</x-dropdown-button>
                     <div>
                         <x-dropdown-button-body>
@@ -30,16 +41,14 @@
                             </x-dropdown-button-li>
                         </x-dropdown-button-body>
                     </div>
+                </div>
+            </div>
 
 
-                    <x-modal-toggle>Generate Graph</x-modal-toggle>
-                    <x-modal>
-                        <x-modal-header>Graph Based Report</x-modal-header>
-                        <x-modal-body>
-                            graph
-                        </x-modal-body>
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900 dark:text-gray-100">
 
-                    </x-modal>
+
 
                     <x-table>
                         <x-table-head>

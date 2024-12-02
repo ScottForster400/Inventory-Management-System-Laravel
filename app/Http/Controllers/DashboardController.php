@@ -113,9 +113,33 @@ class DashboardController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Stock $stock)
+    public function update(Request $request, Product $product)
     {
-        //
+        $request->validate([
+            'name' => 'required|Max:50',
+            'price' => 'required',
+            'manufacturer' => 'required',
+            'age_rating' => 'required',
+            'amount' => 'required',
+            'game_length' => 'required',
+            'min_players' => 'required',
+            'max_players' => 'required',
+
+        ]);
+
+        dd($request);
+        $product->update([
+            'name' =>  $request->name,
+            'price' => $request->price,
+            'manufacturer' => $request->manufacturer,
+            'age_rating' => $request->age_rating,
+            'game_length' => $request->game_length,
+            'minimum_player_count' => $request->min_players,
+            'maximum_player_count' => $request->max_players,
+            'description' => $request->description,
+            'game_type' => $request->game_type,
+            'game_genre' => $request->game_genre
+        ]);
     }
 
     /**
