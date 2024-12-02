@@ -65,12 +65,11 @@ class CartController extends Controller
                 foreach($productAmounts as $productAmount) {
                     $toUpdate = $productAmount->amount;
                 }
-
                 $updatedStock = $stockUpdate - $toUpdate;
+                $stock->amount = $updatedStock;
                 $stock->update([
-                    'amount' => $updatedStock,
+                    'amount'=> $updatedStock,
                 ]);
-                $stock->save();
             }
             foreach($productAmounts as $productAmount) {
                 $productPrice = floatval($productAmount->amount) * $product->Price;
