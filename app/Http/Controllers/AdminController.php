@@ -42,6 +42,7 @@ class AdminController extends Controller
         });
 
 
+
         return view('generate-reports', compact('groupedTransactions'));
     }
 
