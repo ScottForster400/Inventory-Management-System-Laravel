@@ -9,7 +9,7 @@ class Cart extends Model
 
     protected $guarded = [];
 
-    protected $primarykey = 'cart_id';
+    protected $primaryKey = 'cart_id';
 
      public function getRouteKeyName(){
         return null;
