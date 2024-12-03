@@ -64,7 +64,7 @@
                         <x-table-body>
 
 
-                            @foreach($groupedTransactions as $date => $transactions)
+                            @foreach($groupedTransactions as $date=> $transactions)
                                 <x-tr>
                                     <x-th>
                                         {{Carbon\Carbon::parse($date)->format('Y/m/d') }}</x-th>
