@@ -37,7 +37,7 @@ class DashboardController extends Controller
      */
     public function create()
     {
-        //
+        dd('create');
     }
 
     /**
@@ -55,7 +55,8 @@ class DashboardController extends Controller
             'game_length' => 'required',
             'min_players' => 'required',
             'max_players' => 'required',
-
+            'game_type' => 'required',
+            'game_genre' => 'required'
         ]);
 
         //Creates a new Product model with inputted data and saves it to database
@@ -99,7 +100,7 @@ class DashboardController extends Controller
      */
     public function show(Stock $stock)
     {
-        //
+        dd('show');
     }
 
     /**
@@ -107,7 +108,7 @@ class DashboardController extends Controller
      */
     public function edit(Stock $stock)
     {
-        //
+        dd('edit');
     }
 
     /**
@@ -147,9 +148,13 @@ class DashboardController extends Controller
             'game_genre' => $request->game_genre
         ]);
 
-        // dd($product);
-
-        // $product->save();
+        $stockArray=Stock::where('product_id', $selectedProduct->product_id)->where('branch_id',Auth::user()->branch_id)->get();
+        foreach($stockArray as $stock){
+            $selectedStock =$stock;
+        }
+        $selectedStock->update([
+            'amount' => $request->amount,
+        ]);
 
          //Returns user to main dashboard view
          return to_route('dashboard.index');
@@ -158,14 +163,39 @@ class DashboardController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Stock $stock)
+    public function destroy(int $product)
     {
-        //
-    }
+        $selectedProductArray = Product::where('product_id',$product)->get();
+        foreach($selectedProductArray as $p){
+            $selectedProduct = $p;
+        }
 
-    public function stock(){
-        //Creates a stock model with necessary data and saves it to db
+        $stockArray=Stock::where('product_id', $selectedProduct->product_id)->where('branch_id',Auth::user()->branch_id)->get();
+        foreach($stockArray as $stock){
+            $selectedStock =$stock;
+        }
+        $selectedStock->delete();
+        $selectedProduct->delete();
 
         return to_route('dashboard.index');
+    }
+
+    //Searches stock used https://medium.com/@iqbal.ramadhani55/search-in-laravel-e0e20f329b01 to help create function
+    public function search(Request $request){
+
+        $branchId = Auth::user()->branch_id;
+        $stocks = Stock::where('branch_id',$branchId)->get();
+        $productsIdVals = collect();
+        foreach($stocks as $stock){
+            $productsIdVals->push($stock->product_id);
+
+        }
+
+        $searchRequest = $request->search;
+        $products = Product::where('name', 'like', "%$searchRequest%")->whereIn('product_id', $productsIdVals)->paginate(6);
+
+
+
+        return view('dashboard')->with('products',$products)->with('stock',$stocks);
     }
 }
