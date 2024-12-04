@@ -11,18 +11,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
 
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-
-
-
-                    i am a graph
-
-
-                </div>
-            </div>
-
-            <div class="grid grid-cols-3 gap-4 pb-4 pt-4 pl-4">
+            <div class="grid grid-cols-3 gap-4 pb-4 pl-4">
                 <div class="">
                     <x-dropdown-button class="float-left !w-24 " >Sort</x-dropdown-button>
                     <div>
@@ -44,6 +33,47 @@
                 </div>
             </div>
 
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900 dark:text-gray-100">
+
+                    <div>
+                        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                        <script type="text/javascript">
+                        google.charts.load('current', {'packages':['corechart']});
+                        google.charts.setOnLoadCallback(drawChart);
+
+                        function drawChart() {
+                            var data = google.visualization.arrayToDataTable([
+                            ['Day', 'Gross Profit'],
+                            ['2004',  1000],
+                            ['2005',  1170],
+                            ['2006',  660],
+                            ['2007',  1030]
+                            ]);
+
+                            var options = {
+                            title: 'Branch Performance',
+                            curveType: 'function',
+                            legend: { position: 'bottom' }
+                            };
+
+                            var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+                            chart.draw(data, options);
+                        }
+                        </script>
+                    </div>
+
+                    <div>
+                        <div id="curve_chart" style="width: 1200px; height: 350px"></div>
+                    </div>
+
+
+
+                </div>
+            </div>
+
+            <br>
 
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
