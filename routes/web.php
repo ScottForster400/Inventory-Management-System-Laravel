@@ -42,7 +42,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/dashboard/stock', [DashboardController::class, 'stock'])->name('dashboard.stock')->middleware('auth');
+Route::get('/dashboard/search', [DashboardController::class, 'search'])->name('dashboard.search')->middleware('auth');
 
 require __DIR__ . '/auth.php';
 
