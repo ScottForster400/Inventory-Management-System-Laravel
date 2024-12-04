@@ -1,3 +1,5 @@
-<button {{$attributes->merge(['id' => 'dropdownBgHoverButton', 'data-dropdown-toggle' => 'dropdownBgHover', 'class' => 'flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700', 'type' => 'button'])}}>
+<label for="underline_select" class="sr-only pl-2">Underline select</label>
+<select {{ $attributes->merge([ 'id' => 'underline_select', 'class' => 'block p-2 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer'])}}>
     {{$slot}}
- </button>
+</select>
+

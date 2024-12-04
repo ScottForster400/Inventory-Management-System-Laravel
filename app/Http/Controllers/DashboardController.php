@@ -27,7 +27,7 @@ class DashboardController extends Controller
             $productsIdVals->push($stock->product_id);
 
         }
-        $products = Product::whereIn('product_id',$productsIdVals)->paginate(6);
+        $products = Product::whereIn('product_id',$productsIdVals)->paginate(4);
         return view('dashboard')->with('stock', $stocks)->with('products',$products);
 
     }
@@ -192,10 +192,10 @@ class DashboardController extends Controller
         }
 
         $searchRequest = $request->search;
-        $products = Product::where('name', 'like', "%$searchRequest%")->whereIn('product_id', $productsIdVals)->paginate(6);
+        $products = Product::where('name', 'like', "%$searchRequest%")->whereIn('product_id', $productsIdVals)->paginate(4);
 
 
 
-        return view('dashboard')->with('products',$products)->with('stock',$stocks);
+        // return view('dashboard')->with('products',$products)->with('stock',$stocks);
     }
 }
