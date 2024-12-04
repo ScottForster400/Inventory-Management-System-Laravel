@@ -19,7 +19,7 @@
                             </x-td>
                             <x-td class="relative py-5">
                                 <x-input-label for="price" :value="__('Price(£)')">Price(£)</x-input-label>
-                                <x-text-input id="price" type="number" name="price"  class="w-full basis-1/2" value="{{$product->Price}}"></x-text-input>
+                                <x-text-input id="price" type="number" name="price" step=".01" class="w-full basis-1/2" value="{{$product->Price}}"></x-text-input>
                                 @error('price')
                                     <x-error-message-form>{{$message}}</x-error-message-form>
                                 @enderror
@@ -91,6 +91,9 @@
                                         <option value="card_game">Card Game</option>
                                     @endif
                                 </x-select>
+                                @error('game_type')
+                                    <x-error-message-form>{{$message}}</x-error-message-form>
+                                @enderror
                             </x-td>
                             <x-td class="relative py-5">
                                 <x-input-label for="game_genre" :value="__('Game Genre')" >Game Genre</x-input-label>
@@ -127,6 +130,9 @@
                                     <option value="strategy">Strategy</option>
                                 @endif
                                 </x-select>
+                                @error('game_genre')
+                                    <x-error-message-form>{{$message}}</x-error-message-form>
+                                @enderror
                             </x-td>
                             <x-td class="relative py-5">
                                 <x-input-label for="min_players" :value="__('Min Players')">Min Players</x-input-label>
@@ -155,8 +161,13 @@
                     @enderror
                 </div>
             </x-modal-body>
-            <div class="flex items-center max-sm:justify-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
+            <div class="flex items-center justify-between max-sm:justify-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
                 <x-primary-button class="!py-3 !bg-blue-700 hover:!bg-blue-800 !transition-colors">Edit Stock</x-primary-button>
+            </form>
+            <form action="{{route('dashboard.destroy', $product)}}" method="post">
+                @method('delete')
+                @csrf
+                <x-danger-button class="!py-3 hover:!bg-red-800 !transition-colors" onclick="return confirm('Are you sure you would like to delete this product')" >Delete Stock</x-danger-button>
+            </form>
             </div>
-    </form>
 </x-modal>

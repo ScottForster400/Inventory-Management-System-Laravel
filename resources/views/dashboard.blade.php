@@ -38,10 +38,12 @@
                         @endphp
                         @forelse ($products as $product)
                             <x-card-main class="flex flex-col mb-5 mx-5 hover:shadow-2xl transition-shadow text-center">
-                                <x-card-img src="{{asset($product->image)}}"></x-card-img>
+                                <div class="basis-1/2 flex justify-center items-center">
+                                    <x-card-img src="{{asset($product->image)}}"></x-card-img>
+                                </div>
                                 <x-card-body>
                                     <x-card-title>{{$product->name}}</x-card-title>
-                                    <x-card-para class="whitespace-pre-wrap">{{ Str::limit($product->description,40, '...')}}</x-card-para>
+                                    <x-card-para class="whitespace-pre-wrap min-h-14">{{ Str::limit($product->description,40, '...')}}</x-card-para>
                                     <x-card-links>
                                         @include('layouts.edit-stock-modal')
                                         <x-primary-button class="w-1/3 h-12 flex justify-center items-center !rounded-full !bg-blue-700 hover:!bg-blue-800 !transition-colors"><img src="{{asset('imgs/cart.png')}}" alt="Cart" class="w-1/2"></img></x-primary-button>
@@ -49,6 +51,7 @@
                                 </x-card-body>
                             </x-card-main>
                             @php
+
                             $int++;
                             @endphp
                         @empty
