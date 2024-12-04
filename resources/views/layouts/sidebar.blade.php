@@ -25,129 +25,129 @@
                         </ul>
                     </li>
                     <li>
-                        <x-sidebar-dropdown-button data-collapse-toggle="age">
+                        <x-sidebar-dropdown-selection data-dropdown-toggle="age-dropdown">
                             <x-sidebar-img src="{{asset('imgs/age.svg')}}"></x-sidebar-img>
                             <x-sidebar-dropdown-info>Age</x-sidebar-dropdown-info>
-                            </x-sidebar-dropdown-button>
-                            <ul id="age" class="hidden py-2 space-y-2">
-                                <x-sidebar-list >
-                                <x-primary-input-button-outline id="0-2"></x-primary-input-button-outline>
-                                <x-primary-input-button-outline-label for="0-2" class="w-4/5">0-2</x-primary-input-button-outline-label>
-                                </x-sidebar-list>
-                                <x-sidebar-list>
-                                <x-primary-input-button-outline id="2-4"></x-primary-input-button-outline>
-                                <x-primary-input-button-outline-label for="2-4" class="w-4/5">2-4</x-primary-input-button-outline-label>
-                                </x-sidebar-list>
-                                <x-sidebar-list>
-                                <x-primary-input-button-outline id="4-6" ></x-primary-input-button-outline>
-                                <x-primary-input-button-outline-label for="4-6" class="w-4/5">4-6</x-primary-input-button-outline-label>
-                                </x-sidebar-list>
-                                <x-sidebar-list>
-                                <x-primary-input-button-outline id="6-10" ></x-primary-input-button-outline>
-                                <x-primary-input-button-outline-label for="6-10" class="w-4/5">6-10</x-primary-input-button-outline-label>
-                            </x-sidebar-list>
-                            <x-sidebar-list>
-                                <x-primary-input-button-outline id="10+" ></x-primary-input-button-outline>
-                                <x-primary-input-button-outline-label for="10+" class="w-4/5">10 +</x-primary-input-button-outline-label>
-                            </x-sidebar-list>
-                            </ul>
+                        </x-sidebar-dropdown-selection>
+                        <x-dropdown-button-body id="age-dropdown">
+                            <x-dropdown-button-li>
+                                <x-dropdown-button-input id="0-2"></x-dropdown-button-input>
+                                <x-dropdown-button-label for="0-2">0-2</x-dropdown-button-label>
+                            </x-dropdown-button-li>
+                            <x-dropdown-button-li>
+                                <x-dropdown-button-input id="2-4"></x-dropdown-button-input>
+                                <x-dropdown-button-label for="2-4">2-4</x-dropdown-button-label>
+                            </x-dropdown-button-li>
+                            <x-dropdown-button-li>
+                                <x-dropdown-button-input id="4-6"></x-dropdown-button-input>
+                                <x-dropdown-button-label for="4-6">4-6</x-dropdown-button-label>
+                            </x-dropdown-button-li>
+                            <x-dropdown-button-li>
+                                <x-dropdown-button-input id="6-10"></x-dropdown-button-input>
+                                <x-dropdown-button-label for="6-10">6-10</x-dropdown-button-label>
+                            </x-dropdown-button-li>
+                            <x-dropdown-button-li>
+                                <x-dropdown-button-input id="10"></x-dropdown-button-input>
+                                <x-dropdown-button-label for="10">10+</x-dropdown-button-label>
+                            </x-dropdown-button-li>
+                        </x-dropdown-button-body>
                     </li>
                     <li>
-                        <x-sidebar-dropdown-button data-collapse-toggle="time">
+                        <x-sidebar-dropdown-selection data-dropdown-toggle="time-dropdown">
                             <x-sidebar-img src="{{asset('imgs/time.svg')}}"></x-sidebar-img>
                             <x-sidebar-dropdown-info>Time</x-sidebar-dropdown-info>
-                            </x-sidebar-dropdown-button>
-                            <ul id="time" class="hidden py-2 space-y-2">
-                            <x-sidebar-list >
-                                <x-primary-input-button-outline id="0-15"></x-primary-input-button-outline>
-                                <x-primary-input-button-outline-label for="0-15" class="w-4/5">&lt; 15</x-primary-input-button-outline-label>
-                                </x-sidebar-list>
-                                <x-sidebar-list>
-                                <x-primary-input-button-outline id="15-30"></x-primary-input-button-outline>
-                                <x-primary-input-button-outline-label for="15-30" class="w-4/5">&lt; 30</x-primary-input-button-outline-label>
-                                </x-sidebar-list>
-                                <x-sidebar-list>
-                                <x-primary-input-button-outline id="30-45" ></x-primary-input-button-outline>
-                                <x-primary-input-button-outline-label for="30-45" class="w-4/5">&lt; 45</x-primary-input-button-outline-label>
-                                </x-sidebar-list>
-                                <x-sidebar-list>
-                                <x-primary-input-button-outline id="45-60" ></x-primary-input-button-outline>
-                                <x-primary-input-button-outline-label for="45-60" class="w-4/5">60 +</x-primary-input-button-outline-label>
-                            </x-sidebar-list>
-                            </ul>
+                        </x-sidebar-dropdown-selection>
+                        <x-dropdown-button-body id="time-dropdown">
+                            <x-dropdown-button-li>
+                                <x-dropdown-button-input id="0-15"></x-dropdown-button-input>
+                                <x-dropdown-button-label for="0-15">&lt; 15</x-dropdown-button-label>
+                            </x-dropdown-button-li>
+                            <x-dropdown-button-li>
+                                <x-dropdown-button-input id="15-30"></x-dropdown-button-input>
+                                <x-dropdown-button-label for="15-30">&lt; 30</x-dropdown-button-label>
+                            </x-dropdown-button-li>
+                            <x-dropdown-button-li>
+                                <x-dropdown-button-input id="30-45"></x-dropdown-button-input>
+                                <x-dropdown-button-label for="30-45">&lt; 45</x-dropdown-button-label>
+                            </x-dropdown-button-li>
+                            <x-dropdown-button-li>
+                                <x-dropdown-button-input id="45-60"></x-dropdown-button-input>
+                                <x-dropdown-button-label for="45-60">60 +</x-dropdown-button-label>
+                            </x-dropdown-button-li>
+                        </x-dropdown-button-body>
                     </li>
                     <li>
-                        <x-sidebar-dropdown-button data-collapse-toggle="player-count">
+                        <x-sidebar-dropdown-selection data-dropdown-toggle="player-count-dropdown">
                             <x-sidebar-img src="{{asset('imgs/player-count.svg')}}"></x-sidebar-img>
                             <x-sidebar-dropdown-info>Player Count</x-sidebar-dropdown-info>
-                            </x-sidebar-dropdown-button>
-                            <ul id="player-count" class="hidden py-2 space-y-2">
-                            <x-sidebar-list >
-                                <x-primary-input-button-outline id="0-4"></x-primary-input-button-outline>
-                                <x-primary-input-button-outline-label for="0-4" class="w-4/5">&lt; 4</x-primary-input-button-outline-label>
-                                </x-sidebar-list>
-                                <x-sidebar-list>
-                                <x-primary-input-button-outline id="<6"></x-primary-input-button-outline>
-                                <x-primary-input-button-outline-label for="<6" class="w-4/5">&lt; 6</x-primary-input-button-outline-label>
-                                </x-sidebar-list>
-                                <x-sidebar-list>
-                                <x-primary-input-button-outline id="6-8" ></x-primary-input-button-outline>
-                                <x-primary-input-button-outline-label for="6-8" class="w-4/5">&lt; 8</x-primary-input-button-outline-label>
-                                </x-sidebar-list>
-                                <x-sidebar-list>
-                                <x-primary-input-button-outline id="8-10" ></x-primary-input-button-outline>
-                                <x-primary-input-button-outline-label for="8-10" class="w-4/5">10 +</x-primary-input-button-outline-label>
-                            </x-sidebar-list>
-                            </ul>
+                        </x-sidebar-dropdown-selection>
+                        <x-dropdown-button-body id="player-count-dropdown">
+                            <x-dropdown-button-li>
+                                <x-dropdown-button-input id="0-4"></x-dropdown-button-input>
+                                <x-dropdown-button-label for="0-4">&lt; 4</x-dropdown-button-label>
+                            </x-dropdown-button-li>
+                            <x-dropdown-button-li>
+                                <x-dropdown-button-input id="<6"></x-dropdown-button-input>
+                                <x-dropdown-button-label for="<6">&lt; 6</x-dropdown-button-label>
+                            </x-dropdown-button-li>
+                            <x-dropdown-button-li>
+                                <x-dropdown-button-input id="6-8"></x-dropdown-button-input>
+                                <x-dropdown-button-label for="6-8">&lt; 8</x-dropdown-button-label>
+                            </x-dropdown-button-li>
+                            <x-dropdown-button-li>
+                                <x-dropdown-button-input id="8-10"></x-dropdown-button-input>
+                                <x-dropdown-button-label for="8-10">10 +</x-dropdown-button-label>
+                            </x-dropdown-button-li>
+                        </x-dropdown-button-body>
                     </li>
                     <li>
-                        <x-sidebar-dropdown-button data-collapse-toggle="game-type">
+                        <x-sidebar-dropdown-selection data-collapse-toggle="game-type-dropdown">
                             <x-sidebar-img src="{{asset('imgs/game-type.svg')}}"></x-sidebar-img>
                             <x-sidebar-dropdown-info>Game Type</x-sidebar-dropdown-info>
-                        </x-sidebar-dropdown-button>
-                        <ul id="game-type" class="hidden py-2 space-y-2">
-                            <x-sidebar-list >
-                                <x-primary-input-button-outline id="board-game"></x-primary-input-button-outline>
-                                <x-primary-input-button-outline-label for="board-game" class="w-4/5">Board Games</x-primary-input-button-outline-label>
-                                </x-sidebar-list>
-                                <x-sidebar-list>
-                                <x-primary-input-button-outline id="puzzle-game"></x-primary-input-button-outline>
-                                <x-primary-input-button-outline-label for="puzzle-game" class="w-4/5">Puzzles</x-primary-input-button-outline-label>
-                                </x-sidebar-list>
-                                <x-sidebar-list>
-                                <x-primary-input-button-outline id="figures" ></x-primary-input-button-outline>
-                                <x-primary-input-button-outline-label for="figures" class="w-4/5">Figures</x-primary-input-button-outline-label>
-                                </x-sidebar-list>
-                                <x-sidebar-list>
-                                <x-primary-input-button-outline id="card-game" ></x-primary-input-button-outline>
-                                <x-primary-input-button-outline-label for="card-game" class="w-4/5">Card Games</x-primary-input-button-outline-label>
-                            </x-sidebar-list>
-                        </ul>
+                        </x-sidebar-dropdown-selection>
+                        <x-dropdown-button-body id="game-type-dropdown">
+                            <x-dropdown-button-li>
+                                <x-dropdown-button-input id="boardgame"></x-dropdown-button-input>
+                                <x-dropdown-button-label for="boardgame">Board Game</x-dropdown-button-label>
+                            </x-dropdown-button-li>
+                            <x-dropdown-button-li>
+                                <x-dropdown-button-input id="puzzlegame"></x-dropdown-button-input>
+                                <x-dropdown-button-label for="puzzlegame">Puzzles</x-dropdown-button-label>
+                            </x-dropdown-button-li>
+                            <x-dropdown-button-li>
+                                <x-dropdown-button-input id="figures"></x-dropdown-button-input>
+                                <x-dropdown-button-label for="figures">Figures</x-dropdown-button-label>
+                            </x-dropdown-button-li>
+                            <x-dropdown-button-li>
+                                <x-dropdown-button-input id="card-game"></x-dropdown-button-input>
+                                <x-dropdown-button-label for="card-game">Card Games</x-dropdown-button-label>
+                            </x-dropdown-button-li>
+                        </x-dropdown-button-body>
                     </li>
                     <li>
-                        <x-sidebar-dropdown-button data-collapse-toggle="game-genre">
+                        <x-sidebar-dropdown-selection data-collapse-toggle="game-genre-dropdown">
                             <x-sidebar-img src="{{asset('imgs/game-genre.svg')}}"></x-sidebar-img>
                             <x-sidebar-dropdown-info>Game Genre</x-sidebar-dropdown-info>
-                            </x-sidebar-dropdown-button>
-                            <ul id="game-genre" class="hidden py-2 space-y-2">
-                            <x-sidebar-list >
-                                <x-primary-input-button-outline id="adventure"></x-primary-input-button-outline>
-                                <x-primary-input-button-outline-label for="adventure" class="w-4/5">Adventure</x-primary-input-button-outline-label>
-                                </x-sidebar-list>
-                                <x-sidebar-list>
-                                <x-primary-input-button-outline id="puzzle"></x-primary-input-button-outline>
-                                <x-primary-input-button-outline-label for="puzzle" class="w-4/5">Puzzle</x-primary-input-button-outline-label>
-                                </x-sidebar-list>
-                                <x-sidebar-list>
-                                <x-primary-input-button-outline id="competitive" ></x-primary-input-button-outline>
-                                <x-primary-input-button-outline-label for="competitive" class="w-4/5">Competitive</x-primary-input-button-outline-label>
-                                </x-sidebar-list>
-                                <x-sidebar-list>
-                                <x-primary-input-button-outline id="strategy" ></x-primary-input-button-outline>
-                                <x-primary-input-button-outline-label for="strategy" class="w-4/5">Strategy</x-primary-input-button-outline-label>
-                            </x-sidebar-list>
-                            </ul>
-                    </li>
+                        </x-sidebar-dropdown-selection>
+                        <x-dropdown-button-body id="game-genre-dropdown">
+                            <x-dropdown-button-li>
+                                <x-dropdown-button-input id="adventure"></x-dropdown-button-input>
+                                <x-dropdown-button-label for="adventure">Adventure</x-dropdown-button-label>
+                            </x-dropdown-button-li>
+                            <x-dropdown-button-li>
+                                <x-dropdown-button-input id="puzzle"></x-dropdown-button-input>
+                                <x-dropdown-button-label for="puzzle">Puzzle</x-dropdown-button-label>
+                            </x-dropdown-button-li>
+                            <x-dropdown-button-li>
+                                <x-dropdown-button-input id="competitive"></x-dropdown-button-input>
+                                <x-dropdown-button-label for="competitive">Competitive</x-dropdown-button-label>
+                            </x-dropdown-button-li>
+                            <x-dropdown-button-li>
+                                <x-dropdown-button-input id="strategy"></x-dropdown-button-input>
+                                <x-dropdown-button-label for="strategy">Strategy</x-dropdown-button-label>
+                            </x-dropdown-button-li>
+                        </x-dropdown-button-body>
+                </li>
                     <li>
 
                     </li>
