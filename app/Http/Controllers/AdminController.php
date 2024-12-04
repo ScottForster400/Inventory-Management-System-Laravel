@@ -27,7 +27,7 @@ class AdminController extends Controller
 
 
         $chartTransaction = $groupedTransactions->toArray();
-        $chartData[] = ["Day","Profit"];
+        $chartData[] = ["Day","Profit (£)"];
         foreach ($groupedTransactions as $key => $value){
 
             $chartData[] = [$key,$value->sum('price')];
