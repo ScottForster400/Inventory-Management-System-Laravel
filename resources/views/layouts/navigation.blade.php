@@ -17,13 +17,19 @@
                     </x-nav-link>
                 </div>
 
-
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('stock')" :active="request()->routeIs('stock')">
+                        {{ __('Stock') }}
+                    </x-nav-link>
+                </div>
 
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('checkout.index')" :active="request()->routeIs('checkout.index')">
                         {{ __('Checkout') }}
                     </x-nav-link>
                 </div>
+
+
 
                 @if(Auth::user()->admin==1)
                     <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
@@ -33,7 +39,7 @@
                     </div>
 
                     <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                        <x-nav-link :href="route('admin.index')" :active="request()->routeIs('manage-employees')">
+                        <x-nav-link :href="route('manage-employees')" :active="request()->routeIs('manage-employees')">
                             {{ __('Manage Employees') }}
                         </x-nav-link>
                     </div>

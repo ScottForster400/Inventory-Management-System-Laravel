@@ -36,20 +36,20 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
 
+
+                    {{-- i have used this youtube video to helpme make this line graph https://www.youtube.com/watch?v=c19gFmvxW80 --}}
                     <div>
                         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
                         <script type="text/javascript">
+
+                        var transactionData = {{Js::from($chartData)}}
+
+
                         google.charts.load('current', {'packages':['corechart']});
                         google.charts.setOnLoadCallback(drawChart);
 
                         function drawChart() {
-                            var data = google.visualization.arrayToDataTable([
-                            ['Day', 'Gross Profit'],
-                            ['2004',  1000],
-                            ['2005',  1170],
-                            ['2006',  660],
-                            ['2007',  1030]
-                            ]);
+                            var data = google.visualization.arrayToDataTable(transactionData);
 
                             var options = {
                             title: 'Branch Performance',
@@ -99,9 +99,9 @@
                                     <x-th>
                                         {{Carbon\Carbon::parse($date)->format('Y/m/d') }}</x-th>
                                     <x-th>
-                                        <x-modal-toggle>Generate Report</x-modal-toggle>
-                                        <x-modal>
-                                            <x-modal-header>Report</x-modal-header>
+                                        <x-modal-toggle data-modal-target="edit{{$date}}" data-modal-toggle="edit{{$date}}">Generate Report</x-modal-toggle>
+                                        <x-modal id="edit{{$date}}">
+                                            <x-modal-header data-modal-hide="edit{{$date}}">Report</x-modal-header>
                                             <x-modal-body>
 
                                                 <x-table>
@@ -143,7 +143,6 @@
                                                     </tfoot>
                                                 </x-table>
                                             </x-modal-body>
-                                            <x-modal-footer>Close</x-modal-footer>
                                         </x-modal>
                                     </x-th>
                                 </x-tr>
