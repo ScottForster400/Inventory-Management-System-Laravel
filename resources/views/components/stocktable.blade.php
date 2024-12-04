@@ -23,13 +23,14 @@
                     Item Code
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Description
+                <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Description</a>
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Quantity
+                <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Quantity</a>
                 </th>
+                
                 <th scope="col" class="px-6 py-3">
-                    Unit Price
+                <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Unit Price</a>
                 </th>
                 <th scope="col" class="px-6 py-3">
                     Action

@@ -59,7 +59,7 @@ class DashboardController extends Controller
             'game_genre' => 'required'
         ]);
 
-        //Creates a new Product model with inputted data and saves it to database
+        // Creates a new Product model with inputted data and saves it to database
         $uuid = Str::uuid();
         $product = new Product([
             'name' =>  $request->name,
@@ -90,7 +90,7 @@ class DashboardController extends Controller
 
         $stock->save();
 
-        //Returns user to main dashboard view
+        // Returns user to main dashboard view
         return to_route('dashboard.index');
 
     }

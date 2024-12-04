@@ -6,25 +6,31 @@
     <body>
 
 <div class="checkout-display">
+    @if ($carts)
         <h2>Cart Summary</h2>
         <ul class="cart-items">
-            @php
-                $int = 0;
-            @endphp
-            @foreach ($carts as $cart)
-                <li class="item">
-                    <span class="item-name">{{$products[$int]->name}}</span>
-                    <span class="item-price">{{$products[$int]->Price}}</span>
-                    <span class="item-name">{{$cart->amount}}</span>
-                    @php
-                        $int++;
-                    @endphp
-                </li>
-            @endforeach
+        @php
+            $int = 0;
+        @endphp
+        @foreach ($carts as $cart)
+            <li class="item">
+                <span class="item-name">{{$products[$int]->name}}</span>
+                <span class="item-price">{{$products[$int]->Price}}</span>
+                <span class="item-name">{{$cart->amount}}</span>
+                @php
+                    $int++;
+                @endphp
+            </li>
+        @endforeach
+    @else
+        <h2>No Products In Cart</h2>
+    @endif
         </ul>
         <div class="total">
         <span>Total:</span>
-        <span class="total-amount">{{$amount}}</span>
+        @if ($amount)
+            <span class="total-amount">{{$amount}}</span>
+        @endif
         </div>
             <form method="POST" action="{{ route('checkout.destroy' , $user)}}">
                 @method('delete')
