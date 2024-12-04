@@ -26,7 +26,16 @@ class AdminController extends Controller
         });
 
 
-        return view('generate-reports', compact('groupedTransactions'));
+        $chartTransaction = $groupedTransactions->toArray();
+        $chartData[] = ["Day","Profit"];
+        foreach ($groupedTransactions as $key => $value){
+
+            $chartData[] = [$key,$value->sum('price')];
+        }
+
+
+
+        return view('generate-reports', compact('groupedTransactions','chartData'));
 
     }
 
@@ -42,8 +51,17 @@ class AdminController extends Controller
         });
 
 
+        $chartTransaction = $groupedTransactions->toArray();
+        $chartData[] = ["Day","Profit"];
+        foreach ($groupedTransactions as $key => $value){
 
-        return view('generate-reports', compact('groupedTransactions'));
+            $chartData[] = [$key,$value->sum('price')];
+        }
+
+
+
+        return view('generate-reports', compact('groupedTransactions','chartData'));
+
     }
 
     public function manage()
