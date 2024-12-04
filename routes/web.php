@@ -21,11 +21,6 @@ Route::get('/stock', function () {
     return view('stock');
 })->middleware(['auth', 'verified'])->name('stock');
 
-Route::get('/generate-reports', function () {
-    $transaction = DB::table('transactions')->get();
-    return view('generate-reports', ['transaction' => $transaction]);
-})->middleware(['auth', 'verified'])->name('generate-reports');
-
 
 Route::get('/manage-employees', function () {
     $user = DB::table('users')->get();
