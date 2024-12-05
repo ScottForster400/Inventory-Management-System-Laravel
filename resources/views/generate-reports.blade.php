@@ -99,7 +99,7 @@
                                     <x-th>
                                         {{Carbon\Carbon::parse($date)->format('Y/m/d') }}</x-th>
                                     <x-th>
-                                        <x-modal-toggle data-modal-target="edit{{$date}}" data-modal-toggle="edit{{$date}}">Generate Report</x-modal-toggle>
+                                        <x-modal-toggle data-modal-target="edit{{$date}}" data-modal-toggle="edit{{$date}}">View Daily Report</x-modal-toggle>
                                         <x-modal id="edit{{$date}}">
                                             <x-modal-header data-modal-hide="edit{{$date}}">Report</x-modal-header>
                                             <x-modal-body>

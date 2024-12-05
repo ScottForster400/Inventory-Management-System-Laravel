@@ -16,9 +16,12 @@ class AdminController extends Controller
      */
     public function index()
     {
+
         $user_branch_id = Auth::user()->branch_id;
         $branch_id = User::where('branch_id', $user_branch_id)->pluck('id');
+        $transactions = Product::with('product_id');
         $transactions = Transaction::whereIn('user_id',$branch_id)->get();
+
 
 
         $groupedTransactions = $transactions->groupBy(function($transaction) {
