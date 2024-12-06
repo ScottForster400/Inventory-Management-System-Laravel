@@ -54,6 +54,7 @@
                         google.charts.setOnLoadCallback(drawChart);
 
                         function drawChart() {
+
                             var data = google.visualization.arrayToDataTable(transactionData);
 
                             var options = {
@@ -63,6 +64,11 @@
                             };
 
                             var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+                            google.visualization.events.addListener(chart, 'error', function (googleError) {
+                                google.visualization.errors.removeError(googleError.id);
+                                window.alert("There are no Transactions within this Timeframe");
+                            });
 
                             chart.draw(data, options);
                         }

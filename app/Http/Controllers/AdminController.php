@@ -22,25 +22,25 @@ class AdminController extends Controller
 
         //$dateFilter = $request->input('dateFilter','lastWeek');
 
-        $dateFilter = 'lastYear';
+        $dateFilter = 'thisYear';
 
         switch($dateFilter){
             case 'today':
                 $transactions->whereDate('created_at',Carbon::today());
                 break;
-            case 'lastWeek':
+            case 'thisWeek':
                 $transactions->whereBetween('created_at',[
                     Carbon::now()->startOfWeek(),
                     Carbon::now()->endOfWeek(),
                 ]);
                 break;
-            case 'lastMonth':
+            case 'thisMonth':
                 $transactions->whereBetween('created_at', [
                     Carbon::now()->startOfMonth(),
                     Carbon::now()->endOfMonth(),
                 ]);
                 break;
-            case 'lastYear':
+            case 'thisYear':
                 $transactions->whereBetween('created_at', [
                     Carbon::now()->startOfYear(),
                     Carbon::now()->endOfYear(),
