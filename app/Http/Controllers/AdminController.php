@@ -17,9 +17,12 @@ class AdminController extends Controller
 
         $user_branch_id = Auth::user()->branch_id;
         $branch_id = User::where('branch_id', $user_branch_id)->pluck('id');
+
         $transactions = Transaction::whereIn('user_id',$branch_id);
 
-        $dateFilter = $request->input('dateFilter','lastWeek');
+        //$dateFilter = $request->input('dateFilter','lastWeek');
+
+        $dateFilter = 'lastYear';
 
         switch($dateFilter){
             case 'today':
@@ -27,27 +30,26 @@ class AdminController extends Controller
                 break;
             case 'lastWeek':
                 $transactions->whereBetween('created_at',[
-                    Carbon::now()->subWeek()->startOfWeek(),
-                    Carbon::now()->subWeek()->endOfWeek(),
+                    Carbon::now()->startOfWeek(),
+                    Carbon::now()->endOfWeek(),
                 ]);
                 break;
             case 'lastMonth':
                 $transactions->whereBetween('created_at', [
-                    Carbon::now()->subMonth()->startOfMonth(),
-                    Carbon::now()->subMonth()->endOfMonth(),
+                    Carbon::now()->startOfMonth(),
+                    Carbon::now()->endOfMonth(),
                 ]);
                 break;
             case 'lastYear':
                 $transactions->whereBetween('created_at', [
-                    Carbon::now()->subYear()->startOfYear(),
-                    Carbon::now()->subYear()->endOfYear(),
+                    Carbon::now()->startOfYear(),
+                    Carbon::now()->endOfYear(),
                 ]);
                 break;
             default:
                 break;
 
         }
-
 
         $transactions = $transactions->get();
 
