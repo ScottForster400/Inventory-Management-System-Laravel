@@ -10,34 +10,39 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
-
             <div class="grid grid-cols-3 gap-4 pb-4 pl-4">
                 <div class="">
-                    <x-dropdown-button class="float-left !w-24 " >Sort</x-dropdown-button>
-                    <div>
-                        <x-dropdown-button-body>
-                            <x-dropdown-button-li class="w-full">
-                                <x-dropdown-button-a>Today</x-dropdown-button-a>
-                            </x-dropdown-button-li>
-                            <x-dropdown-button-li class="w-full">
-                                <x-dropdown-button-a>Last Week</x-dropdown-button-a>
-                            </x-dropdown-button-li>
-                            <x-dropdown-button-li class="w-full">
-                                <x-dropdown-button-a>Last Month</x-dropdown-button-a>
-                            </x-dropdown-button-li>
-                            <x-dropdown-button-li class="w-full">
-                                <x-dropdown-button-a>Last Year</x-dropdown-button-a>
-                            </x-dropdown-button-li>
-                        </x-dropdown-button-body>
-                    </div>
+                    <form method="GET" action="{{ route('admin.index') }}">
+                        <x-dropdown-button class="float-left !w-24 " >Sort</x-dropdown-button>
+                        <div>
+                            <x-dropdown-button-body>
+                                <x-dropdown-button-li class="w-full">
+                                    <x-dropdown-button-a  {{$dateFilter = 'today'}}>Today</x-dropdown-button-a>
+                                </x-dropdown-button-li>
+                                <x-dropdown-button-li class="w-full">
+                                    <x-dropdown-button-a {{$dateFilter = 'thisWeek'}}>This Week</x-dropdown-button-a>
+                                </x-dropdown-button-li>
+                                <x-dropdown-button-li class="w-full">
+                                    <x-dropdown-button-a {{$dateFilter = 'thisMonth'}}>This Month</x-dropdown-button-a>
+                                </x-dropdown-button-li>
+                                <x-dropdown-button-li class="w-full">
+                                    <x-dropdown-button-a {{$dateFilter = 'thisYear'}}>This Year</x-dropdown-button-a>
+                                </x-dropdown-button-li>
+                                <x-dropdown-button-li class="w-full">
+                                    <x-dropdown-button-a  {{$dateFilter = 'all'}}>All</x-dropdown-button-a>
+                                </x-dropdown-button-li>
+                            </x-dropdown-button-body>
+                        </div>
+                    </form>
                 </div>
             </div>
+
 
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
 
 
-                    {{-- i have used this youtube video to helpme make this line graph https://www.youtube.com/watch?v=c19gFmvxW80 --}}
+                    {{-- i have used this youtube video to help me make this line graph https://www.youtube.com/watch?v=c19gFmvxW80 --}}
                     <div>
                         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
                         <script type="text/javascript">
@@ -49,6 +54,7 @@
                         google.charts.setOnLoadCallback(drawChart);
 
                         function drawChart() {
+
                             var data = google.visualization.arrayToDataTable(transactionData);
 
                             var options = {
@@ -59,12 +65,18 @@
 
                             var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
 
+                            google.visualization.events.addListener(chart, 'error', function (googleError) {
+                                google.visualization.errors.removeError(googleError.id);
+                                document.getElementById("errorMessage").innerHTML ="There are no Transactions within this Timeframe";
+                            });
+
                             chart.draw(data, options);
                         }
                         </script>
                     </div>
 
-                    <div>
+                    <div >
+                        <b id="errorMessage" ></b>
                         <div id="curve_chart" style="width: 1200px; height: 350px"></div>
                     </div>
 
@@ -99,7 +111,7 @@
                                     <x-th>
                                         {{Carbon\Carbon::parse($date)->format('Y/m/d') }}</x-th>
                                     <x-th>
-                                        <x-modal-toggle data-modal-target="edit{{$date}}" data-modal-toggle="edit{{$date}}">Generate Report</x-modal-toggle>
+                                        <x-modal-toggle data-modal-target="edit{{$date}}" data-modal-toggle="edit{{$date}}">View Daily Report</x-modal-toggle>
                                         <x-modal id="edit{{$date}}">
                                             <x-modal-header data-modal-hide="edit{{$date}}">Report</x-modal-header>
                                             <x-modal-body>
