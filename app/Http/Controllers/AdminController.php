@@ -21,7 +21,7 @@ class AdminController extends Controller
         $branch_id = User::where('branch_id', $user_branch_id)->pluck('id');
         $transactions = Transaction::whereIn('user_id',$branch_id);
 
-        $dateFilter = $request->input('dateFilter','all');
+        $dateFilter = $request->input('dateFilter','lastWeek');
 
         switch($dateFilter){
             case 'today':
