@@ -19,10 +19,9 @@ class AdminController extends Controller
 
         $user_branch_id = Auth::user()->branch_id;
         $branch_id = User::where('branch_id', $user_branch_id)->pluck('id');
+        $transactions = Transaction::whereIn('user_id',$branch_id);
 
         $dateFilter = $request->input('dateFilter','all');
-
-        $transactions = Transaction::whereIn('user_id',$branch_id);
 
         switch($dateFilter){
             case 'today':
