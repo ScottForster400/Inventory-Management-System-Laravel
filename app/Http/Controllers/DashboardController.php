@@ -20,6 +20,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
+        // dd($int);
         $branchId = Auth::user()->branch_id;
         $stocks = Stock::where('branch_id',$branchId)->get();
         $productsIdVals = collect();
@@ -135,6 +136,8 @@ class DashboardController extends Controller
             'game_genre' => 'required'
         ]);
 
+        // if($request->description)
+
         $selectedProduct->update([
             'name' =>  $request->name,
             'price' => $request->price,
@@ -183,19 +186,40 @@ class DashboardController extends Controller
     //Searches stock used https://medium.com/@iqbal.ramadhani55/search-in-laravel-e0e20f329b01 to help create function
     public function search(Request $request){
 
+
+
         $branchId = Auth::user()->branch_id;
-        $stocks = Stock::where('branch_id',$branchId)->get();
+        $stocks = Stock::where('branch_id',$branchId)->paginate(4)->withQueryString();
+
         $productsIdVals = collect();
         foreach($stocks as $stock){
-            $productsIdVals->push($stock->product_id);
+        $productsIdVals->push($stock->product_id);
 
         }
 
-        $searchRequest = $request->search;
-        $products = Product::where('name', 'like', "%$searchRequest%")->whereIn('product_id', $productsIdVals)->paginate(4);
+
+        // if(array_key_exists('search',$_REQUEST)){
+
+
+            $searchRequest = $request->search;
+            $products = Product::where([
+                ['name','like',"%$searchRequest%"],
+                ['price','>=',$request->min_price],
+                ['price','<=',$request->max_price],
+                ['age_rating','<=',$request->age],
+                ['maximum_player_count','<=',$request->player_count],
+                ['game_type','like',"%$request->game_type%"],
+                ['game_genre','like',"%$request->game_genre%"]
+
+                ])->whereIn('product_id', $productsIdVals)->paginate(4)->withQueryString();
+
+        // }
+        // else{
+        //     $products=Product::whereIn('product_id', $productsIdVals)->paginate(4);
+        // }
 
 
 
-        // return view('dashboard')->with('products',$products)->with('stock',$stocks);
+        return view('dashboard')->with('products',$products)->with('stock',$stocks);
     }
 }
