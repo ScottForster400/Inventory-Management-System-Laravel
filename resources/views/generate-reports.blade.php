@@ -20,13 +20,13 @@
                                     <x-dropdown-button-a  >Today</x-dropdown-button-a>
                                 </x-dropdown-button-li>
                                 <x-dropdown-button-li class="w-full">
-                                    <x-dropdown-button-a >Last Week</x-dropdown-button-a>
+                                    <x-dropdown-button-a >This Week</x-dropdown-button-a>
                                 </x-dropdown-button-li>
                                 <x-dropdown-button-li class="w-full">
-                                    <x-dropdown-button-a >Last Month</x-dropdown-button-a>
+                                    <x-dropdown-button-a >This Month</x-dropdown-button-a>
                                 </x-dropdown-button-li>
                                 <x-dropdown-button-li class="w-full">
-                                    <x-dropdown-button-a >Last Year</x-dropdown-button-a>
+                                    <x-dropdown-button-a >This Year</x-dropdown-button-a>
                                 </x-dropdown-button-li>
                                 <x-dropdown-button-li class="w-full">
                                     <x-dropdown-button-a  >All</x-dropdown-button-a>
