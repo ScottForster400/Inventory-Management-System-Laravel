@@ -12,26 +12,28 @@
 
             <div class="grid grid-cols-3 gap-4 pb-4 pl-4">
                 <div class="">
-                    <x-dropdown-button class="float-left !w-24 " >Sort</x-dropdown-button>
-                    <div>
-                        <x-dropdown-button-body>
-                            <x-dropdown-button-li class="w-full">
-                                <x-dropdown-button-a {{ $dateFilter == 'today'}} >Today</x-dropdown-button-a>
-                            </x-dropdown-button-li>
-                            <x-dropdown-button-li class="w-full">
-                                <x-dropdown-button-a {{ $dateFilter == 'lastWeek'}}>Last Week</x-dropdown-button-a>
-                            </x-dropdown-button-li>
-                            <x-dropdown-button-li class="w-full">
-                                <x-dropdown-button-a {{ $dateFilter == 'lastMonth'}}>Last Month</x-dropdown-button-a>
-                            </x-dropdown-button-li>
-                            <x-dropdown-button-li class="w-full">
-                                <x-dropdown-button-a {{ $dateFilter == 'lastYear'}}>Last Year</x-dropdown-button-a>
-                            </x-dropdown-button-li>
-                            <x-dropdown-button-li class="w-full">
-                                <x-dropdown-button-a  {{ $dateFilter == 'all'}}>All</x-dropdown-button-a>
-                            </x-dropdown-button-li>
-                        </x-dropdown-button-body>
-                    </div>
+                    <form method="GET" action="{{ route('admin.index') }}">
+                        <x-dropdown-button class="float-left !w-24 " >Sort</x-dropdown-button>
+                        <div>
+                            <x-dropdown-button-body>
+                                <x-dropdown-button-li class="w-full">
+                                    <x-dropdown-button-a {{ $dateFilter == 'today'}} >Today</x-dropdown-button-a>
+                                </x-dropdown-button-li>
+                                <x-dropdown-button-li class="w-full">
+                                    <x-dropdown-button-a {{ $dateFilter == 'lastWeek'}}>Last Week</x-dropdown-button-a>
+                                </x-dropdown-button-li>
+                                <x-dropdown-button-li class="w-full">
+                                    <x-dropdown-button-a {{ $dateFilter == 'lastMonth'}}>Last Month</x-dropdown-button-a>
+                                </x-dropdown-button-li>
+                                <x-dropdown-button-li class="w-full">
+                                    <x-dropdown-button-a {{ $dateFilter == 'lastYear'}}>Last Year</x-dropdown-button-a>
+                                </x-dropdown-button-li>
+                                <x-dropdown-button-li class="w-full">
+                                    <x-dropdown-button-a  {{ $dateFilter == 'all'}}>All</x-dropdown-button-a>
+                                </x-dropdown-button-li>
+                            </x-dropdown-button-body>
+                        </div>
+                    </form>
                 </div>
             </div>
 
