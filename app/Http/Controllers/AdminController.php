@@ -22,7 +22,7 @@ class AdminController extends Controller
 
         //$dateFilter = $request->input('dateFilter','lastWeek');
 
-        $dateFilter = 'thisYear';
+        $dateFilter = 'today';
 
         switch($dateFilter){
             case 'today':

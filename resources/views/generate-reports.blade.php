@@ -67,7 +67,7 @@
 
                             google.visualization.events.addListener(chart, 'error', function (googleError) {
                                 google.visualization.errors.removeError(googleError.id);
-                                window.alert("There are no Transactions within this Timeframe");
+                                document.getElementById("errorMessage").innerHTML ="There are no Transactions within this Timeframe";
                             });
 
                             chart.draw(data, options);
@@ -75,7 +75,8 @@
                         </script>
                     </div>
 
-                    <div>
+                    <div >
+                        <b id="errorMessage" ></b>
                         <div id="curve_chart" style="width: 1200px; height: 350px"></div>
                     </div>
 
