@@ -10,34 +10,37 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
-
             <div class="grid grid-cols-3 gap-4 pb-4 pl-4">
                 <div class="">
                     <x-dropdown-button class="float-left !w-24 " >Sort</x-dropdown-button>
                     <div>
                         <x-dropdown-button-body>
                             <x-dropdown-button-li class="w-full">
-                                <x-dropdown-button-a>Today</x-dropdown-button-a>
+                                <x-dropdown-button-a {{ $dateFilter == 'today'}} >Today</x-dropdown-button-a>
                             </x-dropdown-button-li>
                             <x-dropdown-button-li class="w-full">
-                                <x-dropdown-button-a>Last Week</x-dropdown-button-a>
+                                <x-dropdown-button-a {{ $dateFilter == 'lastWeek'}}>Last Week</x-dropdown-button-a>
                             </x-dropdown-button-li>
                             <x-dropdown-button-li class="w-full">
-                                <x-dropdown-button-a>Last Month</x-dropdown-button-a>
+                                <x-dropdown-button-a {{ $dateFilter == 'lastMonth'}}>Last Month</x-dropdown-button-a>
                             </x-dropdown-button-li>
                             <x-dropdown-button-li class="w-full">
-                                <x-dropdown-button-a>Last Year</x-dropdown-button-a>
+                                <x-dropdown-button-a {{ $dateFilter == 'lastYear'}}>Last Year</x-dropdown-button-a>
+                            </x-dropdown-button-li>
+                            <x-dropdown-button-li class="w-full">
+                                <x-dropdown-button-a  {{ $dateFilter == 'all'}}>All</x-dropdown-button-a>
                             </x-dropdown-button-li>
                         </x-dropdown-button-body>
                     </div>
                 </div>
             </div>
 
+
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
 
 
-                    {{-- i have used this youtube video to helpme make this line graph https://www.youtube.com/watch?v=c19gFmvxW80 --}}
+                    {{-- i have used this youtube video to help me make this line graph https://www.youtube.com/watch?v=c19gFmvxW80 --}}
                     <div>
                         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
                         <script type="text/javascript">

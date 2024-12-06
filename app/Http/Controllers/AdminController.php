@@ -14,14 +14,45 @@ class AdminController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
 
         $user_branch_id = Auth::user()->branch_id;
         $branch_id = User::where('branch_id', $user_branch_id)->pluck('id');
-        $transactions = Product::with('product_id');
-        $transactions = Transaction::whereIn('user_id',$branch_id)->get();
 
+        $dateFilter = $request->input('dateFilter','all');
+
+        $transactions = Transaction::whereIn('user_id',$branch_id);
+
+        switch($dateFilter){
+            case 'today':
+                $transactions->whereDate('created_at',Carbon::today());
+                break;
+            case 'lastWeek':
+                $transactions->whereBetween('created_at',[
+                    Carbon::now()->subWeek()->startOfWeek(),
+                    Carbon::now()->subWeek()->endOfWeek(),
+                ]);
+                break;
+            case 'lastMonth':
+                $transactions->whereBetween('created_at', [
+                    Carbon::now()->subMonth()->startOfMonth(),
+                    Carbon::now()->subMonth()->endOfMonth(),
+                ]);
+                break;
+            case 'lastYear':
+                $transactions->whereBetween('created_at', [
+                    Carbon::now()->subYear()->startOfYear(),
+                    Carbon::now()->subYear()->endOfYear(),
+                ]);
+                break;
+            default:
+                break;
+
+        }
+
+
+        $transactions = $transactions->get();
 
 
         $groupedTransactions = $transactions->groupBy(function($transaction) {
@@ -38,7 +69,7 @@ class AdminController extends Controller
 
 
 
-        return view('generate-reports', compact('groupedTransactions','chartData'));
+        return view('generate-reports', compact('groupedTransactions','chartData','dateFilter'));
 
     }
 
