@@ -17,19 +17,19 @@
                         <div>
                             <x-dropdown-button-body>
                                 <x-dropdown-button-li class="w-full">
-                                    <x-dropdown-button-a  >Today</x-dropdown-button-a>
+                                    <x-dropdown-button-a  {{$dateFilter = 'today'}}>Today</x-dropdown-button-a>
                                 </x-dropdown-button-li>
                                 <x-dropdown-button-li class="w-full">
-                                    <x-dropdown-button-a >This Week</x-dropdown-button-a>
+                                    <x-dropdown-button-a {{$dateFilter = 'thisWeek'}}>This Week</x-dropdown-button-a>
                                 </x-dropdown-button-li>
                                 <x-dropdown-button-li class="w-full">
-                                    <x-dropdown-button-a >This Month</x-dropdown-button-a>
+                                    <x-dropdown-button-a {{$dateFilter = 'thisMonth'}}>This Month</x-dropdown-button-a>
                                 </x-dropdown-button-li>
                                 <x-dropdown-button-li class="w-full">
-                                    <x-dropdown-button-a >This Year</x-dropdown-button-a>
+                                    <x-dropdown-button-a {{$dateFilter = 'thisYear'}}>This Year</x-dropdown-button-a>
                                 </x-dropdown-button-li>
                                 <x-dropdown-button-li class="w-full">
-                                    <x-dropdown-button-a  >All</x-dropdown-button-a>
+                                    <x-dropdown-button-a  {{$dateFilter = 'all'}}>All</x-dropdown-button-a>
                                 </x-dropdown-button-li>
                             </x-dropdown-button-body>
                         </div>
