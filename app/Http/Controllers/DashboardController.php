@@ -222,4 +222,38 @@ class DashboardController extends Controller
 
         return view('dashboard')->with('products',$products)->with('stock',$stocks);
     }
+    public function sort(){
+
+
+
+        $branchId = Auth::user()->branch_id;
+        $stocks = Stock::where('branch_id',$branchId)->get();
+        $productsIdVals = collect();
+        foreach($stocks as $stock){
+            $productsIdVals->push($stock->product_id);
+
+        }
+
+        if(array_key_exists('sort_by',$_REQUEST)){
+            $sortBy = $_REQUEST['sort_by'];
+            if($sortBy =='alph_asc'){
+                $products = Product::whereIn('product_id',$productsIdVals)->orderBy('name','asc')->paginate(4)->withQueryString();
+                $sortedIds = collect();
+                foreach($products as $product){
+                    $sortedIds->push($product->product_id);
+                }
+                $stocks
+            }
+            elseif($sortBy =='alph_des'){
+                $products = Product::whereIn('product_id',$productsIdVals)->orderBy('name','desc')->paginate(4)->withQueryString();
+            }
+            elseif($sortBy == 'price_asc'){
+                $products = Product::whereIn('product_id',$productsIdVals)->orderBy('Price','asc')->paginate(4)->withQueryString();
+            }
+            elseif($sortBy == 'price_des'){
+                $products = Product::whereIn('product_id',$productsIdVals)->orderBy('Price','desc')->paginate(4)->withQueryString();
+            }
+        }
+        return view('dashboard')->with('stock', $stocks)->with('products',$products);
+    }
 }

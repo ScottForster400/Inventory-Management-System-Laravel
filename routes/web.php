@@ -38,6 +38,8 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/dashboard/search', [DashboardController::class, 'search'])->name('dashboard.search')->middleware('auth');
 
+Route::get('/dashboard/sort', [DashboardController::class, 'sort'])->name('dashboard.sort')->middleware('auth');
+
 require __DIR__ . '/auth.php';
 
 //all branches routes
