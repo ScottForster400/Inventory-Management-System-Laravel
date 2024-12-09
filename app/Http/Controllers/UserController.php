@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class UserController extends Controller
 {
@@ -12,7 +14,13 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+
+        $user_branch_id = Auth::user()->branch_id;
+        $branch_id = User::where('branch_id', $user_branch_id)->pluck('id');
+        $sameBranchUsers = User::whereIn('id',$branch_id)->get();
+
+
+        return view('manage-employees',compact('sameBranchUsers'));
     }
 
     /**

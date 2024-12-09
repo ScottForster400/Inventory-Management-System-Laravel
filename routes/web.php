@@ -23,8 +23,7 @@ Route::get('/stock', function () {
 
 
 Route::get('/manage-employees', function () {
-    $user = DB::table('users')->get();
-    return view('manage-employees');
+    return view('manage-employees',[UserController::class, 'index']);
 })->middleware(['auth', 'verified'])->name('manage-employees');
 
 Route::get('/checkout', function () {

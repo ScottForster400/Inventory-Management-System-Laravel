@@ -13,29 +13,21 @@
             <div class="grid grid-cols-3 gap-4 pb-4 pl-4">
                 <div class="">
                     <form method="GET" action="{{ route('admin.index') }}">
-                        <x-dropdown-button class="float-left !w-24 " >Sort</x-dropdown-button>
-                        <div>
-                            <x-dropdown-button-body>
-                                <x-dropdown-button-li class="w-full">
-                                    <x-dropdown-button-a  {{$dateFilter = 'today'}}>Today</x-dropdown-button-a>
-                                </x-dropdown-button-li>
-                                <x-dropdown-button-li class="w-full">
-                                    <x-dropdown-button-a {{$dateFilter = 'thisWeek'}}>This Week</x-dropdown-button-a>
-                                </x-dropdown-button-li>
-                                <x-dropdown-button-li class="w-full">
-                                    <x-dropdown-button-a {{$dateFilter = 'thisMonth'}}>This Month</x-dropdown-button-a>
-                                </x-dropdown-button-li>
-                                <x-dropdown-button-li class="w-full">
-                                    <x-dropdown-button-a {{$dateFilter = 'thisYear'}}>This Year</x-dropdown-button-a>
-                                </x-dropdown-button-li>
-                                <x-dropdown-button-li class="w-full">
-                                    <x-dropdown-button-a  {{$dateFilter = 'all'}}>All</x-dropdown-button-a>
-                                </x-dropdown-button-li>
-                            </x-dropdown-button-body>
-                        </div>
+                        <label for="dateFilter">Sort By:</label>
+                        <select name="dateFilter" id="dateFilter" onchange="this.form.submit()">
+                            <option value="all" {{ $dateFilter == 'all' ? 'selected' : '' }}>All</option>
+                            <option value="today" {{ $dateFilter == 'today' ? 'selected' : '' }}>Today</option>
+                            <option value="thisWeek" {{ $dateFilter == 'thisWeek' ? 'selected' : '' }}>This Week</option>
+                            <option value="thisMonth" {{ $dateFilter == 'thisMonth' ? 'selected' : '' }}>This Month</option>
+                            <option value="thisYear" {{ $dateFilter == 'thisYear' ? 'selected' : '' }}>This Year</option>
+                            <option value="all" {{ $dateFilter == 'all' ? 'selected' : '' }}>All Time</option>
+                        </select>
                     </form>
+
                 </div>
             </div>
+
+
 
 
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
