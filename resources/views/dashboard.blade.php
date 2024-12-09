@@ -1,4 +1,4 @@
-{{-- {{dd($_REQUEST)}} --}}
+
 <x-app-layout>
     <x-slot name="header" >
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
@@ -8,7 +8,8 @@
     <div class="flex flex-row w-full">
         @include('layouts.sidebar')
         <div class=" w-full py-12  flex items-center flex-col ">
-            @include('layouts.search-mobile')
+
+                @include('layouts.search-mobile')
             <div class="max-md:w-8/12 w-4/5 flex items-center justify-between py-2">
                 <x-dropdown-button class="float-left !w-24 ">Sort</x-dropdown-button>
                     <div>
@@ -53,7 +54,7 @@
                                 <div class="basis-1/2 flex justify-center items-center">
                                     <x-card-img src="{{asset($product->image)}}"></x-card-img>
                                 </div>
-                                <x-card-body>
+                                <x-card-body class="!py-5 !px-0">
                                     <x-card-title>{{$product->name}}</x-card-title>
                                     <p class="text-centre text-gray-500 ">£{{$product->Price}}</p>
                                     <div class="flex flex-row text-center items-center  ">
