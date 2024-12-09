@@ -17,7 +17,7 @@ class UserController extends Controller
 
         $user_branch_id = Auth::user()->branch_id;
         $branch_id = User::where('branch_id', $user_branch_id)->pluck('id');
-        $sameBranchUsers = User::whereIn('id',$branch_id)->get();
+        $sameBranchUsers = User::whereIn('id',$branch_id)->paginate(5);
 
 
         return view('manage-employees',compact('sameBranchUsers'));

@@ -60,6 +60,9 @@
 
 
                     </x-table>
+                    <div class="w-full pt-3 max-md:px-4">
+                        {{$sameBranchUsers->links()}}
+                    </div>
 
 
                 </div>
