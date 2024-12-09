@@ -189,7 +189,7 @@ class DashboardController extends Controller
 
 
         $branchId = Auth::user()->branch_id;
-        $stocks = Stock::where('branch_id',$branchId)->paginate(4)->withQueryString();
+        $stocks = Stock::where('branch_id',$branchId)->get();
 
         $productsIdVals = collect();
         foreach($stocks as $stock){
@@ -224,6 +224,7 @@ class DashboardController extends Controller
     }
     public function sort(){
 
+        dd($_REQUEST);
 
 
         $branchId = Auth::user()->branch_id;
@@ -238,22 +239,38 @@ class DashboardController extends Controller
             $sortBy = $_REQUEST['sort_by'];
             if($sortBy =='alph_asc'){
                 $products = Product::whereIn('product_id',$productsIdVals)->orderBy('name','asc')->paginate(4)->withQueryString();
-                $sortedIds = collect();
+                //fetches the stock info in the requested order which allows the amount of product to be displayed correctly
+                $sortedStocks = collect();
                 foreach($products as $product){
-                    $sortedIds->push($product->product_id);
+                    $sortedStocks->push(Stock::where('product_id',$product->product_id)->first());
                 }
-                $stocks
+
             }
             elseif($sortBy =='alph_des'){
                 $products = Product::whereIn('product_id',$productsIdVals)->orderBy('name','desc')->paginate(4)->withQueryString();
+                //fetches the stock info in the requested order which allows the amount of product to be displayed correctly
+                $sortedStocks = collect();
+                foreach($products as $product){
+                    $sortedStocks->push(Stock::where('product_id',$product->product_id)->first());
+                }
             }
             elseif($sortBy == 'price_asc'){
                 $products = Product::whereIn('product_id',$productsIdVals)->orderBy('Price','asc')->paginate(4)->withQueryString();
+                //fetches the stock info in the requested order which allows the amount of product to be displayed correctly
+                $sortedStocks = collect();
+                foreach($products as $product){
+                    $sortedStocks->push(Stock::where('product_id',$product->product_id)->first());
+                }
             }
             elseif($sortBy == 'price_des'){
                 $products = Product::whereIn('product_id',$productsIdVals)->orderBy('Price','desc')->paginate(4)->withQueryString();
+                //fetches the stock info in the requested order which allows the amount of product to be displayed correctly
+                $sortedStocks = collect();
+                foreach($products as $product){
+                    $sortedStocks->push(Stock::where('product_id',$product->product_id)->first());
+                }
             }
         }
-        return view('dashboard')->with('stock', $stocks)->with('products',$products);
+        return view('dashboard')->with('stock', $sortedStocks)->with('products',$products);
     }
 }
