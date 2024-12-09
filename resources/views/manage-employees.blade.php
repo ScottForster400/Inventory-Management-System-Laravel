@@ -8,9 +8,21 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div>
-                <x-button>Create Employee</x-button>
+
+            <div class="flex justify-between">
+
+
+                <div class="flex-none w-14">
+                    <x-search-bar class="w-11/12">Search</x-search-bar>
+                </div>
+
+                <div class="flex-none w-14">
+                    <x-button>Create Employee</x-button>
+                </div>
+
             </div>
+
+
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
 
 
