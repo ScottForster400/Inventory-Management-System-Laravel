@@ -14,12 +14,12 @@
                         <ul id="price" class="hidden py-2 space-y-2">
                             <x-sidebar-list>
                                 <div class="w-2/5">
-                                    <x-input-label for="min-price" :value="__('Min Price(£)')">Min Price(£)</x-input-label>
-                                    <x-text-input id="min-price" type="number" name="min-price" auto-complete="0" placeholder="0" class="w-full"></x-text-input>
+                                    <x-input-label for="min_price" :value="__('Min Price(£)')">Min Price(£)</x-input-label>
+                                    <x-text-input id="min_price" type="number" name="min_price" auto-complete="0" value="0" class="w-full"></x-text-input>
                                 </div>
                                 <div class="w-2/5">
-                                    <x-input-label for="max-price" :value="__('Max Price(£)')">Max Price(£)</x-input-label>
-                                    <x-text-input id="max-price" type="number" name="max-price" auto-complete="100" placeholder="100" class="w-full"></x-text-input>
+                                    <x-input-label for="max_price" :value="__('Max Price(£)')">Max Price(£)</x-input-label>
+                                    <x-text-input id="max_price" type="number" name="max_price" auto-complete="100" value="1000" class="w-full"></x-text-input>
                                 </div>
                             </x-sidebar-list>
                         </ul>
@@ -30,8 +30,8 @@
                             <x-sidebar-selection-info>Age</x-sidebar-selection-info>
                         </x-sidebar-selection-label>
                         <x-sidebar-dropdown-selection name="age">
-                            {{-- Value = 1=1 allows sql to just select all which would be the same as not applying filter --}}
-                            <option value="1=1" selected>Choose age range</option>
+                            {{-- Value = 9999 allows sql to just select all <9999  which should be the same as not applying filter --}}
+                            <option value="9999" selected>Choose age range</option>
                             <option value="2">&lt; 2</option>
                             <option value="4">&lt; 4</option>
                             <option value="6">&lt; 6</option>
@@ -45,7 +45,7 @@
                         </x-sidebar-selection-label>
                         <x-sidebar-dropdown-selection name="game_length">
                             {{-- Value = 1=1 allows sql to just select all which would be the same as not applying filter --}}
-                            <option value="1=1" selected>Choose a Game Length</option>
+                            <option value="9999" selected>Choose a Game Length</option>
                             <option value="15">&lt; 15</option>
                             <option value="30">&lt; 30</option>
                             <option value="45">&lt; 45</option>
@@ -59,7 +59,7 @@
                         </x-sidebar-selection-label>
                         <x-sidebar-dropdown-selection name="player_count">
                             {{-- Value = 1=1 allows sql to just select all which would be the same as not applying filter --}}
-                            <option value="1=1" selected >Choose player count</option>
+                            <option value="9999" selected >Choose player count</option>
                             <option value="4">&lt; 4</option>
                             <option value="6">&lt; 6</option>
                             <option value="8">&lt; 8</option>
@@ -73,7 +73,7 @@
                         </x-sidebar-selection-label>
                         <x-sidebar-dropdown-selection name="game_type">
                             {{-- Value = 1=1 allows sql to just select all which would be the same as not applying filter --}}
-                            <option value="1=1" selected >Choose game type</option>
+                            <option value="" selected >Choose game type</option>
                             <option value="board_game">Board Game</option>
                             <option value="puzzle_game">Puzzles</option>
                             <option value="figures">Figures</option>
@@ -88,7 +88,7 @@
                         </x-sidebar-selection-label>
                         <x-sidebar-dropdown-selection name="game_genre">
                             {{-- Value = 1=1 allows sql to just select all which would be the same as not applying filter --}}
-                            <option value="1=1" selected >Choose game type</option>
+                            <option value="" selected >Choose game type</option>
                             <option value="adventure">Adventure</option>
                             <option value="competitive">Competitive</option>
                             <option value="puzzle">Puzzle</option>

@@ -12,12 +12,12 @@
                     <x-table-body>
                         <x-tr class="max-sm:flex max-sm:flex-col !py-2">
                             <x-td>
-                                <x-input-label for="min-price" :value="__('Min Price(£)')">Min Price(£)</x-input-label>
-                                <x-text-input id="min-price" type="number" name="min-price" auto-complete="0" class="w-full basis-1/2"></x-text-input>
+                                <x-input-label for="min_price" :value="__('Min Price(£)')">Min Price(£)</x-input-label>
+                                <x-text-input id="min_price" type="number" name="min_price" auto-complete="0" class="w-full basis-1/2"></x-text-input>
                             </x-td>
                             <x-td class="!py-2">
-                                <x-input-label for="max-price" :value="__('Max Price(£)')">Max Price(£)</x-input-label>
-                                <x-text-input id="max-price" type="number" name="max-price" auto-complete="100" class="w-full basis-1/2"></x-text-input>
+                                <x-input-label for="max_price" :value="__('Max Price(£)')">Max Price(£)</x-input-label>
+                                <x-text-input id="max_price" type="number" name="max-price" auto-complete="100" class="w-full basis-1/2"></x-text-input>
                             </x-td>
                         </x-tr>
                         <x-tr class="max-sm:flex max-sm:flex-col !py-2">
