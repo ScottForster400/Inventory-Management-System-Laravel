@@ -67,3 +67,8 @@ Route::resource('checkout',CartController::class)->middleware('auth');
 
 
 
+Route::post('/employees/add', [UserController::class, 'store'])->name('employees.store');
+Route::get('/employees', [UserController::class, 'index'])->name('employees.index');
+
+
+

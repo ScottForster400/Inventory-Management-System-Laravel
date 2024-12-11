@@ -5,71 +5,52 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Carbon\Carbon;
+use Illuminate\Support\Facades\Hash;
+use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // Display the list of employees
     public function index(Request $request)
     {
-
-        $searchedName = User::where([['name','like',"%$request%"]]);
-
+        $searchedName = $request->input('search');
         $user_branch_id = Auth::user()->branch_id;
-        $branch_id = User::where('branch_id', $user_branch_id)->pluck('id');
-        $sameBranchUsers = User::whereIn('id',$branch_id)->paginate(5);
 
+        // Filter by branch and search term
+        $sameBranchUsers = User::where('branch_id', $user_branch_id)
+            ->when($searchedName, function ($query, $name) {
+                return $query->where('name', 'like', "%$name%");
+            })
+            ->paginate(5);
 
-        return view('manage-employees',compact('sameBranchUsers'));
+        return view('manage-employees', compact('sameBranchUsers'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
-    {
-        //
-    }
+{
+    // Validate the incoming request data
+    $validated = $request->validate([
+        'first_name' => 'required|string|max:255',
+        'phone' => 'required|string|regex:/^\d{3}-\d{2}-\d{3}$/', // validate phone format
+        'dob' => 'required|date', // validate date of birth
+        'address' => 'required|string|max:255', // validate address
+        'email' => 'required|email|unique:users,email',
+        'password' => 'required|string|min:8',
+    ]);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(User $user)
-    {
-        //
-    }
+    // Create the new employee
+    $user = User::create([
+        'name' => $validated['first_name'],
+        'phone' => $validated['phone'],
+        'email' => $validated['email'],
+        'password' => Hash::make($validated['password']),
+        'branch_id' => Auth::user()->branch_id, // Assign the branch of the current authenticated user
+        'dob' => $validated['dob'], // Store the date of birth
+        'address' => $validated['address'], // Store the address
+    ]);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(User $user)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, User $user)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(User $user)
-    {
-        //
-    }
+    // Redirect back with success message
+    return redirect()->route('employees.isndex')->with('success', 'Employee added successfully.');
+}
+    
 }
