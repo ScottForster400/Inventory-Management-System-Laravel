@@ -3,10 +3,10 @@
     <x-modal-header data-modal-hide="edit{{$product->product_id}}">
         Edit Stock
     </x-modal-header>
-    <form action="{{route('dashboard.update',$product)}}" method="post">
-        @method('put')
-        @csrf
         <x-modal-body>
+            <form action="{{route('dashboard.update',$product)}}" method="post">
+                @method('put')
+                @csrf
                 <x-table>
                     <x-table-body>
                         <x-tr class="max-sm:flex max-sm:flex-col">
@@ -164,6 +164,7 @@
             <div class="flex items-center justify-between max-sm:justify-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
                 <x-primary-button class="!py-3 !bg-blue-700 hover:!bg-blue-800 !transition-colors">Edit Stock</x-primary-button>
             </form>
+            <x-modal-toggle data-modal-target="img{{$product->product_id}}" data-modal-toggle="img{{$product->product_id}}" data-modal-hide="edit{{$product->product_id}}" class="w-1/3 h-12 flex justify-center items-center !rounded-full !bg-blue-700 hover:!bg-blue-800 !transition-colors">Image Upload</x-modal-toggle>
             <form action="{{route('dashboard.destroy', $product)}}" method="post">
                 @method('delete')
                 @csrf

@@ -273,10 +273,6 @@ class DashboardController extends Controller
         if(array_key_exists('sort_by',$_REQUEST) && array_key_exists('search',$searchRequest)){
             $sortBy = $_REQUEST['sort_by'];
 
-            // $name=$searchRequest['search'];
-            // $game_type=$searchRequest['game_type'];
-            // $game_genre=$searchRequest['game_genre'];
-
             if($sortBy =='alph_asc'){
                 $products = Product::where([
                     ['name','like',"%$searchRequest[search]%"],
