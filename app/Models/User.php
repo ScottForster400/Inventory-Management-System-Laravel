@@ -21,6 +21,12 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'national_insurance_number',
+        'phonenumber',
+        'dob',
+        'address',
+        'admin',
+        'branch_id'
     ];
 
     /**
@@ -44,5 +50,16 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function branches(){
+        return $this->belongsTo(Branch::class);
+    }
+
+    public function transactions(){
+        return $this->hasMany(Transaction::class);
+    }
+    public function carts() {
+        return $this->hasMany(Cart::class);
     }
 }
