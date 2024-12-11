@@ -29,8 +29,7 @@
 
 
 
-
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg ">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
 
 
@@ -67,9 +66,9 @@
                         </script>
                     </div>
 
-                    <div >
-                        <b id="errorMessage" ></b>
-                        <div id="curve_chart" style="width: 1200px; height: 350px"></div>
+                    <div class="w-full">
+                        <p id="errorMessage" class="text-center font-semibold"></p>
+                        <div id="curve_chart" style="height: 350px; width:750px;" class="mx-auto max-md:hidden"></div>
                     </div>
 
 
@@ -81,6 +80,8 @@
 
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
+
+
 
 
 
@@ -154,9 +155,12 @@
                         </x-table-body>
                     </x-table>
 
-
                 </div>
+
+
+
             </div>
+
         </div>
     </div>
 </x-app-layout>

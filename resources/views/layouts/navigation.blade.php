@@ -108,6 +108,20 @@
             <x-responsive-nav-link :href="route('dashboard.index')" :active="request()->routeIs('dashboard.index')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('stock')" :active="request()->routeIs('dashboard.index')">
+                {{ __('Stock') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('checkout.index')" :active="request()->routeIs('dashboard.index')">
+                {{ __('Checkout') }}
+            </x-responsive-nav-link>
+            @if(Auth::user()->admin==1)
+                <x-responsive-nav-link :href="route('admin.index')" :active="request()->routeIs('dashboard.index')">
+                    {{ __('Generate Report') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('users.index')" :active="request()->routeIs('dashboard.index')">
+                    {{ __('Manage Employees') }}
+                </x-responsive-nav-link>
+            @endif
         </div>
 
         <!-- Responsive Settings Options -->
