@@ -39,6 +39,11 @@ class CartController extends Controller
             $amount = 0;
             foreach($products as $product){
                 $productAmounts = Cart::select('amount')->where('product_id', $product->product_id)->where('user_id', $user_id)->get();
+                if(array_key_exists('quantity' , $_REQUEST)){
+                    if($product->product_id == $_REQUEST['quantity']){
+
+                    }
+                }
                 foreach($productAmounts as $productAmount) {
                     $productPrice = floatval($productAmount->amount) * $product->Price;
                     $amount = $amount + $productPrice;

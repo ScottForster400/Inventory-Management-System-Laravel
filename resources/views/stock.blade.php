@@ -38,6 +38,7 @@
                     <th scope="col" class="px-6 py-3">
                     <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Quantity</a>
                     </th>
+                    
 
                     <th scope="col" class="px-6 py-3">
                     <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Unit Price</a>
