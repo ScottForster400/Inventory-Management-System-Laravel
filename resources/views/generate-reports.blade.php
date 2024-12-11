@@ -111,7 +111,7 @@
 
                                                 <x-table>
                                                     <x-table-head>
-                                                        <x-tr>
+                                                        <x-tr class="max-md:hidden">
                                                             <x-th>
                                                                 Stock ID
                                                             </x-th>
@@ -122,6 +122,11 @@
                                                                 Price(£)
                                                             </x-th>
                                                         </x-tr>
+                                                        <tr class="sm:hidden">
+                                                            <x-th>StkID</x-th>
+                                                            <x-th>Amt</x-th>
+                                                            <x-th>£</x-th>
+                                                        </tr>
                                                     </x-table-head>
                                                     @foreach ($transactions as $transaction)
                                                         <x-table-body>
