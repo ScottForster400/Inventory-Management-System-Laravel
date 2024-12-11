@@ -11,14 +11,45 @@ use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+
+    public function index(Request $request)
     {
+
         $user_branch_id = Auth::user()->branch_id;
         $branch_id = User::where('branch_id', $user_branch_id)->pluck('id');
-        $transactions = Transaction::whereIn('user_id',$branch_id)->get();
+
+        $transactions = Transaction::whereIn('user_id',$branch_id);
+
+        $dateFilter = $request->input('dateFilter','all');
+
+        switch($dateFilter){
+            case 'today':
+                $transactions->whereDate('created_at',Carbon::today());
+                break;
+            case 'thisWeek':
+                $transactions->whereBetween('created_at',[
+                    Carbon::now()->startOfWeek(),
+                    Carbon::now()->endOfWeek(),
+                ]);
+                break;
+            case 'thisMonth':
+                $transactions->whereBetween('created_at', [
+                    Carbon::now()->startOfMonth(),
+                    Carbon::now()->endOfMonth(),
+                ]);
+                break;
+            case 'thisYear':
+                $transactions->whereBetween('created_at', [
+                    Carbon::now()->startOfYear(),
+                    Carbon::now()->endOfYear(),
+                ]);
+                break;
+            default:
+                break;
+
+        }
+
+        $transactions = $transactions->get();
 
 
         $groupedTransactions = $transactions->groupBy(function($transaction) {
@@ -26,31 +57,19 @@ class AdminController extends Controller
         });
 
 
-        return view('generate-reports', compact('groupedTransactions'));
+        $chartTransaction = $groupedTransactions->toArray();
+        $chartData[] = ["Day","Profit (£)"];
+        foreach ($groupedTransactions as $key => $value){
+
+            $chartData[] = [$key,$value->sum('price')];
+        }
+
+
+
+        return view('generate-reports', compact('groupedTransactions','chartData','dateFilter'));
 
     }
 
-    public function generate()
-    {
-        $user_branch_id = Auth::user()->branch_id;
-        $branch_id = User::where('branch_id', $user_branch_id)->pluck('id');
-        $transactions = Transaction::whereIn('user_id',$branch_id)->get();
-
-
-        $groupedTransactions = $transactions->groupBy(function($transaction) {
-            return $transaction->created_at->format('Y-m-d');
-        });
-
-
-
-        return view('generate-reports', compact('groupedTransactions'));
-    }
-
-    public function manage()
-    {
-        $users = Transaction::with('users')->get();
-        return view('manage-employees')->with('users', $users);
-    }
 
     /**
      * Show the form for creating a new resource.

@@ -21,15 +21,9 @@ Route::get('/stock', function () {
     return view('stock');
 })->middleware(['auth', 'verified'])->name('stock');
 
-Route::get('/generate-reports', function () {
-    $transaction = DB::table('transactions')->get();
-    return view('generate-reports', ['transaction' => $transaction]);
-})->middleware(['auth', 'verified'])->name('generate-reports');
-
 
 Route::get('/manage-employees', function () {
-    $user = DB::table('users')->get();
-    return view('manage-employees');
+    return view('manage-employees',[UserController::class, 'index']);
 })->middleware(['auth', 'verified'])->name('manage-employees');
 
 Route::get('/checkout', function () {
@@ -42,7 +36,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+//Dashboard search and sort
 Route::get('/dashboard/search', [DashboardController::class, 'search'])->name('dashboard.search')->middleware('auth');
+
+Route::get('/dashboard/sort', [DashboardController::class, 'sort'])->name('dashboard.sort')->middleware('auth');
+
+Route::get('/dashboard/search/sort', [DashboardController::class, 'sortSearch'])->name('dashboard.sortSearch')->middleware('auth');
 
 require __DIR__ . '/auth.php';
 
