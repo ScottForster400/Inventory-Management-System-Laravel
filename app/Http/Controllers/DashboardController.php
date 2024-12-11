@@ -187,9 +187,8 @@ class DashboardController extends Controller
     public function search(Request $request){
 
 
-
         $branchId = Auth::user()->branch_id;
-        $stocks = Stock::where('branch_id',$branchId)->paginate(4)->withQueryString();
+        $stocks = Stock::where('branch_id',$branchId)->get();
 
         $productsIdVals = collect();
         foreach($stocks as $stock){
@@ -221,5 +220,120 @@ class DashboardController extends Controller
 
 
         return view('dashboard')->with('products',$products)->with('stock',$stocks);
+    }
+    public function sort(){
+
+
+
+        $branchId = Auth::user()->branch_id;
+        $stocks = Stock::where('branch_id',$branchId)->get();
+        $productsIdVals = collect();
+        foreach($stocks as $stock){
+            $productsIdVals->push($stock->product_id);
+
+        }
+
+        if(array_key_exists('sort_by',$_REQUEST)){
+            $sortBy = $_REQUEST['sort_by'];
+            if($sortBy =='alph_asc'){
+                $products = Product::whereIn('product_id',$productsIdVals)->orderBy('name','asc')->paginate(4)->withQueryString();
+            }
+            elseif($sortBy =='alph_des'){
+                $products = Product::whereIn('product_id',$productsIdVals)->orderBy('name','desc')->paginate(4)->withQueryString();
+            }
+            elseif($sortBy == 'price_asc'){
+                $products = Product::whereIn('product_id',$productsIdVals)->orderBy('Price','asc')->paginate(4)->withQueryString();
+            }
+            elseif($sortBy == 'price_des'){
+                $products = Product::whereIn('product_id',$productsIdVals)->orderBy('Price','desc')->paginate(4)->withQueryString();
+            }
+
+           //fetches the stock info in the requested order which allows the amount of product to be displayed correctly
+           $sortedStocks = collect();
+           foreach($products as $product){
+               $sortedStocks->push(Stock::where('product_id',$product->product_id)->first());
+           }
+        }
+        return view('dashboard')->with('stock', $sortedStocks)->with('products',$products);
+    }
+
+    public function sortSearch(){
+
+        // dd($_REQUEST);
+        $branchId = Auth::user()->branch_id;
+        $stocks = Stock::where('branch_id',$branchId)->get();
+
+        $productsIdVals = collect();
+        foreach($stocks as $stock){
+        $productsIdVals->push($stock->product_id);
+        }
+
+        $searchRequest = $_REQUEST['search'];
+
+        if(array_key_exists('sort_by',$_REQUEST) && array_key_exists('search',$searchRequest)){
+            $sortBy = $_REQUEST['sort_by'];
+
+            // $name=$searchRequest['search'];
+            // $game_type=$searchRequest['game_type'];
+            // $game_genre=$searchRequest['game_genre'];
+
+            if($sortBy =='alph_asc'){
+                $products = Product::where([
+                    ['name','like',"%$searchRequest[search]%"],
+                    ['price','>=',$searchRequest['min_price']],
+                    ['price','<=',$searchRequest['max_price']],
+                    ['age_rating','<=',$searchRequest['age']],
+                    ['maximum_player_count','<=',$searchRequest['player_count']],
+                    ['game_type','like',"%$searchRequest[game_type]%"],
+                    ['game_genre','like',"%$searchRequest[game_genre]%"]
+
+                    ])->whereIn('product_id', $productsIdVals)->orderBy('name', 'asc')->paginate(4)->withQueryString();
+
+
+            }
+            elseif($sortBy =='alph_des'){
+                $products = Product::where([
+                    ['name','like',"%$searchRequest[search]%"],
+                    ['price','>=',$searchRequest['min_price']],
+                    ['price','<=',$searchRequest['max_price']],
+                    ['age_rating','<=',$searchRequest['age']],
+                    ['maximum_player_count','<=',$searchRequest['player_count']],
+                    ['game_type','like',"%$searchRequest[game_type]%"],
+                    ['game_genre','like',"%$searchRequest[game_genre]%"]
+
+                    ])->whereIn('product_id', $productsIdVals)->orderBy('name', 'desc')->paginate(4)->withQueryString();
+            }
+            elseif($sortBy == 'price_asc'){
+                $products = Product::where([
+                    ['name','like',"%$searchRequest[search]%"],
+                    ['price','>=',$searchRequest['min_price']],
+                    ['price','<=',$searchRequest['max_price']],
+                    ['age_rating','<=',$searchRequest['age']],
+                    ['maximum_player_count','<=',$searchRequest['player_count']],
+                    ['game_type','like',"%$searchRequest[game_type]%"],
+                    ['game_genre','like',"%$searchRequest[game_genre]%"]
+
+                    ])->whereIn('product_id', $productsIdVals)->orderBy('Price', 'asc')->paginate(4)->withQueryString();
+            }
+            elseif($sortBy == 'price_des'){
+                $products = Product::where([
+                    ['name','like',"%$searchRequest[search]%"],
+                    ['price','>=',$searchRequest['min_price']],
+                    ['price','<=',$searchRequest['max_price']],
+                    ['age_rating','<=',$searchRequest['age']],
+                    ['maximum_player_count','<=',$searchRequest['player_count']],
+                    ['game_type','like',"%$searchRequest[game_type]%"],
+                    ['game_genre','like',"%$searchRequest[game_genre]%"]
+
+                    ])->whereIn('product_id', $productsIdVals)->orderBy('Price', 'desc')->paginate(4)->withQueryString();
+            }
+            //fetches the stock info in the requested order which allows the amount of product to be displayed correctly
+            $sortedStocks = collect();
+            foreach($products as $product){
+                $sortedStocks->push(Stock::where('product_id',$product->product_id)->first());
+            }
+        }
+        return view('dashboard')->with('stock', $sortedStocks)->with('products',$products);
+
     }
 }

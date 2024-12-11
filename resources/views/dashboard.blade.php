@@ -1,3 +1,19 @@
+@php
+    $currentRoute = Route::currentRouteName();
+    $sortRoute = 'dashboard.sort';
+    $search=$_REQUEST;
+    $isSortRoute = 'false';
+    if($currentRoute == 'dashboard.search' || $currentRoute == 'dashboard.sortSearch'){
+        $sortRoute = 'dashboard.sortSearch';
+    };
+    if ($currentRoute == 'dashboard.sortSearch') {
+        $search = $_REQUEST['search'];
+    }
+    if($currentRoute == 'dashboard.sort' || $currentRoute == 'dashboard.sortSearch'){
+
+        $isSortRoute = 'true';
+    }
+@endphp
 
 <x-app-layout>
     <x-slot name="header" >
@@ -15,16 +31,16 @@
                     <div>
                         <x-dropdown-button-body>
                             <x-dropdown-button-li class="w-full">
-                                <x-dropdown-button-a>A to Z</x-dropdown-button-a>
+                                <x-dropdown-button-a href="{{route($sortRoute, ['sort_by'=>'alph_asc', 'search'=>$search] )}}">A to Z</x-dropdown-button-a>
                             </x-dropdown-button-li>
                             <x-dropdown-button-li class="w-full">
-                                <x-dropdown-button-a>Z to A</x-dropdown-button-a>
+                                <x-dropdown-button-a href="{{route($sortRoute, ['sort_by'=>'alph_des', 'search'=>$search])}}">Z to A</x-dropdown-button-a>
                             </x-dropdown-button-li>
                             <x-dropdown-button-li class="w-full">
-                                <x-dropdown-button-a>Low to High</x-dropdown-button-a>
+                                <x-dropdown-button-a href="{{route($sortRoute, ['sort_by'=>'price_asc', 'search'=>$search])}}">Low to High</x-dropdown-button-a>
                             </x-dropdown-button-li>
                             <x-dropdown-button-li class="w-full">
-                                <x-dropdown-button-a>High to Low</x-dropdown-button-a>
+                                <x-dropdown-button-a href="{{route($sortRoute, ['sort_by'=>'price_des', 'search'=>$search])}}">High to Low</x-dropdown-button-a>
                             </x-dropdown-button-li>
                         </x-dropdown-button-body>
                     </div>
@@ -34,7 +50,7 @@
             <div class="flex flex-3/4 md:pl-20 md:pr-20 max-w-8/10 w-full">
                 <div class=" overflow-hidden w-full">
                     <div class=" flex max-md:flex-col max-md:justify-center max-md:items-center md:flex-row md:flex-wrap md:justify-evenly p-6 text-gray-900 dark:text-gray-100 ">
-                        @if (array_key_exists('page' , $_REQUEST))
+                        @if (array_key_exists('page' , $_REQUEST) && $isSortRoute == 'false') )
                             @php
                                 $pagemult=$_REQUEST['page'];
                                 $pagemult--;
@@ -90,7 +106,7 @@
                         @endforelse
                     </div>
                     <div class="w-full pt-3 max-md:px-4">
-                        {{$products->links()}}
+                        {{$products->appends($_GET)->links()}}
                     </div>
                 </div>
             </div>
