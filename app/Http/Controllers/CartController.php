@@ -71,6 +71,7 @@ class CartController extends Controller
         session_abort();
         return view('checkout');
     }
+    // needs work
 
     /**
      * Show the form for creating a new resource.
