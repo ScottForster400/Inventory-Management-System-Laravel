@@ -53,39 +53,32 @@
 
                 <div class="p-6 text-gray-900 dark:text-gray-100">
 
-                    <x-table>
-                        <x-table-head>
-                            <x-tr>
-                                <x-th>
-                                    Employee
-                                </x-th>
-                                <x-th>
-                                    Employee ID
-                                </x-th>
-                                <x-th>
-                                    Edit
-                                </x-th>
-                            </x-tr>
-                        </x-table-head>
-
-
-                        <x-table-body>
-                        @foreach($sameBranchUsers as $user)
+                                    <x-table>
+                            <x-table-head>
                                 <x-tr>
-                                    <x-th>{{$user->name}}</x-th>
-                                    <x-th>{{$user->id}}</x-th>
-                                    <x-th>
-                                        <x-responsive-nav-link :href="route('profile.edit')">
-                                            Edit Employee
-                                        </x-responsive-nav-link>
-                                    </x-th>
+                                    <x-th>Employee</x-th>
+                                    <x-th>Employee ID</x-th>
+                                    <x-th>Edit</x-th>
                                 </x-tr>
-                        @endforeach
-                        </x-table-body>
+                            </x-table-head>
 
-
-                    </x-table>
-                    <div class="w-full pt-3 max-md:px-4">
+                            <x-table-body>
+                                @foreach($sameBranchUsers as $user)
+                                    <x-tr>
+                                        <x-th>{{ $user->name }}</x-th>
+                                        <x-th>{{ $user->id }}</x-th>
+                                        <x-th>
+                                            <x-responsive-nav-link :href="route('profile.edit')">
+                                                Edit Employee
+                                            </x-responsive-nav-link>
+                                        </x-th>
+                                    </x-tr>
+                                @endforeach
+                            </x-table-body>
+                        </x-table>
+                    
+                    
+                        <div class="w-full pt-3 max-md:px-4">
                         {{$sameBranchUsers->links()}}
                     </div>
 

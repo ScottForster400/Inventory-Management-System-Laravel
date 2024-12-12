@@ -29,8 +29,7 @@
 
 
 
-
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg ">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
 
 
@@ -67,9 +66,9 @@
                         </script>
                     </div>
 
-                    <div >
-                        <b id="errorMessage" ></b>
-                        <div id="curve_chart" style="width: 1200px; height: 350px"></div>
+                    <div class="w-full">
+                        <p id="errorMessage" class="text-center font-semibold"></p>
+                        <div id="curve_chart" style="height: 350px; width:750px;" class="mx-auto max-md:hidden"></div>
                     </div>
 
 
@@ -81,6 +80,8 @@
 
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
+
+
 
 
 
@@ -110,7 +111,7 @@
 
                                                 <x-table>
                                                     <x-table-head>
-                                                        <x-tr>
+                                                        <x-tr class="max-md:hidden">
                                                             <x-th>
                                                                 Stock ID
                                                             </x-th>
@@ -121,6 +122,11 @@
                                                                 Price(£)
                                                             </x-th>
                                                         </x-tr>
+                                                        <tr class="sm:hidden">
+                                                            <x-th>StkID</x-th>
+                                                            <x-th>Amt</x-th>
+                                                            <x-th>£</x-th>
+                                                        </tr>
                                                     </x-table-head>
                                                     @foreach ($transactions as $transaction)
                                                         <x-table-body>
@@ -154,9 +160,12 @@
                         </x-table-body>
                     </x-table>
 
-
                 </div>
+
+
+
             </div>
+
         </div>
     </div>
 </x-app-layout>

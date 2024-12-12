@@ -97,6 +97,7 @@
                                     </x-card-links>
                                 </x-card-body>
                             </x-card-main>
+                            @include('layouts.add-image-modal')
                             @php
 
                             $int++;
