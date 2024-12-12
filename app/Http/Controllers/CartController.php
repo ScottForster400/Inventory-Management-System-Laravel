@@ -46,14 +46,14 @@ class CartController extends Controller
                 }
                 foreach($productAmounts as $productAmount) {
                     $productPrice = floatval($productAmount->amount) * $product->Price;
-                    $amount = $amount + $productPrice;
-                }
+                    $amount = $amount + $productPrice;                }
             }
             $orderedCarts = $carts->sortBy('product_id');
             return view('checkout')->with('carts', $orderedCarts)->with('products', $products)->with('amount', $amount)->with('user', $user_id);
         }
         return view('checkout');
     }
+    // needs work
 
     /**
      * Show the form for creating a new resource.
