@@ -23,7 +23,7 @@ class UserController extends Controller
             })
             ->paginate(5);
 
-        $locationBranch = Branch::where('branch_id',$user_branch_id)->pluck('branch_name');
+        $locationBranch = Branch::where('branch_id',$user_branch_id)->pluck('branch_name')->first();
 
         return view('manage-employees', compact('sameBranchUsers','locationBranch'));
     }
