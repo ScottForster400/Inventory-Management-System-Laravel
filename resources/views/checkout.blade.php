@@ -22,7 +22,7 @@
                         <span class="flex mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">£{{$products[$int]->Price}}</span>
                         <span class="flex mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{$cart->amount}}</span>
                         <div class="flex mb-3 font-normal text-gray-700 dark:text-gray-400">
-                            <form action="{{ route('checkout.index')}}" method="POST">
+                            <form action="{{ route('checkout.store')}}" method="POST">
                                 <label for="Quantity">Pick the amount you want to reduce the amount by</label>
                                 <br>
                                 <input type="number" name="quantity" id="quantity" min="0" max="99">
