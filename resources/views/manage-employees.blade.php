@@ -43,7 +43,7 @@
 
                 <div class="p-6 text-gray-900 dark:text-gray-100">
 
-                                    <x-table>
+                        <x-table>
                             <x-table-head>
                                 <x-tr class="max-md:hidden">
                                     <x-th>Employee</x-th>
