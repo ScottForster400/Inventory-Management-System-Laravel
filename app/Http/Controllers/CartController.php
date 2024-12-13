@@ -53,6 +53,7 @@ class CartController extends Controller
         }
         return view('checkout');
     }
+    // needs work
 
     /**
      * Show the form for creating a new resource.

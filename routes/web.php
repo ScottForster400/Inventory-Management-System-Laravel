@@ -11,6 +11,7 @@ use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Auth\RegisteredUserController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -22,9 +23,7 @@ Route::get('/stock', function () {
 })->middleware(['auth', 'verified'])->name('stock');
 
 
-Route::get('/manage-employees', function () {
-    return view('manage-employees',[UserController::class, 'index']);
-})->middleware(['auth', 'verified'])->name('manage-employees');
+Route::get('/manage-employees', [UserController::class, 'index'])->middleware(['auth', 'verified'])->name('manage-employees');
 
 Route::get('/checkout', function () {
     return view('checkout', [CartController::class, 'index']);
@@ -35,6 +34,11 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+
+Route::middleware('auth')
+    ->get('/admin/create-employee', [RegisteredUserController::class, 'create'])
+    ->name('create.employee');
 
 //Dashboard search and sort
 Route::get('/dashboard/search', [DashboardController::class, 'search'])->name('dashboard.search')->middleware('auth');
