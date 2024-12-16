@@ -66,7 +66,7 @@
                             @php
                                 $game_type = $product->game_type;
                             @endphp
-                            <x-card-main style="height: 600px" class="flex flex-col mb-5 mx-5 hover:shadow-2xl transition-shadow text-center w-1/3 max-sm:w-full">
+                            <x-card-main  class="flex flex-col mb-5 mx-5 hover:shadow-2xl transition-shadow text-center w-1/3 max-sm:w-full">
                                 <div style="flex: 50%" class=" flex justify-center items-center">
                                     <x-card-img class="object-fill" src="{{asset($product->image)}}"></x-card-img>
                                 </div>
@@ -94,8 +94,8 @@
                                     <x-card-links>
                                         @include('layouts.edit-stock-modal')
                                         <x-primary-button class="w-1/3 h-12 flex justify-center items-center !rounded-full !bg-blue-700 hover:!bg-blue-800 !transition-colors">
-                                            <a href="javascript:void(0);" onclick="document.getElementById('checkout-form').submit();">
-                                                <img src="{{asset('imgs/cart.png')}}" alt="Cart" class="p-1">
+                                            <a href="javascript:void(0);" onclick="document.getElementById('checkout-form').submit();" class="flex justify-center items-center">
+                                                <img src="{{asset('imgs/cart.png')}}" alt="Cart" class="p-1 h-2/3 w-2/3">
                                             </a>
                                         </x-primary-button>
                                     </x-card-links>
