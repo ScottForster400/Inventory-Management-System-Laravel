@@ -66,11 +66,11 @@
                             @php
                                 $game_type = $product->game_type;
                             @endphp
-                            <x-card-main  class="flex flex-col mb-5 mx-5 hover:shadow-2xl transition-shadow text-center w-1/3 max-sm:w-full">
-                                <div style="flex: 50%" class=" flex justify-center items-center">
-                                    <x-card-img class="object-fill" src="{{asset($product->image)}}"></x-card-img>
+                            <x-card-main  class="flex flex-col mb-5 mx-5 hover:shadow-2xl transition-shadow text-center w-1/3 max-sm:w-full items-center">
+                                <div style="flex: 50%" class=" flex justify-center items-center max-h-4/5 overflow-hidden rounded-lg w-4/5 h-4/5 pt-5">
+                                    <x-card-img class="object-fill aspect-square" src="{{asset($product->image)}}"></x-card-img>
                                 </div>
-                                <x-card-body class="!py-5 !px-0">
+                                <x-card-body class="!py-5 !px-0 w-full">
                                     <x-card-title>{{$product->name}}</x-card-title>
                                     <p class="text-centre text-gray-500 ">£{{$product->Price}}</p>
                                     <div class="flex flex-row text-center items-center  ">
