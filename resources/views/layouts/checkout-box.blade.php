@@ -3,39 +3,60 @@
     @php
         $int = 0;
     @endphp
-    <x-table class="flex justify-between p-1 border-b align-middle ">
-        <x-table-head>
-            <x-tr>
-                <x-th class="font-bold text-black">
-                    Product Name
-                </x-th>
-                <x-th class="font-bold text-black">
-                    Price
-                </x-th>
-                <x-th class="font-bold text-black">
-                    Amount
-                </x-th>
-            </x-tr>
-        </x-table-head>
-        <x-table-body>
-            @foreach ($carts as $cart)
+    <div class="max-md:hidden">
+        <x-table class="flex justify-between p-1 border-b align-middle">
+            <x-table-head>
                 <x-tr>
-                    <x-th class="font-bold text-gray-500">
-                        {{$products[$int]->name}}
+                    <x-th class="font-bold text-black">
+                        Product Name
                     </x-th>
-                    <x-th class="font-bold text-gray-500">
-                        £{{$products[$int]->Price}}
+                    <x-th class="font-bold text-black">
+                        Price
                     </x-th>
-                    <x-th class="font-bold text-gray-500">
-                        {{$cart->amount}}
+                    <x-th class="font-bold text-black">
+                        Amount
                     </x-th>
                 </x-tr>
-                @php
-                    $int++;
-                @endphp
+            </x-table-head>
+            <x-table-body>
+                @foreach ($carts as $cart)
+                    <x-tr>
+                        <x-th class="font-bold text-gray-500">
+                            {{$products[$int]->name}}
+                        </x-th>
+                        <x-th class="font-bold text-gray-500">
+                            £{{$products[$int]->Price}}
+                        </x-th>
+                        <x-th class="font-bold text-gray-500">
+                            {{$cart->amount}}
+                        </x-th>
+                    </x-tr>
+                    @php
+                        $int++;
+                    @endphp
+                @endforeach
+            </x-table-body>
+        </x-table>
+    </div>
+
+    <div class="hidden justify-between p-1 border-b align-middle max-md:flex max-md:flex-row w-full">
+        @php
+            $int = 0;
+        @endphp
+        <ul class="w-full">
+            @foreach ($carts as $cart)
+                <li class="flex flex-row justify-around w-full">
+                    <p class="font-bold text-gray-500">{{$products[$int]->name}}</p>
+                    <p class="font-bold text-gray-500">£{{$products[$int]->Price}}</p>
+                    <p class="font-bold text-gray-500">{{$cart->amount}}</p>
+                    @php
+                        $int++;
+                    @endphp
+                </li>
             @endforeach
-        </x-table-body>
-    </x-table>
+        </ul>
+    </div>
+
 @else
     <h2>No Products In Cart</h2>
 @endif

@@ -66,11 +66,11 @@
                             @php
                                 $game_type = $product->game_type;
                             @endphp
-                            <x-card-main class="flex flex-col mb-5 mx-5 hover:shadow-2xl transition-shadow text-center max-sm:w-full">
-                                <div class="basis-1/2 flex justify-center items-center">
-                                    <x-card-img src="{{asset($product->image)}}"></x-card-img>
+                            <x-card-main  class="flex flex-col mb-5 mx-5 hover:shadow-2xl transition-shadow text-center w-1/3 max-sm:w-full items-center">
+                                <div style="flex: 50%" class=" flex justify-center items-center max-h-4/5 overflow-hidden rounded-lg w-4/5 h-4/5 pt-5">
+                                    <x-card-img class="object-fill aspect-square" src="{{asset($product->image)}}"></x-card-img>
                                 </div>
-                                <x-card-body class="!py-5 !px-0">
+                                <x-card-body class="!py-5 !px-0 w-full">
                                     <x-card-title>{{$product->name}}</x-card-title>
                                     <p class="text-centre text-gray-500 ">£{{$product->Price}}</p>
                                     <div class="flex flex-row text-center items-center  ">
@@ -93,10 +93,15 @@
                                     <x-card-para class="whitespace-pre-wrap min-h-14 ">{{ Str::limit($product->description,25, '...')}}</x-card-para>
                                     <x-card-links>
                                         @include('layouts.edit-stock-modal')
-                                        <x-primary-button class="w-1/3 h-12 flex justify-center items-center !rounded-full !bg-blue-700 hover:!bg-blue-800 !transition-colors"><img src="{{asset('imgs/cart.png')}}" alt="Cart" class="w-1/2"></img></x-primary-button>
+                                        <x-primary-button class="w-1/3 h-12 flex justify-center items-center !rounded-full !bg-blue-700 hover:!bg-blue-800 !transition-colors">
+                                            <a href="javascript:void(0);" onclick="document.getElementById('checkout-form').submit();" class="flex justify-center items-center">
+                                                <img src="{{asset('imgs/cart.png')}}" alt="Cart" class="p-1 h-2/3 w-2/3">
+                                            </a>
+                                        </x-primary-button>
                                     </x-card-links>
                                 </x-card-body>
                             </x-card-main>
+                            @include('layouts.add-image-modal')
                             @php
 
                             $int++;
@@ -112,5 +117,8 @@
             </div>
         </div>
     </div>
+    <form id="checkout-form" action="{{ route('checkout.add', ['product' => $product]) }}" method="POST" style="display: none;">
+        @csrf
+    </form>
 
 </x-app-layout>
