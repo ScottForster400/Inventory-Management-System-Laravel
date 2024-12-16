@@ -47,6 +47,8 @@ Route::get('/dashboard/sort', [DashboardController::class, 'sort'])->name('dashb
 
 Route::get('/dashboard/search/sort', [DashboardController::class, 'sortSearch'])->name('dashboard.sortSearch')->middleware('auth');
 
+// Route::get('/dashboard/img', [DashboardController::class, 'uploadImage'])->name('dashboard.img')->middleware('auth');
+
 require __DIR__ . '/auth.php';
 
 //all branches routes
