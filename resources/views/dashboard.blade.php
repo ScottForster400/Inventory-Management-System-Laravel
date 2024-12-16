@@ -93,7 +93,11 @@
                                     <x-card-para class="whitespace-pre-wrap min-h-14 ">{{ Str::limit($product->description,25, '...')}}</x-card-para>
                                     <x-card-links>
                                         @include('layouts.edit-stock-modal')
-                                        <x-primary-button class="w-1/3 h-12 flex justify-center items-center !rounded-full !bg-blue-700 hover:!bg-blue-800 !transition-colors"><img src="{{asset('imgs/cart.png')}}" alt="Cart" class="w-1/2"></img></x-primary-button>
+                                        <x-primary-button class="w-1/3 h-12 flex justify-center items-center !rounded-full !bg-blue-700 hover:!bg-blue-800 !transition-colors">
+                                            <a href="javascript:void(0);" onclick="document.getElementById('checkout-form').submit();">
+                                                <img src="{{asset('imgs/cart.png')}}" alt="Cart" class="p-1">
+                                            </a>
+                                        </x-primary-button>
                                     </x-card-links>
                                 </x-card-body>
                             </x-card-main>
@@ -113,5 +117,8 @@
             </div>
         </div>
     </div>
+    <form id="checkout-form" action="{{ route('checkout.add', ['product' => $product]) }}" method="POST" style="display: none;">
+        @csrf
+    </form>
 
 </x-app-layout>

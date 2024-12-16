@@ -164,5 +164,8 @@ class CartController extends Controller
         return to_route('dashboard.index');
     }
 
-
+    public function add(Product $product)
+    {
+        dd('aksjdkajs');
+    }
 }
