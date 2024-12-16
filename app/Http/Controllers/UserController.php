@@ -15,8 +15,6 @@ class UserController extends Controller
     {
         $searchedName = $request->input('search');
         $user_branch_id = Auth::user()->branch_id;
-
-
         $sameBranchUsers = User::where('branch_id', $user_branch_id)
             ->when($searchedName, function ($query, $name) {
                 return $query->where('name', 'like', "%$name%");
