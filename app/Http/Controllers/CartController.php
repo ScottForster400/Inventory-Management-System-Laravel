@@ -168,7 +168,7 @@ class CartController extends Controller
     {
         $productID = $_REQUEST['productIdToAddToCart'];
         $user_id = Auth::user()->id;
-        
+        $product = Product::where('product_id', $productID)->first();
         // Check if the product already exists in the user's cart
         $existingCart = Cart::where('user_id', $user_id)->where('product_id', $productID)->first();
         
@@ -187,6 +187,7 @@ class CartController extends Controller
             $cart->save();
         }
         
+        session()->flash('success',"{$product->name} has been successfully added to cart");
         // Redirect to the main page
         return to_route('dashboard.index');
         

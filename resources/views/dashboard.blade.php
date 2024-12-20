@@ -96,8 +96,8 @@
                                     <x-card-links>
                                         @include('layouts.edit-stock-modal')
                                         <x-primary-button class="w-1/3 h-12 flex justify-center items-center !rounded-full !bg-blue-700 hover:!bg-blue-800 !transition-colors">
-                                            <a href="javascript:void(0);" onclick="document.getElementById('checkout-form').submit();">
-                                                <img src="{{asset('imgs/cart.png')}}" alt="Cart" class="p-1">
+                                            <a href="javascript:void(0);" onclick="document.getElementById('checkout-form-{{ $product->product_id }}').submit();">
+                                                <img src="{{asset('imgs/cart.png')}}" alt="Cart" class="h-2/3 w-2/3 max-w-full">
                                             </a>
                                         </x-primary-button>
                                     </x-card-links>
