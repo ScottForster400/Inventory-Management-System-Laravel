@@ -164,5 +164,32 @@ class CartController extends Controller
         return to_route('dashboard.index');
     }
 
-
+    public function add(Product $product)
+    {
+        $productID = $_REQUEST['productIdToAddToCart'];
+        $user_id = Auth::user()->id;
+        $product = Product::where('product_id', $productID)->first();
+        // Check if the product already exists in the user's cart
+        $existingCart = Cart::where('user_id', $user_id)->where('product_id', $productID)->first();
+        
+        if ($existingCart) {
+            // If the product already exists in the cart, update the amount
+            $existingCart->update([
+                'amount' => $existingCart->amount + 1,
+            ]);
+        } else {
+            // If the product is not in the cart, create a new cart entry
+            $cart = new Cart([
+                'user_id' => $user_id,
+                'product_id' => $productID,
+                'amount' => 1,
+            ]);
+            $cart->save();
+        }
+        
+        session()->flash('success',"{$product->name} has been successfully added to cart");
+        // Redirect to the main page
+        return to_route('dashboard.index');
+        
+    }
 }

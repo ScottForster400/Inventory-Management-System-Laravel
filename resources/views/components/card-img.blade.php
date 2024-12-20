@@ -1,1 +1,1 @@
-<img {{ $attributes->merge(['class'=>'rounded-t-lg '])}} />
+<img {{ $attributes->merge(['class'=>'rounded-lg'])}} />

@@ -20,6 +20,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
+        //dd($_REQUEST);
         // dd($int);
         $branchId = Auth::user()->branch_id;
         $stocks = Stock::where('branch_id',$branchId)->get();
@@ -29,7 +30,14 @@ class DashboardController extends Controller
 
         }
         $products = Product::whereIn('product_id',$productsIdVals)->paginate(4);
-        return view('dashboard')->with('stock', $stocks)->with('products',$products);
+        if(session('success')){
+            session()->flash('success',session('success'));
+            return view('dashboard')->with('stock', $stocks)->with('products',$products);
+        }
+        else{
+            return view('dashboard')->with('stock', $stocks)->with('products',$products);
+        }
+
 
     }
 
@@ -59,6 +67,23 @@ class DashboardController extends Controller
             'game_type' => 'required',
             'game_genre' => 'required'
         ]);
+
+        $alreadyExist = Product::where('name',$request->name)->first();
+
+        //Checks if product exists in branch -- if true updates stock amount with inputted amount
+        if($alreadyExist != null){
+            $inBranch = Stock::where('branch_id',Auth::user()->branch_id)->where('product_id',$alreadyExist->product_id)->first();
+            if($inBranch !=null){
+                $updatedAmount = $request->amount + $inBranch->amount;
+                $inBranch->update([
+                    'amount'=>$updatedAmount,
+
+                ]);
+                session()->flash('success',"{$request->name} already exists updated stock count with specified amount ");
+                    // Returns user to main dashboard view
+                    return to_route('dashboard.index');
+            }
+        }
 
         // Creates a new Product model with inputted data and saves it to database
         $uuid = Str::uuid();
@@ -90,7 +115,7 @@ class DashboardController extends Controller
         ]);
 
         $stock->save();
-
+        session()->flash('success',"{$request->name} has been successfully added ");
         // Returns user to main dashboard view
         return to_route('dashboard.index');
 
@@ -148,8 +173,9 @@ class DashboardController extends Controller
                             'image'=>'uploads/'.$imageName,
                         ]);
 
+                        session()->flash('success',"{$selectedProduct->name}'s image has been successfully uploaded");
                         //Returns user to main dashboard view
-                         return to_route('dashboard.index')->with('success', 'Image uploaded successfully!');
+                         return to_route('dashboard.index',['success'=>"{$selectedProduct->name} successfully removed"]);
                     // }
                     // return redirect()->route('dashboard.index')->with('error', 'Image upload failed.');
                 }
@@ -195,6 +221,8 @@ class DashboardController extends Controller
             'amount' => $request->amount,
         ]);
 
+        session()->flash('success',"{$selectedProduct->name}' has been successfully edited");
+
          //Returns user to main dashboard view
          return to_route('dashboard.index');
     }
@@ -216,12 +244,13 @@ class DashboardController extends Controller
         $selectedStock->delete();
         $selectedProduct->delete();
 
-        return to_route('dashboard.index');
+        session()->flash('success',"{$selectedProduct->name} successfully removed");
+
+        return to_route('dashboard.index',['success'=>"{$selectedProduct->name} successfully removed"]);
     }
 
     //Searches stock used https://medium.com/@iqbal.ramadhani55/search-in-laravel-e0e20f329b01 to help create function
     public function search(Request $request){
-
 
         $branchId = Auth::user()->branch_id;
         $stocks = Stock::where('branch_id',$branchId)->get();
@@ -243,6 +272,7 @@ class DashboardController extends Controller
                 ['price','<=',$request->max_price],
                 ['age_rating','<=',$request->age],
                 ['maximum_player_count','<=',$request->player_count],
+                ['game_length','<=', $request->game_length],
                 ['game_type','like',"%$request->game_type%"],
                 ['game_genre','like',"%$request->game_genre%"]
 
