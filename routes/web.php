@@ -40,6 +40,10 @@ Route::middleware('auth')
     ->get('/admin/create-employee', [RegisteredUserController::class, 'create'])
     ->name('create.employee');
 
+
+Route::post('/users', [UserController::class, 'store'])->name('users.store');
+Route::get('/users/search', [UserController::class, 'search'])->name('user.search')->middleware('auth');
+
 //Dashboard search and sort
 Route::get('/dashboard/search', [DashboardController::class, 'search'])->name('dashboard.search')->middleware('auth');
 
@@ -70,11 +74,6 @@ Route::resource('admin',AdminController::class)->middleware('auth');
 
 Route::resource('dashboard',DashboardController::class)->middleware('auth');
 Route::resource('checkout',CartController::class)->middleware('auth');
-
-
-
-Route::post('/employees/add', [UserController::class, 'store'])->name('employees.store');
-Route::get('/employees', [UserController::class, 'index'])->name('employees.index');
 
 
 

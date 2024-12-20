@@ -7,21 +7,8 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <b>New Employee:</b>
-                    <form method="POST" action="{{ route('register') }}">
-
-                        <div class="flex items-center justify-left">
-                            <!-- Admin -->
-                            <div class="pl-2 pt-2">
-                                <x-input-label for="admin" :value="__('Admin')" />
-                            </div>
-                            <div class="pl-2 pt-2">
-                                <x-text-input id="admin" class="block mt-1 w-4" type="checkbox" name="admin" :value="old('admin')" required autofocus autocomplete="admin" />
-                                <x-input-error :messages="$errors->get('admin')" class="mt-2" />
-                            </div>
-                        </div>
-
+                    <form method="POST" action="{{ route('users.store') }}">
                         @csrf
-
                         <x-table>
                             <x-table-body>
                                 <x-tr>

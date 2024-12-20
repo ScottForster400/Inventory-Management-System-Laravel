@@ -23,10 +23,11 @@
 
             <div class="flex justify-between">
 
-
-                <div class="flex-none w-2/12 min-w-40">
-                    <x-search-bar>Search</x-search-bar>
-                </div>
+                <form action="{{route('user.search')}}" method="GET">
+                    <div class="flex-none w-2/12 min-w-40">
+                        <x-search-bar>Search</x-search-bar>
+                    </div>
+                </form>
 
                 <div class="flex-none w-44 pb-4">
                     <x-nav-link :href="route('create.employee')" :active="request()->routeIs('create.employee')">
