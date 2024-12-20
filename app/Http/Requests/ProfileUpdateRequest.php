@@ -28,6 +28,10 @@ class ProfileUpdateRequest extends FormRequest
                 'max:255',
                 Rule::unique(User::class)->ignore($userId),
             ],
+            'phonenumber' => ['nullable', 'string', 'max:255'],
+            'dob' => ['nullable', 'date'],
+            'address' => ['nullable', 'string'],
+            'national_insurance_number' => ['nullable', 'string', 'max:255'],
         ];
     }
 }
