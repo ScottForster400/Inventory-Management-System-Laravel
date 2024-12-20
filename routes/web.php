@@ -11,6 +11,7 @@ use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Auth\RegisteredUserController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -22,13 +23,13 @@ Route::get('/stock', function () {
 })->middleware(['auth', 'verified'])->name('stock');
 
 
-Route::get('/manage-employees', function () {
-    return view('manage-employees',[UserController::class, 'index']);
-})->middleware(['auth', 'verified'])->name('manage-employees');
+Route::get('/manage-employees', [UserController::class, 'index'])->middleware(['auth', 'verified'])->name('manage-employees');
 
 Route::get('/checkout', function () {
     return view('checkout', [CartController::class, 'index']);
 })->middleware(['auth', 'verified'])->name('checkout');
+
+Route::post('/checkout/add', [CartController::class, 'add'])->name('checkout.add')->middleware('auth');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -36,12 +37,19 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+
+Route::middleware('auth')
+    ->get('/admin/create-employee', [RegisteredUserController::class, 'create'])
+    ->name('create.employee');
+
 //Dashboard search and sort
 Route::get('/dashboard/search', [DashboardController::class, 'search'])->name('dashboard.search')->middleware('auth');
 
 Route::get('/dashboard/sort', [DashboardController::class, 'sort'])->name('dashboard.sort')->middleware('auth');
 
 Route::get('/dashboard/search/sort', [DashboardController::class, 'sortSearch'])->name('dashboard.sortSearch')->middleware('auth');
+
+// Route::get('/dashboard/img', [DashboardController::class, 'uploadImage'])->name('dashboard.img')->middleware('auth');
 
 require __DIR__ . '/auth.php';
 
@@ -64,6 +72,11 @@ Route::resource('admin',AdminController::class)->middleware('auth');
 
 Route::resource('dashboard',DashboardController::class)->middleware('auth');
 Route::resource('checkout',CartController::class)->middleware('auth');
+
+
+
+Route::post('/employees/add', [UserController::class, 'store'])->name('employees.store');
+Route::get('/employees', [UserController::class, 'index'])->name('employees.index');
 
 
 
