@@ -73,7 +73,7 @@
                                     <x-tr class="sm:hidden">
                                         <x-th>{{ $user->name }}</x-th>
                                         <x-th>
-                                            <x-nav-link :href="route('profile.edit')" :active="request()->routeIs('profile.edit')">
+                                            <x-nav-link :href="route('profile.edit', $user)" :active="request()->routeIs('profile.edit')">
                                                 {{ __('Edit Employee') }}
                                             </x-nav-link>
                                         </x-th>
