@@ -222,7 +222,6 @@ class DashboardController extends Controller
     //Searches stock used https://medium.com/@iqbal.ramadhani55/search-in-laravel-e0e20f329b01 to help create function
     public function search(Request $request){
 
-
         $branchId = Auth::user()->branch_id;
         $stocks = Stock::where('branch_id',$branchId)->get();
 
@@ -243,6 +242,7 @@ class DashboardController extends Controller
                 ['price','<=',$request->max_price],
                 ['age_rating','<=',$request->age],
                 ['maximum_player_count','<=',$request->player_count],
+                ['game_length','<=', $request->game_length],
                 ['game_type','like',"%$request->game_type%"],
                 ['game_genre','like',"%$request->game_genre%"]
 
