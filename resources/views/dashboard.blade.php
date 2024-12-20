@@ -96,8 +96,8 @@
                                     <x-card-links>
                                         @include('layouts.edit-stock-modal')
                                         <x-primary-button class="w-1/3 h-12 flex justify-center items-center !rounded-full !bg-blue-700 hover:!bg-blue-800 !transition-colors">
-                                            <a href="javascript:void(0);" onclick="document.getElementById('checkout-form').submit();" class="flex justify-center items-center">
-                                                <img src="{{asset('imgs/cart.png')}}" alt="Cart" class="p-1 h-2/3 w-2/3">
+                                            <a href="javascript:void(0);" onclick="document.getElementById('checkout-form').submit();">
+                                                <img src="{{asset('imgs/cart.png')}}" alt="Cart" class="p-1">
                                             </a>
                                         </x-primary-button>
                                     </x-card-links>
@@ -108,6 +108,10 @@
 
                             $int++;
                             @endphp
+                            <form id="checkout-form-{{ $product->product_id }}" action="{{ route('checkout.add')}}" method="POST" style="display: none;">
+                                @csrf
+                                <input type="hidden" name="productIdToAddToCart" value="{{$product->product_id}}">
+                            </form>
                         @empty
                             <p>No Stock in the system</p>
                         @endforelse
@@ -119,8 +123,4 @@
             </div>
         </div>
     </div>
-    <form id="checkout-form" action="{{ route('checkout.add', ['product' => $product]) }}" method="POST" style="display: none;">
-        @csrf
-    </form>
-
 </x-app-layout>
