@@ -70,9 +70,20 @@ class DashboardController extends Controller
 
         $alreadyExist = Product::where('name',$request->name)->first();
 
-        // if($alreadyExist != null){
-        //     $inBranch = Stock::
-        // }
+        //Checks if product exists in branch -- if true updates stock amount with inputted amount
+        if($alreadyExist != null){
+            $inBranch = Stock::where('branch_id',Auth::user()->branch_id)->where('product_id',$alreadyExist->product_id)->first();
+            if($inBranch !=null){
+                $updatedAmount = $request->amount + $inBranch->amount;
+                $inBranch->update([
+                    'amount'=>$updatedAmount,
+
+                ]);
+                session()->flash('success',"{$request->name} already exists updated stock count with specified amount ");
+                    // Returns user to main dashboard view
+                    return to_route('dashboard.index');
+            }
+        }
 
         // Creates a new Product model with inputted data and saves it to database
         $uuid = Str::uuid();
