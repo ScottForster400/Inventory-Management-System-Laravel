@@ -26,7 +26,7 @@ class UserController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'phone' => 'required|string|regex:/^\d{3}-\d{2}-\d{3}$/',
+            'phonenumber' => 'required|string|max:11',
             'dob' => 'required|date',
             'address' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
@@ -34,9 +34,9 @@ class UserController extends Controller
             'national_insurance_number' => 'required|string|min:9',
         ]);
 
-        $user = User::create([
+        $user = new User([
             'name' => $validated['name'],
-            'phone' => $validated['phone'],
+            'phonenumber' => $validated['phonenumber'],
             'dob' => $validated['dob'],
             'address' => $validated['address'],
             'email' => $validated['email'],
