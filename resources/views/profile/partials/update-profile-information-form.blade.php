@@ -53,6 +53,16 @@
             <x-input-error class="mt-2" :messages="$errors->get('address')" />
         </div>
 
+
+        @if(Auth::user()->admin==1)
+        <div class="mb-6">
+            <label for="admin" class="inline-flex items-center">
+                <input type="checkbox" name="admin" id="admin" value="1" {{ $user->admin ? 'checked' : '' }} class="form-checkbox">
+                <span class="ml-2">Admin</span>
+            </label>
+        </div>
+        @endif
+
         <div class="flex items-center gap-4">
             <x-primary-button>{{ __('Save') }}</x-primary-button>
 

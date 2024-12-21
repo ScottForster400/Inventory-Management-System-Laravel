@@ -32,6 +32,7 @@ class ProfileUpdateRequest extends FormRequest
             'dob' => ['nullable', 'date'],
             'address' => ['nullable', 'string'],
             'national_insurance_number' => ['nullable', 'string', 'max:255'],
+            'admin' => 'nullable|in:0,1',
         ];
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AdminUpdateRequest;
 use App\Http\Requests\ProfileUpdateRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -32,10 +33,12 @@ class ProfileController extends Controller
     {
 
         $user->fill($request->validated());
+        $user->admin = $request->has('admin') ? 1 : 0;
         $user->save();
 
         return Redirect::route('profile.edit', $user)->with('status', 'profile-updated');
     }
+
 
     /**
      * Delete the user's account.
