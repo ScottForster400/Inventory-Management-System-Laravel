@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Branch;
 use App\Models\User;
 use Carbon\Carbon;
 use App\Models\Transaction;
@@ -64,9 +65,9 @@ class AdminController extends Controller
             $chartData[] = [$key,$value->sum('price')];
         }
 
+        $locationBranch = Branch::where('branch_id',$user_branch_id)->pluck('branch_name')->first();
 
-
-        return view('generate-reports', compact('groupedTransactions','chartData','dateFilter'));
+        return view('generate-reports', compact('groupedTransactions','chartData','dateFilter','locationBranch'));
 
     }
 
