@@ -132,18 +132,36 @@
                                                             <x-th>
                                                                 Price(£)
                                                             </x-th>
+                                                            <x-th>
+                                                                Time
+                                                            </x-th>
                                                         </x-tr>
                                                         <tr class="sm:hidden">
-                                                            <x-th>StkID</x-th>
+                                                            <x-th>ID</x-th>
                                                             <x-th>Amt</x-th>
                                                             <x-th>£</x-th>
                                                         </tr>
                                                     </x-table-head>
                                                     @foreach ($transactions as $transaction)
                                                         <x-table-body>
-                                                                <x-tr>
+                                                                <x-tr class="max-md:hidden">
                                                                     <x-th>
-                                                                        {{$transaction->product_id}}
+                                                                        {{$transaction->transaction_id}}
+                                                                    </x-th>
+                                                                    <x-th>
+                                                                        {{$transaction->amount}}
+                                                                    </x-th>
+                                                                    <x-th>
+                                                                        {{$transaction->price}}
+                                                                    </x-th>
+                                                                    <x-th>
+                                                                        {{$transaction->created_at->format('H:i')}}
+                                                                    </x-th>
+                                                                </x-tr>
+
+                                                                <x-tr class="sm:hidden">
+                                                                    <x-th>
+                                                                        {{$transaction->transaction_id}}
                                                                     </x-th>
                                                                     <x-th>
                                                                         {{$transaction->amount}}
