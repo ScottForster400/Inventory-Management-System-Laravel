@@ -5,8 +5,8 @@
 
 
 
-<div class="flex max-md:flex-col max-md:items-center items-center justify-between p-4 w-full">
-    <div class="w-1/4 border-solid border-2 border-gray-500 rounded-lg shadow-xl p-4 max-md:w-4/5">
+<div class="flex max-md:flex-col max-md:items-center justify-center p-4 w-full">
+    <div class="w-1/4 border-solid border-2 border-gray-500 rounded-lg shadow-xl p-4 flex-shrink-0 max-md:w-4/5 h-1/3">
         @include('layouts/checkout-box')
     </div>
     @php

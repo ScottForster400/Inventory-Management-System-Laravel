@@ -4,7 +4,7 @@
         $int = 0;
     @endphp
     <div class="max-md:hidden">
-        <x-table class="flex justify-between p-1 border-b align-middle">
+        <x-table class="flex justify-between p-1 border-b align-middle item">
             <x-table-head>
                 <x-tr>
                     <x-th class="font-bold text-black">
@@ -39,7 +39,7 @@
         </x-table>
     </div>
 
-    <div class="hidden justify-between p-1 border-b align-middle max-md:flex max-md:flex-row w-full">
+    <div class="hidden justify-between p-1 border-b align-middle max-md:flex max-md:flex-row w-full items-center">
         @php
             $int = 0;
         @endphp
