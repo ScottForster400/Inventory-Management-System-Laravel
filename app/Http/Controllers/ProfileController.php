@@ -19,6 +19,7 @@ class ProfileController extends Controller
     public function edit(Request $request, User $user = null): View
     {
 
+        //gets the selected user that was passed when choosing user details
         $user = $user ?: $request->user();
 
         return view('profile.edit', [
@@ -32,6 +33,7 @@ class ProfileController extends Controller
     public function update(ProfileUpdateRequest $request, User $user): RedirectResponse
     {
 
+        //updates the users information
         $user->fill($request->validated());
         $user->admin = $request->has('admin') ? 1 : 0;
         $user->save();
@@ -45,6 +47,7 @@ class ProfileController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
+        //deletes the user.
         $request->validateWithBag('userDeletion', [
             'password' => ['required', 'current_password'],
         ]);

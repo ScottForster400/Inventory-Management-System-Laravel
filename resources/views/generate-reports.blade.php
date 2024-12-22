@@ -8,6 +8,7 @@
                 </h2>
             </div>
 
+            <!-- Branch of Admin -->
             <div>
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                 {{$locationBranch}}
@@ -23,6 +24,7 @@
 
             <div class="grid grid-cols-3 gap-4 pb-4 pl-4">
                 <div class="">
+                    <!-- Date Filters -->
                     <form method="GET" action="{{ route('admin.index') }}">
                         <label for="dateFilter">Sort By:</label>
                         <select name="dateFilter" id="dateFilter" onchange="this.form.submit()">
@@ -78,7 +80,9 @@
                     </div>
 
                     <div class="w-full">
+                        <!-- If no transactions within timeframe, error message displays -->
                         <p id="errorMessage" class="text-center font-semibold"></p>
+                        <!-- Graph for transactions -->
                         <div id="curve_chart" style="height: 350px; width:750px;" class="mx-auto max-md:hidden"></div>
                     </div>
 
@@ -116,6 +120,7 @@
                                         {{Carbon\Carbon::parse($date)->format('Y/m/d') }}</x-th>
                                     <x-th>
                                         <x-modal-toggle data-modal-target="edit{{$date}}" data-modal-toggle="edit{{$date}}">View Daily Report</x-modal-toggle>
+                                        <!-- Modal to view report -->
                                         <x-modal id="edit{{$date}}" class="bg-gray-500 bg-opacity-75 h-full">
                                             <x-modal-header data-modal-hide="edit{{$date}}">Report</x-modal-header>
                                             <x-modal-body>

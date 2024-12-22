@@ -7,6 +7,7 @@
                 </h2>
             </div>
 
+            <!-- Branch of Admin -->
             <div>
                 <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                     {{$locationBranch}}
@@ -23,12 +24,14 @@
 
             <div class="flex justify-between">
 
+                <!-- Search  bar to search employees -->
                 <form action="{{route('user.search')}}" method="GET">
                     <div class="flex-none w-2/12 min-w-40">
                         <x-search-bar>Search</x-search-bar>
                     </div>
                 </form>
 
+                <!-- Create Employee Button -->
                 <div class="flex-none w-44 pb-4">
                     <x-nav-link :href="route('create.employee')" :active="request()->routeIs('create.employee')">
                         {{ __('Create Employee') }}
@@ -59,6 +62,7 @@
                             </x-table-head>
 
                             <x-table-body>
+                                <!-- All employees in admins branch -->
                                 @foreach($sameBranchUsers as $user)
                                     <x-tr class="max-md:hidden">
                                         <x-th>{{ $user->name }}</x-th>
@@ -70,11 +74,12 @@
                                         </x-th>
                                     </x-tr>
 
+                                    <!-- Mobile View -->
                                     <x-tr class="sm:hidden">
                                         <x-th>{{ $user->name }}</x-th>
                                         <x-th>
                                             <x-nav-link :href="route('profile.edit', $user)" :active="request()->routeIs('profile.edit')">
-                                                {{ __('Edit Employee') }}
+                                                {{ __('Edit') }}
                                             </x-nav-link>
                                         </x-th>
                                     </x-tr>

@@ -17,43 +17,49 @@
         @csrf
         @method('patch')
 
+        <!-- Name -->
         <div>
             <x-input-label for="name" :value="__('Name')" />
             <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->name)" required autofocus autocomplete="name" />
             <x-input-error class="mt-2" :messages="$errors->get('name')" />
         </div>
 
+        <!-- Email -->
         <div>
             <x-input-label for="email" :value="__('Email')" />
             <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required autocomplete="username" />
             <x-input-error class="mt-2" :messages="$errors->get('email')" />
         </div>
 
+        <!-- NIN -->
         <div>
             <x-input-label for="national_insurance_number" :value="__('National Insurance Number')" />
             <x-text-input id="national_insurance_number" name="national_insurance_number" type="text" class="mt-1 block w-full" :value="old('national_insurance_number', $user->national_insurance_number)" />
             <x-input-error class="mt-2" :messages="$errors->get('national_insurance_number')" />
         </div>
 
+        <!-- DoB -->
         <div>
             <x-input-label for="date_of_birth" :value="__('Date of Birth')" />
             <x-text-input id="date_of_birth" name="date_of_birth" type="date" class="mt-1 block w-full" :value="old('date_of_birth', $user->dob)" />
             <x-input-error class="mt-2" :messages="$errors->get('date_of_birth')" />
         </div>
 
+        <!-- Phone Number -->
         <div>
             <x-input-label for="phone_number" :value="__('Phone Number')" />
             <x-text-input id="phone_number" name="phone_number" type="text" class="mt-1 block w-full" :value="old('phone_number', $user->phonenumber)" />
             <x-input-error class="mt-2" :messages="$errors->get('phone_number')" />
         </div>
 
+        <!-- Address -->
         <div>
             <x-input-label for="address" :value="__('Address')" />
             <x-text-input id="address" name="address" type="text" class="mt-1 block w-full" :value="old('address', $user->address)"/>
             <x-input-error class="mt-2" :messages="$errors->get('address')" />
         </div>
 
-
+        <!-- Admin Enabled -->
         @if(Auth::user()->admin==1)
         <div class="mb-6">
             <label for="admin" class="inline-flex items-center">
