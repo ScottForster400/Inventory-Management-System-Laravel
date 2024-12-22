@@ -13,39 +13,61 @@
         @csrf
     </form>
 
-    <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6">
+    <form method="post" action="{{ route('profile.update', $user) }}" class="mt-6 space-y-6">
         @csrf
         @method('patch')
 
+        <!-- Name -->
         <div>
             <x-input-label for="name" :value="__('Name')" />
             <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->name)" required autofocus autocomplete="name" />
             <x-input-error class="mt-2" :messages="$errors->get('name')" />
         </div>
 
+        <!-- Email -->
         <div>
             <x-input-label for="email" :value="__('Email')" />
             <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required autocomplete="username" />
             <x-input-error class="mt-2" :messages="$errors->get('email')" />
-
-            @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
-                <div>
-                    <p class="text-sm mt-2 text-gray-800 dark:text-gray-200">
-                        {{ __('Your email address is unverified.') }}
-
-                        <button form="send-verification" class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">
-                            {{ __('Click here to re-send the verification email.') }}
-                        </button>
-                    </p>
-
-                    @if (session('status') === 'verification-link-sent')
-                        <p class="mt-2 font-medium text-sm text-green-600 dark:text-green-400">
-                            {{ __('A new verification link has been sent to your email address.') }}
-                        </p>
-                    @endif
-                </div>
-            @endif
         </div>
+
+        <!-- NIN -->
+        <div>
+            <x-input-label for="national_insurance_number" :value="__('National Insurance Number')" />
+            <x-text-input id="national_insurance_number" name="national_insurance_number" type="text" class="mt-1 block w-full" :value="old('national_insurance_number', $user->national_insurance_number)" />
+            <x-input-error class="mt-2" :messages="$errors->get('national_insurance_number')" />
+        </div>
+
+        <!-- DoB -->
+        <div>
+            <x-input-label for="date_of_birth" :value="__('Date of Birth')" />
+            <x-text-input id="date_of_birth" name="date_of_birth" type="date" class="mt-1 block w-full" :value="old('date_of_birth', $user->dob)" />
+            <x-input-error class="mt-2" :messages="$errors->get('date_of_birth')" />
+        </div>
+
+        <!-- Phone Number -->
+        <div>
+            <x-input-label for="phone_number" :value="__('Phone Number')" />
+            <x-text-input id="phone_number" name="phone_number" type="text" class="mt-1 block w-full" :value="old('phone_number', $user->phonenumber)" />
+            <x-input-error class="mt-2" :messages="$errors->get('phone_number')" />
+        </div>
+
+        <!-- Address -->
+        <div>
+            <x-input-label for="address" :value="__('Address')" />
+            <x-text-input id="address" name="address" type="text" class="mt-1 block w-full" :value="old('address', $user->address)"/>
+            <x-input-error class="mt-2" :messages="$errors->get('address')" />
+        </div>
+
+        <!-- Admin Enabled -->
+        @if(Auth::user()->admin==1)
+        <div class="mb-6">
+            <label for="admin" class="inline-flex items-center">
+                <input type="checkbox" name="admin" id="admin" value="1" {{ $user->admin ? 'checked' : '' }} class="form-checkbox">
+                <span class="ml-2">Admin</span>
+            </label>
+        </div>
+        @endif
 
         <div class="flex items-center gap-4">
             <x-primary-button>{{ __('Save') }}</x-primary-button>
@@ -61,4 +83,5 @@
             @endif
         </div>
     </form>
+
 </section>

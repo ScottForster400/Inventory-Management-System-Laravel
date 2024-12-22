@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AdminUpdateRequest;
 use App\Http\Requests\ProfileUpdateRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -15,35 +16,38 @@ class ProfileController extends Controller
     /**
      * Display the user's profile form.
      */
-    public function edit(Request $request): View
+    public function edit(Request $request, User $user = null): View
     {
 
+        //gets the selected user that was passed when choosing user details
+        $user = $user ?: $request->user();
+
         return view('profile.edit', [
-            'user' => $request->user(),
+            'user' => $user,
         ]);
     }
 
     /**
      * Update the user's profile information.
      */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
+    public function update(ProfileUpdateRequest $request, User $user): RedirectResponse
     {
-        $request->user()->fill($request->validated());
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
-        }
+        //updates the users information
+        $user->fill($request->validated());
+        $user->admin = $request->has('admin') ? 1 : 0;
+        $user->save();
 
-        $request->user()->save();
-
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        return Redirect::route('profile.edit', $user)->with('status', 'profile-updated');
     }
+
 
     /**
      * Delete the user's account.
      */
     public function destroy(Request $request): RedirectResponse
     {
+        //deletes the user.
         $request->validateWithBag('userDeletion', [
             'password' => ['required', 'current_password'],
         ]);
