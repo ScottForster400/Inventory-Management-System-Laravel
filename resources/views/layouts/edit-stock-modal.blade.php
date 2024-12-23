@@ -161,14 +161,14 @@
                     @enderror
                 </div>
             </x-modal-body>
-            <div class="flex items-center justify-between max-sm:justify-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
-                <x-primary-button class="!py-3 !bg-blue-700 hover:!bg-blue-800 !transition-colors">Edit Stock</x-primary-button>
+            <div class="flex items-center max-sm:flex-wrap justify-between max-sm:justify-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
+                <x-primary-button class="!py-3 !bg-blue-700 hover:!bg-blue-800 !transition-colors max-sm:!w-1/3 max-sm:m-2 max-sm:!h-14 justify-center items-center">Edit Stock</x-primary-button>
             </form>
-            <x-modal-toggle data-modal-target="img{{$product->product_id}}" data-modal-toggle="img{{$product->product_id}}" data-modal-hide="edit{{$product->product_id}}" class="w-1/3 h-12 flex justify-center items-center !rounded-full !bg-blue-700 hover:!bg-blue-800 !transition-colors">Image Upload</x-modal-toggle>
-            <form action="{{route('dashboard.destroy', $product)}}" method="post">
-                @method('delete')
-                @csrf
-                <x-danger-button class="!py-3 hover:!bg-red-800 !transition-colors" onclick="return confirm('Are you sure you would like to delete this product')" >Delete Stock</x-danger-button>
-            </form>
+                <x-primary-button data-modal-target="img{{$product->product_id}}" data-modal-toggle="img{{$product->product_id}}" data-modal-hide="edit{{$product->product_id}}" class="!py-3 !bg-blue-700 hover:!bg-blue-800 !transition-colors max-sm:!w-1/3 max-sm:m-2 max-sm:!h-14 justify-center items-center ">Image Upload</x-primary-button>
+                <form action="{{route('dashboard.destroy', $product)}}" method="post" class="max-sm:w-1/3 flex justify-center items-center">
+                    @method('delete')
+                    @csrf
+                    <x-danger-button class="!py-3 hover:!bg-red-800 !transition-colors max-sm:!w-full max-sm:m-2 max-sm:!h-14 flex justify-center items-center" onclick="return confirm('Are you sure you would like to delete this product')" >Delete Stock</x-danger-button>
+                </form>
             </div>
 </x-modal>
