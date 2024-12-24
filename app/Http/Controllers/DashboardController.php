@@ -54,6 +54,8 @@ class DashboardController extends Controller
      */
     public function store(Request $request)
     {
+
+
         //make sure request contains all relevant info
         $request->validate([
             'name' => 'required|Max:50',
@@ -242,7 +244,7 @@ class DashboardController extends Controller
             $selectedStock =$stock;
         }
         $selectedStock->delete();
-        $selectedProduct->delete();
+       // $selectedProduct->delete();
 
         session()->flash('success',"{$selectedProduct->name} successfully removed");
 
