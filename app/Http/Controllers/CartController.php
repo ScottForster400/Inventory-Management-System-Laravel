@@ -12,6 +12,7 @@ use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rules\Exists;
 
 class CartController extends Controller
 {
@@ -20,6 +21,13 @@ class CartController extends Controller
      */
     public function index()
     {
+        $productIdToChange = -0;
+        $quantity = 0;
+        if(session('quantity')){
+            $productIdToChange = session('productIdToChange');
+            $quantity = session('quantity');
+        }
+        
         $user_id = Auth::user()->id;
         // gets user id
         $carts = Cart::where('user_id', $user_id)->get();
@@ -36,22 +44,32 @@ class CartController extends Controller
         $products = Product::whereIn('product_id',$productIDvals)->get();
         // gets the products from the database where product id is equal to the products in the cart
         if($carts){
+            foreach($carts as $cart){
+                if($cart->product_id == $productIdToChange){
+                    $amountChanged = $cart->amount - $quantity;
+                    $cart->update([
+                        'amount' => $amountChanged,
+                    ]);
+                }
+                if($cart->amount <= 0){
+                    DB::table('carts')->where('cart_id', $cart->cart_id)->delete();
+                }
+
+            }
+            $carts = Cart::where('user_id', $user_id)->get();
             $amount = 0;
             foreach($products as $product){
                 $productAmounts = Cart::select('amount')->where('product_id', $product->product_id)->where('user_id', $user_id)->get();
-                if(array_key_exists('quantity' , $_REQUEST)){
-                    if($product->product_id == $_REQUEST['quantity']){
-
-                    }
-                }
                 foreach($productAmounts as $productAmount) {
                     $productPrice = floatval($productAmount->amount) * $product->Price;
-                    $amount = $amount + $productPrice;
+                    $amount = $amount + $productPrice;                
                 }
             }
             $orderedCarts = $carts->sortBy('product_id');
+            session_abort();
             return view('checkout')->with('carts', $orderedCarts)->with('products', $products)->with('amount', $amount)->with('user', $user_id);
         }
+        session_abort();
         return view('checkout');
     }
 
@@ -68,7 +86,9 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-        dd("store");
+        $quantity = $_REQUEST['quantity'];
+        $productIdToChange = $_REQUEST['product_id_to_change'];
+        return to_route('checkout.index')->with('quantity', $quantity)->with('productIdToChange', $productIdToChange);
     }
 
     /**
@@ -144,5 +164,32 @@ class CartController extends Controller
         return to_route('dashboard.index');
     }
 
-
+    public function add(Product $product)
+    {
+        $productID = $_REQUEST['productIdToAddToCart'];
+        $user_id = Auth::user()->id;
+        $product = Product::where('product_id', $productID)->first();
+        // Check if the product already exists in the user's cart
+        $existingCart = Cart::where('user_id', $user_id)->where('product_id', $productID)->first();
+        
+        if ($existingCart) {
+            // If the product already exists in the cart, update the amount
+            $existingCart->update([
+                'amount' => $existingCart->amount + 1,
+            ]);
+        } else {
+            // If the product is not in the cart, create a new cart entry
+            $cart = new Cart([
+                'user_id' => $user_id,
+                'product_id' => $productID,
+                'amount' => 1,
+            ]);
+            $cart->save();
+        }
+        
+        session()->flash('success',"{$product->name} has been successfully added to cart");
+        // Redirect to the main page
+        return to_route('dashboard.index');
+        
+    }
 }

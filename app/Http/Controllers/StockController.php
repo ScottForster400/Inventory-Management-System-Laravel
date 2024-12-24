@@ -14,18 +14,24 @@ class StockController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-        $branchId = Auth::user()->branch_id;
-        $productIds = Stock::select('product_id')->where('branch_id',$branchId)->get();
-        $productsIdVals = collect();
-        foreach($productIds as $productId){
-            $productsIdVals->push($productId);
+{
+    $branchId = Auth::user()->branch_id;
 
-        }
-        $products = Product::whereIn('product_id',$productsIdVals)->paginate(6);
-        return view('dashboard')->with('products',$products);
+    // Retrieve stocks for the current branch
+    $stocks = Stock::where('branch_id', $branchId)->get();
 
+    // Collect product IDs from the stocks
+    $productsIdVals = collect();
+    foreach ($stocks as $stock) {
+        $productsIdVals->push($stock->product_id);
     }
+
+    // Fetch products with pagination
+    $products = Product::whereIn('product_id', $productsIdVals)->paginate(4);
+
+    // Pass both $stocks and $products to the view
+    return view('dashboard')->with('stocks', $stocks)->with('products', $products);
+}
 
     /**
      * Show the form for creating a new resource.

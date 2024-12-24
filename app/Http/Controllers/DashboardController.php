@@ -20,6 +20,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
+        //dd($_REQUEST);
         // dd($int);
         $branchId = Auth::user()->branch_id;
         $stocks = Stock::where('branch_id',$branchId)->get();
@@ -29,7 +30,14 @@ class DashboardController extends Controller
 
         }
         $products = Product::whereIn('product_id',$productsIdVals)->paginate(4);
-        return view('dashboard')->with('stock', $stocks)->with('products',$products);
+        if(session('success')){
+            session()->flash('success',session('success'));
+            return view('dashboard')->with('stock', $stocks)->with('products',$products);
+        }
+        else{
+            return view('dashboard')->with('stock', $stocks)->with('products',$products);
+        }
+
 
     }
 
@@ -46,6 +54,8 @@ class DashboardController extends Controller
      */
     public function store(Request $request)
     {
+
+
         //make sure request contains all relevant info
         $request->validate([
             'name' => 'required|Max:50',
@@ -59,6 +69,23 @@ class DashboardController extends Controller
             'game_type' => 'required',
             'game_genre' => 'required'
         ]);
+
+        $alreadyExist = Product::where('name',$request->name)->first();
+
+        //Checks if product exists in branch -- if true updates stock amount with inputted amount
+        if($alreadyExist != null){
+            $inBranch = Stock::where('branch_id',Auth::user()->branch_id)->where('product_id',$alreadyExist->product_id)->first();
+            if($inBranch !=null){
+                $updatedAmount = $request->amount + $inBranch->amount;
+                $inBranch->update([
+                    'amount'=>$updatedAmount,
+
+                ]);
+                session()->flash('success',"{$request->name} already exists updated stock count with specified amount ");
+                    // Returns user to main dashboard view
+                    return to_route('dashboard.index');
+            }
+        }
 
         // Creates a new Product model with inputted data and saves it to database
         $uuid = Str::uuid();
@@ -90,7 +117,7 @@ class DashboardController extends Controller
         ]);
 
         $stock->save();
-
+        session()->flash('success',"{$request->name} has been successfully added ");
         // Returns user to main dashboard view
         return to_route('dashboard.index');
 
@@ -117,11 +144,43 @@ class DashboardController extends Controller
      */
     public function update(Request $request, int $product)
     {
-        $selectedProductArray = Product::where('product_id',$product)->get();
-        foreach($selectedProductArray as $p){
-            $selectedProduct =$p;
-        }
 
+        if ($request->file('img')){
+
+                    $selectedProductArray = Product::where('product_id',$product)->get();
+                    foreach($selectedProductArray as $p){
+                        $selectedProduct =$p;
+                    }
+
+                    // Validate the image
+                    $request->validate([
+                        'img' => 'required',
+                    ]);
+
+
+                    // Create the uploads directory if it doesn't exist
+                    $uploadPath = public_path('uploads');
+                    if (!file_exists($uploadPath)) {
+                        mkdir($uploadPath, 0755, true);
+                    }
+
+
+                    // if ($request->file('img')) {
+
+                        //Renames image so that there wont be duplicates in the db
+                        $imageName = time() . '.' . $request->img->extension();
+                        $request->img->move($uploadPath, $imageName);
+
+                        $selectedProduct->update([
+                            'image'=>'uploads/'.$imageName,
+                        ]);
+
+                        session()->flash('success',"{$selectedProduct->name}'s image has been successfully uploaded");
+                        //Returns user to main dashboard view
+                         return to_route('dashboard.index',['success'=>"{$selectedProduct->name} successfully removed"]);
+                    // }
+                    // return redirect()->route('dashboard.index')->with('error', 'Image upload failed.');
+                }
 
         $request->validate([
             'name' => 'required|Max:50',
@@ -136,6 +195,11 @@ class DashboardController extends Controller
             'game_genre' => 'required'
         ]);
 
+
+        $selectedProductArray = Product::where('product_id',$product)->get();
+        foreach($selectedProductArray as $p){
+            $selectedProduct =$p;
+        }
         // if($request->description)
 
         $selectedProduct->update([
@@ -159,6 +223,8 @@ class DashboardController extends Controller
             'amount' => $request->amount,
         ]);
 
+        session()->flash('success',"{$selectedProduct->name}' has been successfully edited");
+
          //Returns user to main dashboard view
          return to_route('dashboard.index');
     }
@@ -178,14 +244,15 @@ class DashboardController extends Controller
             $selectedStock =$stock;
         }
         $selectedStock->delete();
-        $selectedProduct->delete();
+       // $selectedProduct->delete();
 
-        return to_route('dashboard.index');
+        session()->flash('success',"{$selectedProduct->name} successfully removed");
+
+        return to_route('dashboard.index',['success'=>"{$selectedProduct->name} successfully removed"]);
     }
 
     //Searches stock used https://medium.com/@iqbal.ramadhani55/search-in-laravel-e0e20f329b01 to help create function
     public function search(Request $request){
-
 
         $branchId = Auth::user()->branch_id;
         $stocks = Stock::where('branch_id',$branchId)->get();
@@ -207,6 +274,7 @@ class DashboardController extends Controller
                 ['price','<=',$request->max_price],
                 ['age_rating','<=',$request->age],
                 ['maximum_player_count','<=',$request->player_count],
+                ['game_length','<=', $request->game_length],
                 ['game_type','like',"%$request->game_type%"],
                 ['game_genre','like',"%$request->game_genre%"]
 
@@ -273,10 +341,6 @@ class DashboardController extends Controller
         if(array_key_exists('sort_by',$_REQUEST) && array_key_exists('search',$searchRequest)){
             $sortBy = $_REQUEST['sort_by'];
 
-            // $name=$searchRequest['search'];
-            // $game_type=$searchRequest['game_type'];
-            // $game_genre=$searchRequest['game_genre'];
-
             if($sortBy =='alph_asc'){
                 $products = Product::where([
                     ['name','like',"%$searchRequest[search]%"],
@@ -336,4 +400,47 @@ class DashboardController extends Controller
         return view('dashboard')->with('stock', $sortedStocks)->with('products',$products);
 
     }
+
+    // public function uploadImage(Request $request){
+    //     dd($request);
+
+    //     // $selectedProductArray = Product::where('product_id',$product)->get();
+    //     // foreach($selectedProductArray as $p){
+    //     //     $selectedProduct =$p;
+    //     // }
+
+
+    //     if(array_key_exists('img',$_REQUEST)){
+
+    //         // Validate the image
+    //         $request->validate([
+    //             'img' => 'required',
+    //         ]);
+
+
+    //         // Create the uploads directory if it doesn't exist
+    //         $uploadPath = public_path('uploads');
+    //         if (!file_exists($uploadPath)) {
+    //             mkdir($uploadPath, 0755, true);
+    //         }
+
+
+    //         // if ($request->file('img')) {
+
+    //             //Renames image so that there wont be duplicates in the db
+    //             $imageName = time() . '.' . $request->img;
+    //             $request->img->move($uploadPath, $imageName);
+
+    //             dd($imageName);
+
+    //             $selectedProduct->update([
+    //                 'image'=>$imageName,
+    //             ]);
+
+    //             //Returns user to main dashboard view
+    //              return to_route('dashboard.index')->with('success', 'Image uploaded successfully!');
+    //         // }
+    //         // return redirect()->route('dashboard.index')->with('error', 'Image upload failed.');
+    //     }
+    // }
 }
