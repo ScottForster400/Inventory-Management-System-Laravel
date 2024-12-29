@@ -27,8 +27,8 @@ class ProductFactory extends Factory
             'maximum_player_count'=>fake()->numberBetween(2,10),
             'game_length'=>fake()->numberBetween(10,60),
             'Price'=>fake()->randomFloat(2,0.01,100),
-            'game_type'=>'Board Game',
-            'game_genre'=>'Puzzle',
+            'game_type'=>'board_game',
+            'game_genre'=>'puzzle',
             'image'=>'imgs/logo.png'
 
         ];

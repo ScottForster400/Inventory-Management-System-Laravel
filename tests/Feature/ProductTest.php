@@ -11,8 +11,10 @@ use Illuminate\Routing\Route;
 use Database\Seeders\StockSeeder;
 
 use Database\Seeders\ProductSeeder;
+use Illuminate\Container\Attributes\Database;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Symfony\Component\Mime\Part\DataPart;
 
 class ProductTest extends TestCase
 {
@@ -61,22 +63,6 @@ class ProductTest extends TestCase
        $user = User::factory()->create([
             'branch_id' => 1
        ]);
-
-       $productInBranch = Product::factory()->create([
-            'name' => 'productInBranch'
-
-       ]);
-
-       $productNotInBranch = Product::factory()->create([
-            'name' => 'productNotInBranch'
-       ]);
-
-       $productInBranchStock = Stock::factory()->create([
-            'product_id' => $productInBranch -> product_id,
-            'branch_id' => 1
-       ]);
-
-
 
        $response = $this->actingAs($user)->post('dashboard',[
             'name' => 'testAdd',
@@ -135,6 +121,60 @@ class ProductTest extends TestCase
             'product_id' => $productInBranchStock->id,
         ]);
 
+
+    }
+
+    public function test_user_can_edit_stock(){
+
+        $branch = Branch::factory()->create([
+            'branch_id' => 1
+        ]);
+
+       $user = User::factory()->create([
+            'branch_id' => 1
+       ]);
+
+       $productInBranch = Product::factory()->create([
+            'name' => 'productInBranch'
+
+       ]);
+
+
+       $productInBranchStock = Stock::factory()->create([
+            'product_id' => $productInBranch -> product_id,
+            'branch_id' => 1,
+            'amount' => 500
+       ]);
+
+
+
+       $response = $this->actingAs($user)->put('/dashboard/'.$productInBranch -> product_id,[
+            'name' => 'update_test',
+            'price' => $productInBranch -> Price,
+            'description' => $productInBranch -> description,
+            'manufacturer' => $productInBranch -> manufacturer,
+            'age_rating' => $productInBranch -> age_rating,
+            'game_length' => $productInBranch -> game_length,
+            'min_players' => $productInBranch -> minimum_player_count,
+            'max_players' => $productInBranch -> maximum_player_count,
+            'game_type' => $productInBranch -> game_type,
+            'game_genre' => $productInBranch -> game_genre,
+            'amount' => 250
+       ]);
+
+       $this->assertDatabaseHas('products',[
+        'product_id' => $productInBranch -> product_id,
+        'name' => 'update_test'
+        ]);
+
+        $this->assertDatabaseHas('stocks',[
+            'stock_id' => $productInBranchStock -> stock_id,
+            'product_id' => $productInBranch -> product_id,
+            'branch_id' => $user -> branch_id,
+            'amount' => '250'
+        ]);
+
+        $response->assertRedirectToRoute('dashboard.index');
 
     }
 }

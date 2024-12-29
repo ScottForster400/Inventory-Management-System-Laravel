@@ -204,7 +204,7 @@ class DashboardController extends Controller
 
         $selectedProduct->update([
             'name' =>  $request->name,
-            'price' => $request->price,
+            'Price' => $request->Price,
             'manufacturer' => $request->manufacturer,
             'age_rating' => $request->age_rating,
             'game_length' => $request->game_length,
@@ -401,46 +401,4 @@ class DashboardController extends Controller
 
     }
 
-    // public function uploadImage(Request $request){
-    //     dd($request);
-
-    //     // $selectedProductArray = Product::where('product_id',$product)->get();
-    //     // foreach($selectedProductArray as $p){
-    //     //     $selectedProduct =$p;
-    //     // }
-
-
-    //     if(array_key_exists('img',$_REQUEST)){
-
-    //         // Validate the image
-    //         $request->validate([
-    //             'img' => 'required',
-    //         ]);
-
-
-    //         // Create the uploads directory if it doesn't exist
-    //         $uploadPath = public_path('uploads');
-    //         if (!file_exists($uploadPath)) {
-    //             mkdir($uploadPath, 0755, true);
-    //         }
-
-
-    //         // if ($request->file('img')) {
-
-    //             //Renames image so that there wont be duplicates in the db
-    //             $imageName = time() . '.' . $request->img;
-    //             $request->img->move($uploadPath, $imageName);
-
-    //             dd($imageName);
-
-    //             $selectedProduct->update([
-    //                 'image'=>$imageName,
-    //             ]);
-
-    //             //Returns user to main dashboard view
-    //              return to_route('dashboard.index')->with('success', 'Image uploaded successfully!');
-    //         // }
-    //         // return redirect()->route('dashboard.index')->with('error', 'Image upload failed.');
-    //     }
-    // }
 }
