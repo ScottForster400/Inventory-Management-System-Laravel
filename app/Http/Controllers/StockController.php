@@ -14,31 +14,33 @@ class StockController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-{
-    $branchId = Auth::user()->branch_id;
+    {
+        
+        $branchId = Auth::user()->branch_id;
+        $stocks = Stock::where('branch_id',$branchId)->get();
+        $productsIdVals = collect();
+        foreach($stocks as $stock){
+            $productsIdVals->push($stock->product_id);
 
-    // Retrieve stocks for the current branch
-    $stocks = Stock::where('branch_id', $branchId)->get();
+        }
+        $products = Product::whereIn('product_id',$productsIdVals)->paginate(4);
+        if(session('success')){
+            session()->flash('success',session('success'));
+            return view('stock')->with('stock', $stocks)->with('products',$products);
+        }
+        else{
+            return view('stock')->with('stock', $stocks)->with('products',$products);
+        }
 
-    // Collect product IDs from the stocks
-    $productsIdVals = collect();
-    foreach ($stocks as $stock) {
-        $productsIdVals->push($stock->product_id);
+
     }
-
-    // Fetch products with pagination
-    $products = Product::whereIn('product_id', $productsIdVals)->paginate(4);
-
-    // Pass both $stocks and $products to the view
-    return view('dashboard')->with('stocks', $stocks)->with('products', $products);
-}
 
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        //
+        dd('create');
     }
 
     /**
@@ -62,7 +64,42 @@ class StockController extends Controller
      */
     public function edit(Stock $stock)
     {
-        //
+        dd('edit');
+    }
+
+    public function sort()
+    {
+
+        $branchId = Auth::user()->branch_id;
+        $stocks = Stock::where('branch_id',$branchId)->get();
+        $productsIdVals = collect();
+        foreach($stocks as $stock){
+            $productsIdVals->push($stock->product_id);
+
+        }
+
+        if(array_key_exists('sort_by',$_REQUEST)){
+            $sortBy = $_REQUEST['sort_by'];
+            if($sortBy =='alph_asc'){
+                $products = Product::whereIn('product_id',$productsIdVals)->orderBy('name','asc')->paginate(4)->withQueryString();
+            }
+            elseif($sortBy =='alph_des'){
+                $products = Product::whereIn('product_id',$productsIdVals)->orderBy('name','desc')->paginate(4)->withQueryString();
+            }
+            elseif($sortBy == 'price_asc'){
+                $products = Product::whereIn('product_id',$productsIdVals)->orderBy('Price','asc')->paginate(4)->withQueryString();
+            }
+            elseif($sortBy == 'price_des'){
+                $products = Product::whereIn('product_id',$productsIdVals)->orderBy('Price','desc')->paginate(4)->withQueryString();
+            }
+
+           //fetches the stock info in the requested order which allows the amount of product to be displayed correctly
+           $sortedStocks = collect();
+           foreach($products as $product){
+               $sortedStocks->push(Stock::where('product_id',$product->product_id)->first());
+           }
+        }
+        return view('dashboard')->with('stock', $sortedStocks)->with('products',$products);
     }
 
     /**
@@ -76,8 +113,25 @@ class StockController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Stock $stock)
+    public function destroy(int $product)
     {
-        //
+        $selectedProductArray = Product::where('product_id',$product)->get();
+        foreach($selectedProductArray as $p){
+            $selectedProduct = $p;
+        }
+
+        $stockArray=Stock::where('product_id', $selectedProduct->product_id)->where('branch_id',Auth::user()->branch_id)->get();
+        foreach($stockArray as $stock){
+            $selectedStock =$stock;
+        }
+        $selectedStock->delete();
+       // $selectedProduct->delete();
+
+        session()->flash('success',"{$selectedProduct->name} successfully removed");
+
+        return to_route('stock.index',['success'=>"{$selectedProduct->name} successfully removed"]);
     }
+    
 }
+
+
