@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AdminUpdateRequest;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\ProfileUpdateRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -39,6 +40,26 @@ class ProfileController extends Controller
         $user->save();
 
         return Redirect::route('profile.edit', $user)->with('status', 'profile-updated');
+    }
+
+    //updates the correct users password
+    public function updatePassword(Request $request, User $user): RedirectResponse
+    {
+        //confirms with current password
+        $request->validate([
+            'current_password' => 'required',
+            'password' => 'required|confirmed',
+        ]);
+
+        if (!Hash::check($request->current_password, $user->password)) {
+            return back()->withErrors(['current_password' => 'That is not this users current password.']);
+        }
+
+        //if the current password is confirmed then the password is updated to be a new password.
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        return redirect()->route('profile.edit', $user)->with('status', 'password-updated');
     }
 
 
