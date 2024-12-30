@@ -2,7 +2,7 @@
     <x-modal-header data-modal-hide="add-stock">
         Add Stock
     </x-modal-header>
-    <form action="{{ route('dashboard.store')}}" method="post">
+    <form action="{{ route($addRoute)}}" method="post">
         {{-- prevents cross site request forgeries --}}
         @csrf
         <x-modal-body>

@@ -1,6 +1,8 @@
 @php
     $currentRoute = Route::currentRouteName();
     $sortRoute = 'dashboard.sort';
+    $editRoute = 'dashboard.update';
+    $addRoute = 'stocks.store';
     $search=$_REQUEST;
     $isSortRoute = 'false';
     if($currentRoute == 'dashboard.search' || $currentRoute == 'dashboard.sortSearch'){
@@ -52,18 +54,10 @@
             <div class="flex flex-3/4 md:pl-20 md:pr-20 max-w-8/10 w-full">
                 <div class=" overflow-hidden w-full">
                     <div class=" flex max-md:flex-col max-md:justify-center max-md:items-center md:flex-row md:flex-wrap md:justify-evenly p-6 text-gray-900 dark:text-gray-100 ">
-                        @if (array_key_exists('page' , $_REQUEST) && $isSortRoute == 'false')
-                            @php
-                                $pagemult=$_REQUEST['page'];
-                                $pagemult--;
-                                $int=4*$pagemult;
 
-                            @endphp
-                        @else
                             @php
                                 $int=0
                             @endphp
-                        @endif
                         @forelse ($products as $product)
                             @php
                                 $game_type = $product->game_type;

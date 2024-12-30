@@ -30,12 +30,17 @@ class DashboardController extends Controller
 
         }
         $products = Product::whereIn('product_id',$productsIdVals)->paginate(4);
+
+        $sortedStocks = collect();
+        foreach($products as $product){
+            $sortedStocks->push(Stock::where('product_id',$product->product_id)->first());
+        }
         if(session('success')){
             session()->flash('success',session('success'));
             return view('dashboard')->with('stock', $stocks)->with('products',$products);
         }
         else{
-            return view('dashboard')->with('stock', $stocks)->with('products',$products);
+            return view('dashboard')->with('stock', $sortedStocks)->with('products',$products);
         }
 
 
@@ -46,7 +51,7 @@ class DashboardController extends Controller
      */
     public function create()
     {
-        dd('create');
+        abort(404);
     }
 
     /**
@@ -128,7 +133,7 @@ class DashboardController extends Controller
      */
     public function show(Stock $stock)
     {
-        dd('show');
+        abort(404);
     }
 
     /**
@@ -136,7 +141,7 @@ class DashboardController extends Controller
      */
     public function edit(Stock $stock)
     {
-        dd('edit');
+        abort(404);
     }
 
     /**
@@ -144,6 +149,7 @@ class DashboardController extends Controller
      */
     public function update(Request $request, int $product)
     {
+
 
         if ($request->file('img')){
 
@@ -204,7 +210,7 @@ class DashboardController extends Controller
 
         $selectedProduct->update([
             'name' =>  $request->name,
-            'Price' => $request->Price,
+            'Price' => $request->price,
             'manufacturer' => $request->manufacturer,
             'age_rating' => $request->age_rating,
             'game_length' => $request->game_length,
