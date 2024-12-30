@@ -40,9 +40,9 @@
 
         <!-- Phone Number -->
         <div>
-            <x-input-label for="phone_number" :value="__('Phone Number')" />
-            <x-text-input id="phone_number" name="phone_number" type="text" class="mt-1 block w-full" :value="old('phone_number', $user->phonenumber)" />
-            <x-input-error class="mt-2" :messages="$errors->get('phone_number')" />
+            <x-input-label for="phonenumber" :value="__('Phone Number')" />
+            <x-text-input id="phonenumber" name="phonenumber" type="text" class="mt-1 block w-full" :value="old('phonenumber', $user->phonenumber)" />
+            <x-input-error class="mt-2" :messages="$errors->get('phonenumber')" />
         </div>
 
         <!-- Address -->
