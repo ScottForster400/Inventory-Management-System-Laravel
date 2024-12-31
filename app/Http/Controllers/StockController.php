@@ -36,7 +36,7 @@ class StockController extends Controller
         }
         if(session('success')){
             session()->flash('success',session('success'));
-            return view('stock')->with('stock', $stocks)->with('products',$products);
+            return view('stock')->with('stock', $sortedStocks)->with('products',$products);
         }
         else{
             return view('stock')->with('stock', $sortedStocks)->with('products',$products);
