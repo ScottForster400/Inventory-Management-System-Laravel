@@ -2,7 +2,8 @@
     $currentRoute = Route::currentRouteName();
     $sortRoute = 'dashboard.sort';
     $editRoute = 'dashboard.update';
-    $addRoute = 'stocks.store';
+    $addRoute = 'dashboard.store';
+    $searchRoute ='dashboard.search';
     $search=$_REQUEST;
     $isSortRoute = 'false';
     if($currentRoute == 'dashboard.search' || $currentRoute == 'dashboard.sortSearch'){
@@ -53,7 +54,7 @@
             @endif
             <div class="flex flex-3/4 md:pl-20 md:pr-20 max-w-8/10 w-full">
                 <div class=" overflow-hidden w-full">
-                    <div class=" flex max-md:flex-col max-md:justify-center max-md:items-center md:flex-row md:flex-wrap md:justify-evenly p-6 text-gray-900 dark:text-gray-100 ">
+                    <div class=" flex max-md:flex-col max-md:justify-center max-md:items-center md:flex-row flex-wrap md:justify-evenly p-6 text-gray-900 dark:text-gray-100 ">
 
                             @php
                                 $int=0
@@ -62,12 +63,12 @@
                             @php
                                 $game_type = $product->game_type;
                             @endphp
-                            <x-card-main  class="flex flex-col mb-5 mx-5 hover:shadow-2xl transition-shadow text-center w-1/3 max-sm:w-full items-center">
+                            <x-card-main  class="flex flex-col mb-5 md:mx-5 hover:shadow-2xl transition-shadow text-center w-1/3 md:max-w-72 md:min-w-64 max-sm:w-full max-sm:max-w-80 items-center">
                                 <div style="flex: 50%" class=" flex justify-center items-center max-h-4/5 overflow-hidden rounded-lg w-4/5 h-4/5 pt-5">
                                     <x-card-img class="object-fill aspect-square" src="{{asset($product->image)}}"></x-card-img>
                                 </div>
                                 <x-card-body class="!py-5 !px-0 w-full">
-                                    <x-card-title>{{$product->name}}</x-card-title>
+                                    <x-card-title>{{ Str::limit($product->name,20, '...')}}</x-card-title>
                                     <p class="text-centre text-gray-500 ">£{{$product->Price}}</p>
                                     <div class="flex flex-row text-center items-center ">
                                         @if ($game_type == 'puzzle_game')

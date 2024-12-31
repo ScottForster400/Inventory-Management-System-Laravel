@@ -29,7 +29,7 @@ class DashboardController extends Controller
             $productsIdVals->push($stock->product_id);
 
         }
-        $products = Product::whereIn('product_id',$productsIdVals)->paginate(4);
+        $products = Product::whereIn('product_id',$productsIdVals)->paginate(6);
 
         $sortedStocks = collect();
         foreach($products as $product){
@@ -202,6 +202,7 @@ class DashboardController extends Controller
         ]);
 
 
+
         $selectedProductArray = Product::where('product_id',$product)->get();
         foreach($selectedProductArray as $p){
             $selectedProduct =$p;
@@ -220,6 +221,24 @@ class DashboardController extends Controller
             'game_type' => $request->game_type,
             'game_genre' => $request->game_genre
         ]);
+
+        $alreadyExist = Product::where('name',$request->name)->whereNot('product_id',$selectedProduct->product_id)->first();
+
+        //Checks if product exists in branch -- if true updates stock amount with inputted amount
+        if($alreadyExist != null){
+            $inBranch = Stock::where('branch_id',Auth::user()->branch_id)->where('product_id',$alreadyExist->product_id)->first();
+            if($inBranch !=null){
+                $updatedAmount = $request->amount + $inBranch->amount;
+                $inBranch->update([
+                    'amount'=>$updatedAmount,
+
+                ]);
+                $selectedProduct->delete();
+                session()->flash('success',"{$request->name} already exists updated stock count with specified amount ");
+                    // Returns user to main dashboard view
+                    return to_route('dashboard.index');
+            }
+        }
 
         $stockArray=Stock::where('product_id', $selectedProduct->product_id)->where('branch_id',Auth::user()->branch_id)->get();
         foreach($stockArray as $stock){
@@ -284,7 +303,7 @@ class DashboardController extends Controller
                 ['game_type','like',"%$request->game_type%"],
                 ['game_genre','like',"%$request->game_genre%"]
 
-                ])->whereIn('product_id', $productsIdVals)->paginate(4)->withQueryString();
+                ])->whereIn('product_id', $productsIdVals)->paginate(6)->withQueryString();
 
         // }
         // else{
@@ -310,16 +329,16 @@ class DashboardController extends Controller
         if(array_key_exists('sort_by',$_REQUEST)){
             $sortBy = $_REQUEST['sort_by'];
             if($sortBy =='alph_asc'){
-                $products = Product::whereIn('product_id',$productsIdVals)->orderBy('name','asc')->paginate(4)->withQueryString();
+                $products = Product::whereIn('product_id',$productsIdVals)->orderBy('name','asc')->paginate(6)->withQueryString();
             }
             elseif($sortBy =='alph_des'){
-                $products = Product::whereIn('product_id',$productsIdVals)->orderBy('name','desc')->paginate(4)->withQueryString();
+                $products = Product::whereIn('product_id',$productsIdVals)->orderBy('name','desc')->paginate(6)->withQueryString();
             }
             elseif($sortBy == 'price_asc'){
-                $products = Product::whereIn('product_id',$productsIdVals)->orderBy('Price','asc')->paginate(4)->withQueryString();
+                $products = Product::whereIn('product_id',$productsIdVals)->orderBy('Price','asc')->paginate(6)->withQueryString();
             }
             elseif($sortBy == 'price_des'){
-                $products = Product::whereIn('product_id',$productsIdVals)->orderBy('Price','desc')->paginate(4)->withQueryString();
+                $products = Product::whereIn('product_id',$productsIdVals)->orderBy('Price','desc')->paginate(6)->withQueryString();
             }
 
            //fetches the stock info in the requested order which allows the amount of product to be displayed correctly
@@ -357,7 +376,7 @@ class DashboardController extends Controller
                     ['game_type','like',"%$searchRequest[game_type]%"],
                     ['game_genre','like',"%$searchRequest[game_genre]%"]
 
-                    ])->whereIn('product_id', $productsIdVals)->orderBy('name', 'asc')->paginate(4)->withQueryString();
+                    ])->whereIn('product_id', $productsIdVals)->orderBy('name', 'asc')->paginate(6)->withQueryString();
 
 
             }
@@ -371,7 +390,7 @@ class DashboardController extends Controller
                     ['game_type','like',"%$searchRequest[game_type]%"],
                     ['game_genre','like',"%$searchRequest[game_genre]%"]
 
-                    ])->whereIn('product_id', $productsIdVals)->orderBy('name', 'desc')->paginate(4)->withQueryString();
+                    ])->whereIn('product_id', $productsIdVals)->orderBy('name', 'desc')->paginate(6)->withQueryString();
             }
             elseif($sortBy == 'price_asc'){
                 $products = Product::where([
@@ -383,7 +402,7 @@ class DashboardController extends Controller
                     ['game_type','like',"%$searchRequest[game_type]%"],
                     ['game_genre','like',"%$searchRequest[game_genre]%"]
 
-                    ])->whereIn('product_id', $productsIdVals)->orderBy('Price', 'asc')->paginate(4)->withQueryString();
+                    ])->whereIn('product_id', $productsIdVals)->orderBy('Price', 'asc')->paginate(6)->withQueryString();
             }
             elseif($sortBy == 'price_des'){
                 $products = Product::where([
@@ -395,7 +414,7 @@ class DashboardController extends Controller
                     ['game_type','like',"%$searchRequest[game_type]%"],
                     ['game_genre','like',"%$searchRequest[game_genre]%"]
 
-                    ])->whereIn('product_id', $productsIdVals)->orderBy('Price', 'desc')->paginate(4)->withQueryString();
+                    ])->whereIn('product_id', $productsIdVals)->orderBy('Price', 'desc')->paginate(6)->withQueryString();
             }
             //fetches the stock info in the requested order which allows the amount of product to be displayed correctly
             $sortedStocks = collect();

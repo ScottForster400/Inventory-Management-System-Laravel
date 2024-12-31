@@ -150,7 +150,7 @@ class ProductTest extends TestCase
 
        $response = $this->actingAs($user)->put('/dashboard/'.$productInBranch -> product_id,[
             'name' => 'update_test',
-            'price' => $productInBranch -> Price,
+            'price' => 500,
             'description' => $productInBranch -> description,
             'manufacturer' => $productInBranch -> manufacturer,
             'age_rating' => $productInBranch -> age_rating,
@@ -164,7 +164,16 @@ class ProductTest extends TestCase
 
        $this->assertDatabaseHas('products',[
         'product_id' => $productInBranch -> product_id,
-        'name' => 'update_test'
+        'name' => 'update_test',
+        'price' => 500,
+        'description' => $productInBranch -> description,
+        'manufacturer' => $productInBranch -> manufacturer,
+        'age_rating' => $productInBranch -> age_rating,
+        'game_length' => $productInBranch -> game_length,
+        'minimum_player_count' => $productInBranch -> minimum_player_count,
+        'maximum_player_count' => $productInBranch -> maximum_player_count,
+        'game_type' => $productInBranch -> game_type,
+        'game_genre' => $productInBranch -> game_genre,
         ]);
 
         $this->assertDatabaseHas('stocks',[
