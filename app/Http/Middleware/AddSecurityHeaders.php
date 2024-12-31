@@ -5,12 +5,21 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class ContentSecurityPolicy
+class AddSecurityHeaders
 {
-
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure  $next
+     * @return mixed
+     */
     public function handle(Request $request, Closure $next)
     {
-        // Define your Content Security Policy rules
+        // Get the response
+        $response = $next($request);
+
+        // Content Security Policy (CSP)
         $csp = "default-src 'self'; ";
         $csp .= "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com https://cdn.jsdelivr.net https://cdn.flowbite.com; ";
         $csp .= "style-src 'self' 'unsafe-inline' https://fonts.bunny.net https://cdn.tailwindcss.com https://cdn.jsdelivr.net https://cdn.flowbite.com; ";
@@ -23,11 +32,12 @@ class ContentSecurityPolicy
         $csp .= "form-action 'self'; ";
         $csp .= "upgrade-insecure-requests;";
 
-        // Set the CSP header
-        $response = $next($request);
+        // Set CSP header
         $response->headers->set('Content-Security-Policy', $csp);
+
+        // Anti-Clickjacking header
+        $response->headers->set('X-Frame-Options', 'DENY');
 
         return $response;
     }
 }
-

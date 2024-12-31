@@ -12,6 +12,19 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Middleware\AddSecurityHeaders;
+use App\Models\Cart;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
+
+Route::middleware([AddSecurityHeaders::class])->group(function () {
+    Route::get('/checkout', [CartController::class, 'index']);
+    Route::get('/dashboard', [DashboardController::class, 'index']);
+    Route::get('/stock', [StockController::class, 'index']);
+    Route::get('/generate-reports', [AdminController::class, 'index']);
+    Route::get('/manage-employees', [UserController::class,'index']);
+    Route::get('/welcome');
+});
+
 
 Route::get('/', function () {
     return view('welcome');
