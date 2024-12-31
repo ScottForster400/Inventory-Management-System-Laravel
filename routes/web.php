@@ -50,10 +50,13 @@ Route::get('/users/search', [UserController::class, 'search'])->name('user.searc
 
 //Dashboard search and sort
 Route::get('/dashboard/search', [DashboardController::class, 'search'])->name('dashboard.search')->middleware('auth');
-
 Route::get('/dashboard/sort', [DashboardController::class, 'sort'])->name('dashboard.sort')->middleware('auth');
-
 Route::get('/dashboard/search/sort', [DashboardController::class, 'sortSearch'])->name('dashboard.sortSearch')->middleware('auth');
+
+//Stock search and sort
+Route::get('/stock/search', [StockController::class, 'search'])->name('stocks.search')->middleware('auth');
+Route::get('/stock/sort', [StockController::class, 'sort'])->name('stocks.sort')->middleware('auth');
+Route::get('/stock/search/sort', [StockController::class, 'sortSearch'])->name('stocks.sortSearch')->middleware('auth');
 
 // Route::get('/dashboard/img', [DashboardController::class, 'uploadImage'])->name('dashboard.img')->middleware('auth');
 

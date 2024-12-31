@@ -17,8 +17,9 @@ class ProductFactory extends Factory
      */
     public function definition(): array
     {
+        $rndNum = fake()->numberBetween(100,999);
         return [
-            'name'=>'Sample Product',
+            'name'=>('Sample Product'.$rndNum),
             'uuid'=> Str::uuid(),
             'manufacturer'=> fake('en_GB')->company(),
             'description'=>fake('en_GB')->text(),
