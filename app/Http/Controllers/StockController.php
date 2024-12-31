@@ -7,10 +7,10 @@ use App\Models\Stock;
 use App\Models\Product;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Ramsey\Uuid\Type\Integer;
 use Illuminate\Support\Facades\Auth;
 use PhpParser\Node\Expr\Cast\Array_;
 use PhpParser\Node\Expr\Cast\String_;
-use Ramsey\Uuid\Type\Integer;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 class StockController extends Controller
@@ -24,22 +24,35 @@ class StockController extends Controller
         // dd($int);
         $branchId = Auth::user()->branch_id;
         $stocks = Stock::where('branch_id',$branchId)->get();
+        $lowStocks = Stock::where('branch_id',$branchId)->where('amount','<=',30)->get();
         $productsIdVals = collect();
         foreach($stocks as $stock){
             $productsIdVals->push($stock->product_id);
 
         }
+        $lowProductIdVals= collect();
+        foreach($lowStocks as $stock){
+            $lowProductIdVals->push($stock->product_id);
+
+        }
+
         $products = Product::whereIn('product_id',$productsIdVals)->paginate(4);
         $sortedStocks = collect();
         foreach($products as $product){
             $sortedStocks->push(Stock::where('product_id',$product->product_id)->first());
         }
+
+        $lowStockProducts = Product::whereIn('product_id',$lowProductIdVals)->get();
+        $sortedLowStocks = collect();
+        foreach($lowStockProducts as $product){
+            $sortedLowStocks->push(Stock::where('product_id',$product->product_id)->first());
+        }
         if(session('success')){
             session()->flash('success',session('success'));
-            return view('stock')->with('stock', $sortedStocks)->with('products',$products);
+            return view('stock')->with('stock', $sortedStocks)->with('products',$products)->with('lowStockProducts', $lowStockProducts)->with('lowStock',$sortedLowStocks);
         }
         else{
-            return view('stock')->with('stock', $sortedStocks)->with('products',$products);
+            return view('stock')->with('stock', $sortedStocks)->with('products',$products)->with('lowStockProducts', $lowStockProducts)->with('lowStock',$sortedLowStocks);
         }
 
 
@@ -200,6 +213,7 @@ class StockController extends Controller
         ]);
 
 
+
         $selectedProductArray = Product::where('product_id',$product)->get();
         foreach($selectedProductArray as $p){
             $selectedProduct =$p;
@@ -218,6 +232,24 @@ class StockController extends Controller
             'game_type' => $request->game_type,
             'game_genre' => $request->game_genre
         ]);
+
+        $alreadyExist = Product::where('name',$request->name)->whereNot('product_id',$selectedProduct->product_id)->first();
+
+        //Checks if product exists in branch -- if true updates stock amount with inputted amount
+        if($alreadyExist != null){
+            $inBranch = Stock::where('branch_id',Auth::user()->branch_id)->where('product_id',$alreadyExist->product_id)->first();
+            if($inBranch !=null){
+                $updatedAmount = $request->amount + $inBranch->amount;
+                $inBranch->update([
+                    'amount'=>$updatedAmount,
+
+                ]);
+                $selectedProduct->delete();
+                session()->flash('success',"{$request->name} already exists updated stock count with specified amount ");
+                    // Returns user to main dashboard view
+                    return to_route('stocks.index');
+            }
+        }
 
         $stockArray=Stock::where('product_id', $selectedProduct->product_id)->where('branch_id',Auth::user()->branch_id)->get();
         foreach($stockArray as $stock){
@@ -260,10 +292,15 @@ class StockController extends Controller
 
         $branchId = Auth::user()->branch_id;
         $stocks = Stock::where('branch_id',$branchId)->get();
-
+        $lowStocks = Stock::where('branch_id',$branchId)->where('amount','<=',30)->get();
         $productsIdVals = collect();
         foreach($stocks as $stock){
         $productsIdVals->push($stock->product_id);
+
+        }
+        $lowProductIdVals= collect();
+        foreach($lowStocks as $stock){
+            $lowProductIdVals->push($stock->product_id);
 
         }
 
@@ -284,66 +321,102 @@ class StockController extends Controller
 
                 ])->whereIn('product_id', $productsIdVals)->paginate(4)->withQueryString();
 
-        // }
-        // else{
-        //     $products=Product::whereIn('product_id', $productsIdVals)->paginate(4);
-        // }
+            $lowStockProducts = Product::where([
+                ['name','like',"%$searchRequest%"],
+                ['price','>=',$request->min_price],
+                ['price','<=',$request->max_price],
+                ['age_rating','<=',$request->age],
+                ['maximum_player_count','<=',$request->player_count],
+                ['game_length','<=', $request->game_length],
+                ['game_type','like',"%$request->game_type%"],
+                ['game_genre','like',"%$request->game_genre%"]
+
+                ])->whereIn('product_id', $lowProductIdVals)->orderBy('name', 'asc')->get();
+
+            //fetches the stock info in the requested order which allows the amount of product to be displayed correctly
+            $sortedStocks = collect();
+            foreach($products as $product){
+                $sortedStocks->push(Stock::where('product_id',$product->product_id)->first());
+            }
 
 
+            $sortedLowStocks = collect();
+            foreach($lowStockProducts as $product){
+            $sortedLowStocks->push(Stock::where('product_id',$product->product_id)->first());
+            }
 
-        return view('stock')->with('products',$products)->with('stock',$stocks);
+
+        return view('stock')->with('products',$products)->with('stock',$stocks)->with('lowStockProducts',$lowStockProducts)->with('lowStock',$sortedLowStocks);
     }
     public function sort(){
 
 
-
-        $branchId = Auth::user()->branch_id;
-        $stocks = Stock::where('branch_id',$branchId)->get();
-        $productsIdVals = collect();
-        foreach($stocks as $stock){
-            $productsIdVals->push($stock->product_id);
-
-        }
-
         if(array_key_exists('sort_by',$_REQUEST)){
             $sortBy = $_REQUEST['sort_by'];
+            $branchId = Auth::user()->branch_id;
+            $stocks = Stock::where('branch_id',$branchId)->get();
+            $lowStocks = Stock::where('branch_id',$branchId)->where('amount','<=',30)->get();
+            $productsIdVals = collect();
+            foreach($stocks as $stock){
+                $productsIdVals->push($stock->product_id);
+
+            }
+            $lowProductIdVals= collect();
+            foreach($lowStocks as $stock){
+                $lowProductIdVals->push($stock->product_id);
+
+            }
+
+
             if($sortBy =='alph_asc'){
                 $products = Product::whereIn('product_id',$productsIdVals)->orderBy('name','asc')->paginate(4)->withQueryString();
+                $lowStockProducts = Product::whereIn('product_id',$lowProductIdVals)->orderBy('name','asc')->get();
             }
             elseif($sortBy =='alph_des'){
                 $products = Product::whereIn('product_id',$productsIdVals)->orderBy('name','desc')->paginate(4)->withQueryString();
+                $lowStockProducts = Product::whereIn('product_id',$lowProductIdVals)->orderBy('name','desc')->get();
             }
             elseif($sortBy == 'price_asc'){
                 $products = Product::whereIn('product_id',$productsIdVals)->orderBy('Price','asc')->paginate(4)->withQueryString();
+                $lowStockProducts = Product::whereIn('product_id',$lowProductIdVals)->orderBy('Price','asc')->get();
             }
             elseif($sortBy == 'price_des'){
                 $products = Product::whereIn('product_id',$productsIdVals)->orderBy('Price','desc')->paginate(4)->withQueryString();
+                $lowStockProducts = Product::whereIn('product_id',$lowProductIdVals)->orderBy('Price','desc')->get();
             }
 
+
            //fetches the stock info in the requested order which allows the amount of product to be displayed correctly
-           $sortedStocks = collect();
-           foreach($products as $product){
-               $sortedStocks->push(Stock::where('product_id',$product->product_id)->first());
-           }
+            $sortedStocks = collect();
+            foreach($products as $product){
+            $sortedStocks->push(Stock::where('product_id',$product->product_id)->first());
+            }
+
+            $sortedLowStocks = collect();
+            foreach($lowStockProducts as $product){
+            $sortedLowStocks->push(Stock::where('product_id',$product->product_id)->first());
         }
-        return view('stock')->with('stock', $sortedStocks)->with('products',$products);
+        }
+        return view('stock')->with('stock', $sortedStocks)->with('products',$products)->with('lowStockProducts', $lowStockProducts)->with('lowStock',$sortedLowStocks);
     }
 
     public function sortSearch(){
-
-        // dd($_REQUEST);
-        $branchId = Auth::user()->branch_id;
-        $stocks = Stock::where('branch_id',$branchId)->get();
-
-        $productsIdVals = collect();
-        foreach($stocks as $stock){
-        $productsIdVals->push($stock->product_id);
-        }
-
         $searchRequest = $_REQUEST['search'];
-
         if(array_key_exists('sort_by',$_REQUEST) && array_key_exists('search',$searchRequest)){
             $sortBy = $_REQUEST['sort_by'];
+            $branchId = Auth::user()->branch_id;
+            $stocks = Stock::where('branch_id',$branchId)->get();
+            $lowStocks = Stock::where('branch_id',$branchId)->where('amount','<=',30)->get();
+            $productsIdVals = collect();
+            foreach($stocks as $stock){
+                $productsIdVals->push($stock->product_id);
+
+            }
+            $lowProductIdVals= collect();
+            foreach($lowStocks as $stock){
+                $lowProductIdVals->push($stock->product_id);
+
+            }
 
             if($sortBy =='alph_asc'){
                 $products = Product::where([
@@ -357,7 +430,16 @@ class StockController extends Controller
 
                     ])->whereIn('product_id', $productsIdVals)->orderBy('name', 'asc')->paginate(4)->withQueryString();
 
+                $lowStockProducts = Product::where([
+                    ['name','like',"%$searchRequest[search]%"],
+                    ['price','>=',$searchRequest['min_price']],
+                    ['price','<=',$searchRequest['max_price']],
+                    ['age_rating','<=',$searchRequest['age']],
+                    ['maximum_player_count','<=',$searchRequest['player_count']],
+                    ['game_type','like',"%$searchRequest[game_type]%"],
+                    ['game_genre','like',"%$searchRequest[game_genre]%"]
 
+                    ])->whereIn('product_id', $lowProductIdVals)->orderBy('name', 'asc')->get();
             }
             elseif($sortBy =='alph_des'){
                 $products = Product::where([
@@ -370,6 +452,17 @@ class StockController extends Controller
                     ['game_genre','like',"%$searchRequest[game_genre]%"]
 
                     ])->whereIn('product_id', $productsIdVals)->orderBy('name', 'desc')->paginate(4)->withQueryString();
+
+                    $lowStockProducts = Product::where([
+                        ['name','like',"%$searchRequest[search]%"],
+                        ['price','>=',$searchRequest['min_price']],
+                        ['price','<=',$searchRequest['max_price']],
+                        ['age_rating','<=',$searchRequest['age']],
+                        ['maximum_player_count','<=',$searchRequest['player_count']],
+                        ['game_type','like',"%$searchRequest[game_type]%"],
+                        ['game_genre','like',"%$searchRequest[game_genre]%"]
+
+                        ])->whereIn('product_id', $lowProductIdVals)->orderBy('name', 'desc')->get();
             }
             elseif($sortBy == 'price_asc'){
                 $products = Product::where([
@@ -382,6 +475,17 @@ class StockController extends Controller
                     ['game_genre','like',"%$searchRequest[game_genre]%"]
 
                     ])->whereIn('product_id', $productsIdVals)->orderBy('Price', 'asc')->paginate(4)->withQueryString();
+
+                    $lowStockProducts = Product::where([
+                        ['name','like',"%$searchRequest[search]%"],
+                        ['price','>=',$searchRequest['min_price']],
+                        ['price','<=',$searchRequest['max_price']],
+                        ['age_rating','<=',$searchRequest['age']],
+                        ['maximum_player_count','<=',$searchRequest['player_count']],
+                        ['game_type','like',"%$searchRequest[game_type]%"],
+                        ['game_genre','like',"%$searchRequest[game_genre]%"]
+
+                        ])->whereIn('product_id', $lowProductIdVals)->orderBy('Price', 'asc')->get();
             }
             elseif($sortBy == 'price_des'){
                 $products = Product::where([
@@ -394,17 +498,34 @@ class StockController extends Controller
                     ['game_genre','like',"%$searchRequest[game_genre]%"]
 
                     ])->whereIn('product_id', $productsIdVals)->orderBy('Price', 'desc')->paginate(4)->withQueryString();
+
+                    $lowStockProducts = Product::where([
+                        ['name','like',"%$searchRequest[search]%"],
+                        ['price','>=',$searchRequest['min_price']],
+                        ['price','<=',$searchRequest['max_price']],
+                        ['age_rating','<=',$searchRequest['age']],
+                        ['maximum_player_count','<=',$searchRequest['player_count']],
+                        ['game_type','like',"%$searchRequest[game_type]%"],
+                        ['game_genre','like',"%$searchRequest[game_genre]%"]
+
+                        ])->whereIn('product_id', $lowProductIdVals)->orderBy('Price', 'desc')->get();
             }
             //fetches the stock info in the requested order which allows the amount of product to be displayed correctly
             $sortedStocks = collect();
             foreach($products as $product){
                 $sortedStocks->push(Stock::where('product_id',$product->product_id)->first());
             }
+
+
+            $sortedLowStocks = collect();
+            foreach($lowStockProducts as $product){
+            $sortedLowStocks->push(Stock::where('product_id',$product->product_id)->first());
         }
-        return view('stock')->with('stock', $sortedStocks)->with('products',$products);
+        return view('stock')->with('stock', $sortedStocks)->with('products',$products)->with('lowStockProducts', $lowStockProducts)->with('lowStock',$sortedLowStocks);
 
     }
 
+    }
 }
 
 

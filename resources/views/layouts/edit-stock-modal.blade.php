@@ -165,7 +165,7 @@
                 <x-primary-button class="!py-3 !bg-blue-700 hover:!bg-blue-800 !transition-colors max-sm:!w-1/3 max-sm:m-2 max-sm:!h-14 justify-center items-center">Edit Stock</x-primary-button>
             </form>
                 <x-primary-button data-modal-target="img{{$product->product_id}}" data-modal-toggle="img{{$product->product_id}}" data-modal-hide="edit{{$product->product_id}}" class="!py-3 !bg-blue-700 hover:!bg-blue-800 !transition-colors max-sm:!w-1/3 max-sm:m-2 max-sm:!h-14 justify-center items-center ">Image Upload</x-primary-button>
-                @if($editRoute == 'dashboard.edit'){
+                @if($editRoute == 'dashboard.update'){
                     <form action="{{route('dashboard.destroy', $product)}}" method="post" class="max-sm:w-1/3 flex justify-center items-center">
                         @method('delete')
                         @csrf
