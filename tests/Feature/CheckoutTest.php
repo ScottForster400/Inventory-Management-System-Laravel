@@ -16,7 +16,7 @@ class CheckoutTest extends TestCase
     public function test_user_can_see_products_in_cart(): void
     {
         $user = User::factory()->create([
-            'user_id' => '1',
+            'id' => '1',
         ]);
         $product = Product::factory()->create([
             'product_id'=> '1',
@@ -24,7 +24,7 @@ class CheckoutTest extends TestCase
         ]);
         $cart = Cart::factory()->create([
             'user_id' => $user->id,
-            'product_id' => $product->id,
+            'product_id' => $product->product_id,
             'amount' => 1,
         ]);
         $response = $this->actingAs($user)->get('/checkout');
