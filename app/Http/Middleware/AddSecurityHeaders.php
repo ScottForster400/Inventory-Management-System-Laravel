@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class AddSecurityHeaders
 {
@@ -18,6 +19,8 @@ class AddSecurityHeaders
     {
         // Get the response
         $response = $next($request);
+
+        Log::info("AddSecurityHeaders middleware triggered");
 
         // Content Security Policy (CSP)
         $csp = "default-src 'self'; ";

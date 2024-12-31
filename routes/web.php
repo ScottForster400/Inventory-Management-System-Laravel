@@ -22,7 +22,9 @@ Route::middleware([AddSecurityHeaders::class])->group(function () {
     Route::get('/stock', [StockController::class, 'index']);
     Route::get('/generate-reports', [AdminController::class, 'index']);
     Route::get('/manage-employees', [UserController::class,'index']);
-    Route::get('/welcome');
+    Route::get('/welcome', function () {
+        return view('welcome');
+    });
 });
 
 
