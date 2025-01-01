@@ -1,16 +1,19 @@
 <x-th>
     {{ $product->product_id }}
 </x-th>
-<x-td>
+<x-td class="max-sm:hidden">
     {{Str::limit($product->name,17, '...')}}
+</x-td>
+<x-td class="sm:hidden">
+    {{Str::limit($product->name,10, '...')}}
 </x-td>
 <x-td>
     {{$lowStock[$int]->amount}}
 </x-td>
-<x-td>
+<x-td class="max-sm:hidden">
     £{{$product->Price}}
 </x-td>
-<x-td class="flex flex-row">
+<x-td class="flex flex-row max-sm:hidden">
     <form method="POST" action="{{ route('stocks.destroy', $product->product_id) }}" class="inline">
         @csrf
         @method('DELETE')

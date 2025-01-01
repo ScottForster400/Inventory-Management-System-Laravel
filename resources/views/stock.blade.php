@@ -39,18 +39,18 @@
                     <x-table-head>
                         <x-tr>
                             <x-th >
-                                Item Code
+                                Id
                             </x-th>
                             <x-th >
                                 <p>Name</p>
                             </x-th>
                             <x-th>
-                                <p >Quantity</p>
+                                <p >Quant</p>
                             </x-th>
-                            <x-th>
+                            <x-th class="max-sm:hidden">
                                 <p >Unit Price</p>
                             </x-th>
-                            <x-th>
+                            <x-th class="max-sm:hidden">
                                 Action
                             </x-th>
                         </x-tr>
@@ -96,18 +96,18 @@
                     <x-table-head>
                         <x-tr>
                             <x-th >
-                                Item Code
+                                Id
                             </x-th>
                             <x-th >
                                 <p>Name</p>
                             </x-th>
                             <x-th>
-                                <p >Quantity</p>
+                                <p >Quant</p>
                             </x-th>
-                            <x-th>
+                            <x-th class="max-sm:hidden">
                                 <p >Unit Price</p>
                             </x-th>
-                            <x-th>
+                            <x-th class="max-sm:hidden">
                                 Action
                             </x-th>
                         </x-tr>
