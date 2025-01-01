@@ -17,7 +17,7 @@ return new class extends Migration
             //phone number is 20 due to fake() phone number generation length
             $table->string('phonenumber',20);
             $table->date('dob');
-            $table->string('address',50);
+            $table->string('address',100);
             $table->boolean('admin');
             $table->foreignIdFor(Branch::class);
         });

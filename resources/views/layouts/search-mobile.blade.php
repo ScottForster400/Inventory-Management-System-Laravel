@@ -1,11 +1,40 @@
-
+@if($searchRoute == 'dashboard.search')
     <div class="w-8/12 md:hidden md:w-1/2">
-        <form action="{{route('dashboard.search')}}" method="GET" class="w-full flex flex-col justify-center items-center">
-            <x-search-bar>Search</x-search-bar>
+@else
+    <div class="w-full">
+@endif
+        <form action="{{route($searchRoute)}}" method="GET" class="w-full flex flex-col justify-center items-center">
+            @if($searchRoute == 'dashboard.search')
+                <x-search-bar>Search</x-search-bar>
+            @else
+                <div class="flex justify-between items-center w-full max-md:flex-col">
+                    <x-search-bar class="!w-1/3 max-md:!w-11/12">Search</x-search-bar>
+                    <div class="flex flex-row max-md:pt-4 max-md:w-11/12 max-md:justify-between">
+                        <x-dropdown-button class="float-left !w-24 ">Sort</x-dropdown-button>
+                        <div>
+                            <x-dropdown-button-body>
+                                <x-dropdown-button-li class="w-full">
+                                    <x-dropdown-button-a href="{{route($sortRoute, ['sort_by'=>'alph_asc', 'search'=>$search] )}}">A to Z</x-dropdown-button-a>
+                                </x-dropdown-button-li>
+                                <x-dropdown-button-li class="w-full">
+                                    <x-dropdown-button-a href="{{route($sortRoute, ['sort_by'=>'alph_des', 'search'=>$search])}}">Z to A</x-dropdown-button-a>
+                                </x-dropdown-button-li>
+                                <x-dropdown-button-li class="w-full">
+                                    <x-dropdown-button-a href="{{route($sortRoute, ['sort_by'=>'price_asc', 'search'=>$search])}}">Low to High</x-dropdown-button-a>
+                                </x-dropdown-button-li>
+                                <x-dropdown-button-li class="w-full">
+                                    <x-dropdown-button-a href="{{route($sortRoute, ['sort_by'=>'price_des', 'search'=>$search])}}">High to Low</x-dropdown-button-a>
+                                </x-dropdown-button-li>
+                            </x-dropdown-button-body>
+                        </div>
+                        <x-modal-toggle data-modal-target="add-stock" data-modal-toggle="add-stock" class="float-right !w-24 flex justify-center items-center text-white ml-4"> Add</x-modal-toggle>
+                    </div>
+                </div>
+            @endif
             <x-accordion-head class="!flex-col !items-end !justify-normal">
                 <x-accordion-body>
-                <ul>
-                    <li class="py-2">
+                <ul class="max-sm:flex max-sm:justify-center max-sm:items-center">
+                    <li class="py-2 mx-2 max-sm:w-52">
                         <x-sidebar-dropdown-button data-collapse-toggle="price">
                             <x-sidebar-img src="{{asset('imgs/price.svg')}}"></x-sidebar-img>
                             <x-sidebar-dropdown-info>Price</x-sidebar-dropdown-info>
@@ -23,7 +52,11 @@
                             </x-sidebar-list>
                         </ul>
                     </li>
-                    <li class="py-2">
+                @if($searchRoute == 'stocks.search')
+                </ul>
+                <ul class="flex flex-row flex-wrap justify-evenly">
+                @endif
+                    <li class="py-2 mx-2 max-md:w-52">
                         <x-sidebar-selection-label>
                             <x-sidebar-img src="{{asset('imgs/age.svg')}}"></x-sidebar-img>
                             <x-sidebar-selection-info>Age</x-sidebar-selection-info>
@@ -37,7 +70,7 @@
                             <option value="100">10+</option>
                         </x-sidebar-dropdown-selection>
                     </li>
-                    <li class="py-2">
+                    <li class="py-2 mx-2 max-md:w-52">
                         <x-sidebar-selection-label>
                             <x-sidebar-img src="{{asset('imgs/time.svg')}}"></x-sidebar-img>
                             <x-sidebar-selection-info>Time</x-sidebar-selection-info>
@@ -51,7 +84,7 @@
                             <option value="100">60+</option>
                         </x-sidebar-dropdown-selection>
                     </li>
-                    <li class="py-2">
+                    <li class="py-2 mx-2 max-md:w-52">
                         <x-sidebar-selection-label>
                             <x-sidebar-img src="{{asset('imgs/player-count.svg')}}"></x-sidebar-img>
                             <x-sidebar-selection-info>Player Count</x-sidebar-selection-info>
@@ -65,7 +98,7 @@
                             <option value="100">10 +</option>
                         </x-sidebar-dropdown-selection>
                     </li>
-                    <li class="py-2">
+                    <li class="py-2 mx-2 max-md:w-52">
                         <x-sidebar-selection-label>
                             <x-sidebar-img src="{{asset('imgs/game-type.svg')}}"></x-sidebar-img>
                             <x-sidebar-selection-info>Game Type</x-sidebar-selection-info>
@@ -80,7 +113,7 @@
                         </x-sidebar-dropdown-selection>
 
                     </li>
-                    <li class="py-2">
+                    <li class="py-2 mx-2 max-md:w-52">
                         <x-sidebar-selection-label>
                             <x-sidebar-img src="{{asset('imgs/game-genre.svg')}}"></x-sidebar-img>
                             <x-sidebar-selection-info>Game Genre</x-sidebar-selection-info>

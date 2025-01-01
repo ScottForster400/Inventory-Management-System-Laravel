@@ -11,6 +11,22 @@ use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Middleware\AddSecurityHeaders;
+use App\Models\Cart;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
+
+Route::middleware([AddSecurityHeaders::class])->group(function () {
+    Route::get('/checkout', [CartController::class, 'index']);
+    Route::get('/dashboard', [DashboardController::class, 'index']);
+    Route::get('/stock', [StockController::class, 'index']);
+    Route::get('/generate-reports', [AdminController::class, 'index']);
+    Route::get('/manage-employees', [UserController::class,'index']);
+    Route::get('/welcome', function () {
+        return view('welcome');
+    });
+});
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -22,26 +38,42 @@ Route::get('/stock', function () {
 })->middleware(['auth', 'verified'])->name('stock');
 
 
-Route::get('/manage-employees', function () {
-    return view('manage-employees',[UserController::class, 'index']);
-})->middleware(['auth', 'verified'])->name('manage-employees');
+Route::get('/manage-employees', [UserController::class, 'index'])->middleware(['auth', 'verified'])->name('manage-employees');
 
 Route::get('/checkout', function () {
     return view('checkout', [CartController::class, 'index']);
 })->middleware(['auth', 'verified'])->name('checkout');
 
+Route::post('/checkout/add', [CartController::class, 'add'])->name('checkout.add')->middleware('auth');
+
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/profile/{user?}', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile/{user?}', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile/{user?}', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::put('/profile/{user}/password', [ProfileController::class, 'updatePassword'])->name('profile.password.update');
+
 });
+
+
+Route::middleware('auth')
+    ->get('/admin/create-employee', [RegisteredUserController::class, 'create'])
+    ->name('create.employee');
+
+
+Route::post('/users', [UserController::class, 'store'])->name('users.store');
+Route::get('/users/search', [UserController::class, 'search'])->name('user.search')->middleware('auth');
 
 //Dashboard search and sort
 Route::get('/dashboard/search', [DashboardController::class, 'search'])->name('dashboard.search')->middleware('auth');
-
 Route::get('/dashboard/sort', [DashboardController::class, 'sort'])->name('dashboard.sort')->middleware('auth');
-
 Route::get('/dashboard/search/sort', [DashboardController::class, 'sortSearch'])->name('dashboard.sortSearch')->middleware('auth');
+
+//Stock search and sort
+Route::get('/stock/search', [StockController::class, 'search'])->name('stocks.search')->middleware('auth');
+Route::get('/stock/sort', [StockController::class, 'sort'])->name('stocks.sort')->middleware('auth');
+Route::get('/stock/search/sort', [StockController::class, 'sortSearch'])->name('stocks.sortSearch')->middleware('auth');
+
+// Route::get('/dashboard/img', [DashboardController::class, 'uploadImage'])->name('dashboard.img')->middleware('auth');
 
 require __DIR__ . '/auth.php';
 

@@ -1,8 +1,20 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Generate Reports') }}
-        </h2>
+        <div class="flex justify-between">
+
+            <div>
+                <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+                    {{ __('Generate Reports') }}
+                </h2>
+            </div>
+
+            <!-- Branch of Admin -->
+            <div>
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+                {{$locationBranch}}
+            </h2>
+            </div>
+        </div>
     </x-slot>
 
 
@@ -12,6 +24,7 @@
 
             <div class="grid grid-cols-3 gap-4 pb-4 pl-4">
                 <div class="">
+                    <!-- Date Filters -->
                     <form method="GET" action="{{ route('admin.index') }}">
                         <label for="dateFilter">Sort By:</label>
                         <select name="dateFilter" id="dateFilter" onchange="this.form.submit()">
@@ -67,7 +80,9 @@
                     </div>
 
                     <div class="w-full">
+                        <!-- If no transactions within timeframe, error message displays -->
                         <p id="errorMessage" class="text-center font-semibold"></p>
+                        <!-- Graph for transactions -->
                         <div id="curve_chart" style="height: 350px; width:750px;" class="mx-auto max-md:hidden"></div>
                     </div>
 
@@ -105,13 +120,14 @@
                                         {{Carbon\Carbon::parse($date)->format('Y/m/d') }}</x-th>
                                     <x-th>
                                         <x-modal-toggle data-modal-target="edit{{$date}}" data-modal-toggle="edit{{$date}}">View Daily Report</x-modal-toggle>
+                                        <!-- Modal to view report -->
                                         <x-modal id="edit{{$date}}" class="bg-gray-500 bg-opacity-75 h-full">
                                             <x-modal-header data-modal-hide="edit{{$date}}">Report</x-modal-header>
                                             <x-modal-body>
 
                                                 <x-table>
                                                     <x-table-head>
-                                                        <x-tr>
+                                                        <x-tr class="max-md:hidden">
                                                             <x-th>
                                                                 Stock ID
                                                             </x-th>
@@ -121,13 +137,36 @@
                                                             <x-th>
                                                                 Price(£)
                                                             </x-th>
+                                                            <x-th>
+                                                                Time
+                                                            </x-th>
                                                         </x-tr>
+                                                        <tr class="sm:hidden">
+                                                            <x-th>ID</x-th>
+                                                            <x-th>Amt</x-th>
+                                                            <x-th>£</x-th>
+                                                        </tr>
                                                     </x-table-head>
                                                     @foreach ($transactions as $transaction)
                                                         <x-table-body>
-                                                                <x-tr>
+                                                                <x-tr class="max-md:hidden">
                                                                     <x-th>
-                                                                        {{$transaction->product_id}}
+                                                                        {{$transaction->transaction_id}}
+                                                                    </x-th>
+                                                                    <x-th>
+                                                                        {{$transaction->amount}}
+                                                                    </x-th>
+                                                                    <x-th>
+                                                                        {{$transaction->price}}
+                                                                    </x-th>
+                                                                    <x-th>
+                                                                        {{$transaction->created_at->format('H:i')}}
+                                                                    </x-th>
+                                                                </x-tr>
+
+                                                                <x-tr class="sm:hidden">
+                                                                    <x-th>
+                                                                        {{$transaction->transaction_id}}
                                                                     </x-th>
                                                                     <x-th>
                                                                         {{$transaction->amount}}

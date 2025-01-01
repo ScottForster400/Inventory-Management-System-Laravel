@@ -20,6 +20,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
+        //dd($_REQUEST);
         // dd($int);
         $branchId = Auth::user()->branch_id;
         $stocks = Stock::where('branch_id',$branchId)->get();
@@ -28,8 +29,20 @@ class DashboardController extends Controller
             $productsIdVals->push($stock->product_id);
 
         }
-        $products = Product::whereIn('product_id',$productsIdVals)->paginate(4);
-        return view('dashboard')->with('stock', $stocks)->with('products',$products);
+        $products = Product::whereIn('product_id',$productsIdVals)->paginate(6);
+
+        $sortedStocks = collect();
+        foreach($products as $product){
+            $sortedStocks->push(Stock::where('product_id',$product->product_id)->first());
+        }
+        if(session('success')){
+            session()->flash('success',session('success'));
+            return view('dashboard')->with('stock', $stocks)->with('products',$products);
+        }
+        else{
+            return view('dashboard')->with('stock', $sortedStocks)->with('products',$products);
+        }
+
 
     }
 
@@ -38,7 +51,7 @@ class DashboardController extends Controller
      */
     public function create()
     {
-        dd('create');
+        abort(404);
     }
 
     /**
@@ -46,6 +59,8 @@ class DashboardController extends Controller
      */
     public function store(Request $request)
     {
+
+
         //make sure request contains all relevant info
         $request->validate([
             'name' => 'required|Max:50',
@@ -59,6 +74,23 @@ class DashboardController extends Controller
             'game_type' => 'required',
             'game_genre' => 'required'
         ]);
+
+        $alreadyExist = Product::where('name',$request->name)->first();
+
+        //Checks if product exists in branch -- if true updates stock amount with inputted amount
+        if($alreadyExist != null){
+            $inBranch = Stock::where('branch_id',Auth::user()->branch_id)->where('product_id',$alreadyExist->product_id)->first();
+            if($inBranch !=null){
+                $updatedAmount = $request->amount + $inBranch->amount;
+                $inBranch->update([
+                    'amount'=>$updatedAmount,
+
+                ]);
+                session()->flash('success',"{$request->name} already exists updated stock count with specified amount ");
+                    // Returns user to main dashboard view
+                    return to_route('dashboard.index');
+            }
+        }
 
         // Creates a new Product model with inputted data and saves it to database
         $uuid = Str::uuid();
@@ -90,7 +122,7 @@ class DashboardController extends Controller
         ]);
 
         $stock->save();
-
+        session()->flash('success',"{$request->name} has been successfully added ");
         // Returns user to main dashboard view
         return to_route('dashboard.index');
 
@@ -101,7 +133,7 @@ class DashboardController extends Controller
      */
     public function show(Stock $stock)
     {
-        dd('show');
+        abort(404);
     }
 
     /**
@@ -109,7 +141,7 @@ class DashboardController extends Controller
      */
     public function edit(Stock $stock)
     {
-        dd('edit');
+        abort(404);
     }
 
     /**
@@ -117,11 +149,44 @@ class DashboardController extends Controller
      */
     public function update(Request $request, int $product)
     {
-        $selectedProductArray = Product::where('product_id',$product)->get();
-        foreach($selectedProductArray as $p){
-            $selectedProduct =$p;
-        }
 
+
+        if ($request->file('img')){
+
+                    $selectedProductArray = Product::where('product_id',$product)->get();
+                    foreach($selectedProductArray as $p){
+                        $selectedProduct =$p;
+                    }
+
+                    // Validate the image
+                    $request->validate([
+                        'img' => 'required',
+                    ]);
+
+
+                    // Create the uploads directory if it doesn't exist
+                    $uploadPath = public_path('uploads');
+                    if (!file_exists($uploadPath)) {
+                        mkdir($uploadPath, 0755, true);
+                    }
+
+
+                    // if ($request->file('img')) {
+
+                        //Renames image so that there wont be duplicates in the db
+                        $imageName = time() . '.' . $request->img->extension();
+                        $request->img->move($uploadPath, $imageName);
+
+                        $selectedProduct->update([
+                            'image'=>'uploads/'.$imageName,
+                        ]);
+
+                        session()->flash('success',"{$selectedProduct->name}'s image has been successfully uploaded");
+                        //Returns user to main dashboard view
+                         return to_route('dashboard.index',['success'=>"{$selectedProduct->name} successfully removed"]);
+                    // }
+                    // return redirect()->route('dashboard.index')->with('error', 'Image upload failed.');
+                }
 
         $request->validate([
             'name' => 'required|Max:50',
@@ -136,11 +201,17 @@ class DashboardController extends Controller
             'game_genre' => 'required'
         ]);
 
+
+
+        $selectedProductArray = Product::where('product_id',$product)->get();
+        foreach($selectedProductArray as $p){
+            $selectedProduct =$p;
+        }
         // if($request->description)
 
         $selectedProduct->update([
             'name' =>  $request->name,
-            'price' => $request->price,
+            'Price' => $request->price,
             'manufacturer' => $request->manufacturer,
             'age_rating' => $request->age_rating,
             'game_length' => $request->game_length,
@@ -151,6 +222,24 @@ class DashboardController extends Controller
             'game_genre' => $request->game_genre
         ]);
 
+        $alreadyExist = Product::where('name',$request->name)->whereNot('product_id',$selectedProduct->product_id)->first();
+
+        //Checks if product exists in branch -- if true updates stock amount with inputted amount
+        if($alreadyExist != null){
+            $inBranch = Stock::where('branch_id',Auth::user()->branch_id)->where('product_id',$alreadyExist->product_id)->first();
+            if($inBranch !=null){
+                $updatedAmount = $request->amount + $inBranch->amount;
+                $inBranch->update([
+                    'amount'=>$updatedAmount,
+
+                ]);
+                $selectedProduct->delete();
+                session()->flash('success',"{$request->name} already exists updated stock count with specified amount ");
+                    // Returns user to main dashboard view
+                    return to_route('dashboard.index');
+            }
+        }
+
         $stockArray=Stock::where('product_id', $selectedProduct->product_id)->where('branch_id',Auth::user()->branch_id)->get();
         foreach($stockArray as $stock){
             $selectedStock =$stock;
@@ -158,6 +247,8 @@ class DashboardController extends Controller
         $selectedStock->update([
             'amount' => $request->amount,
         ]);
+
+        session()->flash('success',"{$selectedProduct->name}' has been successfully edited");
 
          //Returns user to main dashboard view
          return to_route('dashboard.index');
@@ -178,14 +269,15 @@ class DashboardController extends Controller
             $selectedStock =$stock;
         }
         $selectedStock->delete();
-        $selectedProduct->delete();
+       // $selectedProduct->delete();
 
-        return to_route('dashboard.index');
+        session()->flash('success',"{$selectedProduct->name} successfully removed");
+
+        return to_route('dashboard.index',['success'=>"{$selectedProduct->name} successfully removed"]);
     }
 
     //Searches stock used https://medium.com/@iqbal.ramadhani55/search-in-laravel-e0e20f329b01 to help create function
     public function search(Request $request){
-
 
         $branchId = Auth::user()->branch_id;
         $stocks = Stock::where('branch_id',$branchId)->get();
@@ -207,10 +299,11 @@ class DashboardController extends Controller
                 ['price','<=',$request->max_price],
                 ['age_rating','<=',$request->age],
                 ['maximum_player_count','<=',$request->player_count],
+                ['game_length','<=', $request->game_length],
                 ['game_type','like',"%$request->game_type%"],
                 ['game_genre','like',"%$request->game_genre%"]
 
-                ])->whereIn('product_id', $productsIdVals)->paginate(4)->withQueryString();
+                ])->whereIn('product_id', $productsIdVals)->paginate(6)->withQueryString();
 
         // }
         // else{
@@ -236,16 +329,16 @@ class DashboardController extends Controller
         if(array_key_exists('sort_by',$_REQUEST)){
             $sortBy = $_REQUEST['sort_by'];
             if($sortBy =='alph_asc'){
-                $products = Product::whereIn('product_id',$productsIdVals)->orderBy('name','asc')->paginate(4)->withQueryString();
+                $products = Product::whereIn('product_id',$productsIdVals)->orderBy('name','asc')->paginate(6)->withQueryString();
             }
             elseif($sortBy =='alph_des'){
-                $products = Product::whereIn('product_id',$productsIdVals)->orderBy('name','desc')->paginate(4)->withQueryString();
+                $products = Product::whereIn('product_id',$productsIdVals)->orderBy('name','desc')->paginate(6)->withQueryString();
             }
             elseif($sortBy == 'price_asc'){
-                $products = Product::whereIn('product_id',$productsIdVals)->orderBy('Price','asc')->paginate(4)->withQueryString();
+                $products = Product::whereIn('product_id',$productsIdVals)->orderBy('Price','asc')->paginate(6)->withQueryString();
             }
             elseif($sortBy == 'price_des'){
-                $products = Product::whereIn('product_id',$productsIdVals)->orderBy('Price','desc')->paginate(4)->withQueryString();
+                $products = Product::whereIn('product_id',$productsIdVals)->orderBy('Price','desc')->paginate(6)->withQueryString();
             }
 
            //fetches the stock info in the requested order which allows the amount of product to be displayed correctly
@@ -273,10 +366,6 @@ class DashboardController extends Controller
         if(array_key_exists('sort_by',$_REQUEST) && array_key_exists('search',$searchRequest)){
             $sortBy = $_REQUEST['sort_by'];
 
-            // $name=$searchRequest['search'];
-            // $game_type=$searchRequest['game_type'];
-            // $game_genre=$searchRequest['game_genre'];
-
             if($sortBy =='alph_asc'){
                 $products = Product::where([
                     ['name','like',"%$searchRequest[search]%"],
@@ -287,7 +376,7 @@ class DashboardController extends Controller
                     ['game_type','like',"%$searchRequest[game_type]%"],
                     ['game_genre','like',"%$searchRequest[game_genre]%"]
 
-                    ])->whereIn('product_id', $productsIdVals)->orderBy('name', 'asc')->paginate(4)->withQueryString();
+                    ])->whereIn('product_id', $productsIdVals)->orderBy('name', 'asc')->paginate(6)->withQueryString();
 
 
             }
@@ -301,7 +390,7 @@ class DashboardController extends Controller
                     ['game_type','like',"%$searchRequest[game_type]%"],
                     ['game_genre','like',"%$searchRequest[game_genre]%"]
 
-                    ])->whereIn('product_id', $productsIdVals)->orderBy('name', 'desc')->paginate(4)->withQueryString();
+                    ])->whereIn('product_id', $productsIdVals)->orderBy('name', 'desc')->paginate(6)->withQueryString();
             }
             elseif($sortBy == 'price_asc'){
                 $products = Product::where([
@@ -313,7 +402,7 @@ class DashboardController extends Controller
                     ['game_type','like',"%$searchRequest[game_type]%"],
                     ['game_genre','like',"%$searchRequest[game_genre]%"]
 
-                    ])->whereIn('product_id', $productsIdVals)->orderBy('Price', 'asc')->paginate(4)->withQueryString();
+                    ])->whereIn('product_id', $productsIdVals)->orderBy('Price', 'asc')->paginate(6)->withQueryString();
             }
             elseif($sortBy == 'price_des'){
                 $products = Product::where([
@@ -325,7 +414,7 @@ class DashboardController extends Controller
                     ['game_type','like',"%$searchRequest[game_type]%"],
                     ['game_genre','like',"%$searchRequest[game_genre]%"]
 
-                    ])->whereIn('product_id', $productsIdVals)->orderBy('Price', 'desc')->paginate(4)->withQueryString();
+                    ])->whereIn('product_id', $productsIdVals)->orderBy('Price', 'desc')->paginate(6)->withQueryString();
             }
             //fetches the stock info in the requested order which allows the amount of product to be displayed correctly
             $sortedStocks = collect();
@@ -336,4 +425,5 @@ class DashboardController extends Controller
         return view('dashboard')->with('stock', $sortedStocks)->with('products',$products);
 
     }
+
 }

@@ -17,8 +17,9 @@ class ProductFactory extends Factory
      */
     public function definition(): array
     {
+        $rndNum = fake()->numberBetween(100,999);
         return [
-            'name'=>'Sample Product',
+            'name'=>('Sample Product'.$rndNum),
             'uuid'=> Str::uuid(),
             'manufacturer'=> fake('en_GB')->company(),
             'description'=>fake('en_GB')->text(),
@@ -27,8 +28,8 @@ class ProductFactory extends Factory
             'maximum_player_count'=>fake()->numberBetween(2,10),
             'game_length'=>fake()->numberBetween(10,60),
             'Price'=>fake()->randomFloat(2,0.01,100),
-            'game_type'=>'Board Game',
-            'game_genre'=>'Puzzle',
+            'game_type'=>'board_game',
+            'game_genre'=>'puzzle',
             'image'=>'imgs/logo.png'
 
         ];

@@ -15,6 +15,9 @@ class ProfileUpdateRequest extends FormRequest
      */
     public function rules(): array
     {
+
+        $userId = $this->route('user') ? $this->route('user')->id : $this->user()->id;
+
         return [
             'name' => ['required', 'string', 'max:255'],
             'email' => [
@@ -23,8 +26,12 @@ class ProfileUpdateRequest extends FormRequest
                 'lowercase',
                 'email',
                 'max:255',
-                Rule::unique(User::class)->ignore($this->user()->id),
+                Rule::unique(User::class)->ignore($userId),
             ],
+            'phonenumber' => ['nullable', 'string', 'max:255'],
+            'address' => ['nullable', 'string'],
+            'national_insurance_number' => ['nullable', 'string', 'max:255'],
+            'admin' => 'nullable|in:0,1',
         ];
     }
 }
