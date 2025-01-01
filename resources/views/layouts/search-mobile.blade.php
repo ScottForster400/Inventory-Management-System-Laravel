@@ -7,9 +7,9 @@
             @if($searchRoute == 'dashboard.search')
                 <x-search-bar>Search</x-search-bar>
             @else
-                <div class="flex justify-between items-center w-full">
-                    <x-search-bar class="!w-1/3">Search</x-search-bar>
-                    <div class="flex flex-row ">
+                <div class="flex justify-between items-center w-full max-md:flex-col">
+                    <x-search-bar class="!w-1/3 max-md:!w-11/12">Search</x-search-bar>
+                    <div class="flex flex-row max-md:pt-4 max-md:w-11/12 max-md:justify-between">
                         <x-dropdown-button class="float-left !w-24 ">Sort</x-dropdown-button>
                         <div>
                             <x-dropdown-button-body>
@@ -33,8 +33,8 @@
             @endif
             <x-accordion-head class="!flex-col !items-end !justify-normal">
                 <x-accordion-body>
-                <ul>
-                    <li class="py-2 mx-2">
+                <ul class="max-sm:flex max-sm:justify-center max-sm:items-center">
+                    <li class="py-2 mx-2 max-sm:w-52">
                         <x-sidebar-dropdown-button data-collapse-toggle="price">
                             <x-sidebar-img src="{{asset('imgs/price.svg')}}"></x-sidebar-img>
                             <x-sidebar-dropdown-info>Price</x-sidebar-dropdown-info>
@@ -56,7 +56,7 @@
                 </ul>
                 <ul class="flex flex-row flex-wrap justify-evenly">
                 @endif
-                    <li class="py-2 mx-2">
+                    <li class="py-2 mx-2 max-md:w-52">
                         <x-sidebar-selection-label>
                             <x-sidebar-img src="{{asset('imgs/age.svg')}}"></x-sidebar-img>
                             <x-sidebar-selection-info>Age</x-sidebar-selection-info>
@@ -70,7 +70,7 @@
                             <option value="100">10+</option>
                         </x-sidebar-dropdown-selection>
                     </li>
-                    <li class="py-2 mx-2">
+                    <li class="py-2 mx-2 max-md:w-52">
                         <x-sidebar-selection-label>
                             <x-sidebar-img src="{{asset('imgs/time.svg')}}"></x-sidebar-img>
                             <x-sidebar-selection-info>Time</x-sidebar-selection-info>
@@ -84,7 +84,7 @@
                             <option value="100">60+</option>
                         </x-sidebar-dropdown-selection>
                     </li>
-                    <li class="py-2 mx-2">
+                    <li class="py-2 mx-2 max-md:w-52">
                         <x-sidebar-selection-label>
                             <x-sidebar-img src="{{asset('imgs/player-count.svg')}}"></x-sidebar-img>
                             <x-sidebar-selection-info>Player Count</x-sidebar-selection-info>
@@ -98,7 +98,7 @@
                             <option value="100">10 +</option>
                         </x-sidebar-dropdown-selection>
                     </li>
-                    <li class="py-2 mx-2">
+                    <li class="py-2 mx-2 max-md:w-52">
                         <x-sidebar-selection-label>
                             <x-sidebar-img src="{{asset('imgs/game-type.svg')}}"></x-sidebar-img>
                             <x-sidebar-selection-info>Game Type</x-sidebar-selection-info>
@@ -113,7 +113,7 @@
                         </x-sidebar-dropdown-selection>
 
                     </li>
-                    <li class="py-2 mx-2">
+                    <li class="py-2 mx-2 max-md:w-52">
                         <x-sidebar-selection-label>
                             <x-sidebar-img src="{{asset('imgs/game-genre.svg')}}"></x-sidebar-img>
                             <x-sidebar-selection-info>Game Genre</x-sidebar-selection-info>

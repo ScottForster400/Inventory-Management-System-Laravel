@@ -280,7 +280,6 @@ class StockController extends Controller
             $selectedStock =$stock;
         }
         $selectedStock->delete();
-       // $selectedProduct->delete();
 
         session()->flash('success',"{$selectedProduct->name} successfully removed");
 
