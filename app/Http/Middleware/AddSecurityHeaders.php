@@ -8,21 +8,14 @@ use Illuminate\Support\Facades\Log;
 
 class AddSecurityHeaders
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @return mixed
-     */
     public function handle(Request $request, Closure $next)
     {
-        // Get the response
+        // Gets the response
         $response = $next($request);
 
         Log::info("AddSecurityHeaders middleware triggered");
 
-        // Content Security Policy (CSP)
+        // Content security policy rules
         $csp = "default-src 'self'; ";
         $csp .= "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com https://cdn.jsdelivr.net https://cdn.flowbite.com; ";
         $csp .= "style-src 'self' 'unsafe-inline' https://fonts.bunny.net https://cdn.tailwindcss.com https://cdn.jsdelivr.net https://cdn.flowbite.com; ";
@@ -35,10 +28,10 @@ class AddSecurityHeaders
         $csp .= "form-action 'self'; ";
         $csp .= "upgrade-insecure-requests;";
 
-        // Set CSP header
+        // Sets the CSP header on all pages
         $response->headers->set('Content-Security-Policy', $csp);
 
-        // Anti-Clickjacking header
+        // Sets the Anti Clickjacking on all pages
         $response->headers->set('X-Frame-Options', 'DENY');
 
         return $response;
