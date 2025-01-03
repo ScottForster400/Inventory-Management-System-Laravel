@@ -30,7 +30,6 @@ class DashboardController extends Controller
 
         }
         $products = Product::whereIn('product_id',$productsIdVals)->paginate(6);
-
         $sortedStocks = collect();
         foreach($products as $product){
             $sortedStocks->push(Stock::where('product_id',$product->product_id)->first());
