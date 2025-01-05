@@ -28,7 +28,6 @@
                     <form method="GET" action="{{ route('admin.index') }}">
                         <label for="dateFilter">Sort By:</label>
                         <select name="dateFilter" id="dateFilter" onchange="this.form.submit()">
-                            <option value="all" {{ $dateFilter == 'all' ? 'selected' : '' }}>All</option>
                             <option value="today" {{ $dateFilter == 'today' ? 'selected' : '' }}>Today</option>
                             <option value="thisWeek" {{ $dateFilter == 'thisWeek' ? 'selected' : '' }}>This Week</option>
                             <option value="thisMonth" {{ $dateFilter == 'thisMonth' ? 'selected' : '' }}>This Month</option>

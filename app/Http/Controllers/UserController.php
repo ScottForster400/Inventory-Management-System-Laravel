@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use App\Models\Branch;
 
 class UserController extends Controller
@@ -31,11 +32,11 @@ class UserController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'phonenumber' => 'required|string|max:11',
-            'dob' => 'required|date',
+            'dob' => 'required|date|before_or_equal:' . Carbon::now()->subYears(18)->toDateString(),
             'address' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:8',
-            'national_insurance_number' => 'required|string|min:9',
+            'password' => 'required|string|confirmed|min:8',
+            'national_insurance_number' => 'required|string|size:9',
         ]);
 
         //creates a new user based in the input details

@@ -30,7 +30,6 @@ class DashboardController extends Controller
 
         }
         $products = Product::whereIn('product_id',$productsIdVals)->paginate(6);
-
         $sortedStocks = collect();
         foreach($products as $product){
             $sortedStocks->push(Stock::where('product_id',$product->product_id)->first());
@@ -233,6 +232,8 @@ class DashboardController extends Controller
                     'amount'=>$updatedAmount,
 
                 ]);
+                $selectedStock=Stock::where('product_id', $selectedProduct->product_id)->where('branch_id',Auth::user()->branch_id)->first();
+                $selectedStock->delete();
                 $selectedProduct->delete();
                 session()->flash('success',"{$request->name} already exists updated stock count with specified amount ");
                     // Returns user to main dashboard view
@@ -269,7 +270,6 @@ class DashboardController extends Controller
             $selectedStock =$stock;
         }
         $selectedStock->delete();
-       // $selectedProduct->delete();
 
         session()->flash('success',"{$selectedProduct->name} successfully removed");
 
@@ -278,6 +278,7 @@ class DashboardController extends Controller
 
     //Searches stock used https://medium.com/@iqbal.ramadhani55/search-in-laravel-e0e20f329b01 to help create function
     public function search(Request $request){
+
 
         $branchId = Auth::user()->branch_id;
         $stocks = Stock::where('branch_id',$branchId)->get();
@@ -373,6 +374,7 @@ class DashboardController extends Controller
                     ['price','<=',$searchRequest['max_price']],
                     ['age_rating','<=',$searchRequest['age']],
                     ['maximum_player_count','<=',$searchRequest['player_count']],
+                    ['game_length','<=', $searchRequest['game_length']],
                     ['game_type','like',"%$searchRequest[game_type]%"],
                     ['game_genre','like',"%$searchRequest[game_genre]%"]
 
@@ -387,6 +389,7 @@ class DashboardController extends Controller
                     ['price','<=',$searchRequest['max_price']],
                     ['age_rating','<=',$searchRequest['age']],
                     ['maximum_player_count','<=',$searchRequest['player_count']],
+                    ['game_length','<=', $searchRequest['game_length']],
                     ['game_type','like',"%$searchRequest[game_type]%"],
                     ['game_genre','like',"%$searchRequest[game_genre]%"]
 
@@ -399,6 +402,7 @@ class DashboardController extends Controller
                     ['price','<=',$searchRequest['max_price']],
                     ['age_rating','<=',$searchRequest['age']],
                     ['maximum_player_count','<=',$searchRequest['player_count']],
+                    ['game_length','<=', $searchRequest['game_length']],
                     ['game_type','like',"%$searchRequest[game_type]%"],
                     ['game_genre','like',"%$searchRequest[game_genre]%"]
 
@@ -411,6 +415,7 @@ class DashboardController extends Controller
                     ['price','<=',$searchRequest['max_price']],
                     ['age_rating','<=',$searchRequest['age']],
                     ['maximum_player_count','<=',$searchRequest['player_count']],
+                    ['game_length','<=', $searchRequest['game_length']],
                     ['game_type','like',"%$searchRequest[game_type]%"],
                     ['game_genre','like',"%$searchRequest[game_genre]%"]
 
