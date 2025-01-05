@@ -374,6 +374,7 @@ class DashboardController extends Controller
                     ['price','<=',$searchRequest['max_price']],
                     ['age_rating','<=',$searchRequest['age']],
                     ['maximum_player_count','<=',$searchRequest['player_count']],
+                    ['game_length','<=', $searchRequest['game_length']],
                     ['game_type','like',"%$searchRequest[game_type]%"],
                     ['game_genre','like',"%$searchRequest[game_genre]%"]
 
@@ -388,6 +389,7 @@ class DashboardController extends Controller
                     ['price','<=',$searchRequest['max_price']],
                     ['age_rating','<=',$searchRequest['age']],
                     ['maximum_player_count','<=',$searchRequest['player_count']],
+                    ['game_length','<=', $searchRequest['game_length']],
                     ['game_type','like',"%$searchRequest[game_type]%"],
                     ['game_genre','like',"%$searchRequest[game_genre]%"]
 
@@ -400,6 +402,7 @@ class DashboardController extends Controller
                     ['price','<=',$searchRequest['max_price']],
                     ['age_rating','<=',$searchRequest['age']],
                     ['maximum_player_count','<=',$searchRequest['player_count']],
+                    ['game_length','<=', $searchRequest['game_length']],
                     ['game_type','like',"%$searchRequest[game_type]%"],
                     ['game_genre','like',"%$searchRequest[game_genre]%"]
 
@@ -412,6 +415,7 @@ class DashboardController extends Controller
                     ['price','<=',$searchRequest['max_price']],
                     ['age_rating','<=',$searchRequest['age']],
                     ['maximum_player_count','<=',$searchRequest['player_count']],
+                    ['game_length','<=', $searchRequest['game_length']],
                     ['game_type','like',"%$searchRequest[game_type]%"],
                     ['game_genre','like',"%$searchRequest[game_genre]%"]
 
