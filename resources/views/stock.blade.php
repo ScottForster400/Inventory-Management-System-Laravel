@@ -1,4 +1,5 @@
 @php
+//defines variables that are used in certain ui components
     $currentRoute = Route::currentRouteName();
     $sortRoute = 'stocks.sort';
     $editRoute = 'stocks.update';
@@ -24,15 +25,22 @@
         </h2>
     </x-slot>
     <div class="flex w-full justify-center items-center flex-col">
+
+        {{-- Displays success message if session contains data --}}
             @if (session('success'))
                 <x-success>{{Session::pull('success')}}</x-success>
             @endif
 
+        {{-- Displays search add and sort both for mobile and desktop --}}
         <div class=" w-11/12 mt-3 flex justify-between items-center">
             @include('layouts.search-mobile')
         </div>
+
+        {{-- Layout for add stock modal --}}
         @include('layouts.add-stock-modal')
         <div class="flex w-11/12 justify-center items-center flex-col bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg m-5 mb-10">
+
+            {{-- Table for all stock --}}
             <h1 class="py-3">Stock</h1>
             <div class="flex justify-center items-center w-11/12 m-5">
                 <x-table class="w-4/5 text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 ">
@@ -60,10 +68,13 @@
                             @php
                                 $int=0
                             @endphp
-
+                        {{-- displays each products details in a row of the table --}}
                         @foreach($products as $product)
+
+                            {{-- Alters table row background colour dependant on stock amount --}}
                             @if ($stock[$int]->amount<=10)
                                 <x-tr class="bg-red-200 border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-red-300 dark:hover:bg-gray-600 transition-colors">
+                                    {{-- Layout to display product details in table row --}}
                                     @include('layouts.stock-table-item')
                                 </x-tr>
                             @elseif($stock[$int]->amount<=30)
@@ -84,11 +95,14 @@
                     </x-table-body>
                 </x-table>
             </div>
+
+            {{-- Pagination Navigation --}}
             <div class=" w-4/5 my-4">
                 {{ $products->links() }}
             </div>
         </div>
 
+        {{-- Low Stock Table --}}
         <div class="flex w-11/12 justify-center items-center flex-col bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg m-5 mb-10">
             <h1 class="py-3">Low Stock</h1>
             <div class="flex justify-center items-center w-11/12 m-5">

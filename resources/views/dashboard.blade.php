@@ -1,4 +1,5 @@
 @php
+    //defines variables that are used in certain ui components
     $currentRoute = Route::currentRouteName();
     $sortRoute = 'dashboard.sort';
     $editRoute = 'dashboard.update';
@@ -25,9 +26,15 @@
         </h2>
     </x-slot>
     <div class="flex flex-row w-full">
+
+        {{-- Sidebar (search + filters) for desktop --}}
         @include('layouts.sidebar')
         <div class=" w-full py-12  flex items-center flex-col ">
+
+            {{-- Search + filters for Mobile --}}
             @include('layouts.search-mobile')
+
+            {{-- Sort by drop down --}}
             <div class="max-md:w-8/12 w-4/5 flex items-center justify-between py-2">
                 <x-dropdown-button class="float-left !w-24 ">Sort</x-dropdown-button>
                     <div>
@@ -46,19 +53,30 @@
                             </x-dropdown-button-li>
                         </x-dropdown-button-body>
                     </div>
-                    <x-modal-toggle data-modal-target="add-stock" data-modal-toggle="add-stock" class="float-right !w-24 flex justify-center items-center text-white "> Add</x-modal-toggle>
+
+                    {{-- Add Stock modal toggle --}}
+                    <x-modal-toggle data-modal-target="add-stock" data-modal-toggle="add-stock" class="float-right !w-24 flex justify-center items-center text-white ">Add</x-modal-toggle>
             </div>
+
+            {{-- Add stock modal layout --}}
             @include('layouts.add-stock-modal')
+
+            {{-- Displays success message if session contains data --}}
             @if (session('success'))
                 <x-success>{{Session::pull('success')}}</x-success>
             @endif
+
+            {{-- Main display for all products --}}
             <div class="flex flex-3/4 md:pl-20 md:pr-20 max-w-8/10 w-full">
                 <div class=" overflow-hidden w-full">
                     <div class=" flex max-md:flex-col max-md:justify-center max-md:items-center md:flex-row flex-wrap md:justify-evenly p-6 text-gray-900 dark:text-gray-100 ">
 
                             @php
+                                //int is used as it allows me to fetch data from stocks whilst being a for each loop for products array
                                 $int=0
                             @endphp
+
+                        {{-- Creates a card for each product fetched from database --}}
                         @forelse ($products as $product)
                             @php
                                 $game_type = $product->game_type;
@@ -67,6 +85,8 @@
                                 <div style="flex: 50%" class=" flex justify-center items-center max-h-4/5 overflow-hidden rounded-lg w-4/5 h-4/5 pt-5">
                                     <x-card-img class="object-fill aspect-square" src="{{asset($product->image)}}"></x-card-img>
                                 </div>
+
+                                {{-- Contains product details --}}
                                 <x-card-body class="!py-5 !px-0 w-full">
                                     <x-card-title>{{ Str::limit($product->name,20, '...')}}</x-card-title>
                                     <p class="text-centre text-gray-500 ">£{{$product->Price}}</p>
@@ -88,8 +108,12 @@
                                     </div>
                                     <p class="text-centre text-gray-500 ">{{$product->minimum_player_count}}-{{$product->maximum_player_count}} players</p>
                                     <x-card-para class="whitespace-pre-wrap min-h-14 ">{{ Str::limit($product->description,25, '...')}}</x-card-para>
+
+                                    {{-- Contains edit and add to cart which allow interaction with products --}}
                                     <x-card-links>
-                                        @include('layouts.edit-stock-modal')
+                                        <div class="w-1/3">
+                                            @include('layouts.edit-stock-modal')
+                                        </div>
                                         <x-primary-button class="w-1/3 h-12 flex justify-center items-center !rounded-full !bg-blue-700 hover:!bg-blue-800 !transition-colors">
                                             <a href="javascript:void(0);" onclick="document.getElementById('checkout-form-{{ $product->product_id }}').submit();" class="flex justify-center items-center">
                                                 <img src="{{asset('imgs/cart.png')}}" alt="Cart" class="h-2/3 w-2/3 max-w-full">
@@ -98,6 +122,8 @@
                                     </x-card-links>
                                 </x-card-body>
                             </x-card-main>
+
+                            {{-- Modal for add image  --}}
                             @include('layouts.add-image-modal')
                             @php
 
@@ -107,10 +133,14 @@
                                 @csrf
                                 <input type="hidden" name="productIdToAddToCart" value="{{$product->product_id}}">
                             </form>
+
+                        {{-- Displayed if $products is empty --}}
                         @empty
                             <p>No Stock in the system</p>
                         @endforelse
                     </div>
+
+                    {{-- pagination navigation --}}
                     <div class="w-full pt-3 max-md:px-4">
                         {{$products->appends($_GET)->links()}}
                     </div>
