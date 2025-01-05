@@ -1,4 +1,4 @@
-<x-modal-toggle data-modal-target="edit{{$product->product_id}}" data-modal-toggle="edit{{$product->product_id}}" class="w-1/3 h-12 flex justify-center items-center !rounded-full !bg-blue-700 hover:!bg-blue-800 !transition-colors">Edit</x-modal-toggle>
+<x-modal-toggle data-modal-target="edit{{$product->product_id}}" data-modal-toggle="edit{{$product->product_id}}" class="w-full h-12 flex justify-center items-center !rounded-full !bg-blue-700 hover:!bg-blue-800 !transition-colors">Edit</x-modal-toggle>
 <x-modal id="edit{{$product->product_id}}" class="bg-gray-500 bg-opacity-75 h-full">
     <x-modal-header data-modal-hide="edit{{$product->product_id}}">
         Edit Stock
@@ -165,7 +165,15 @@
                 <x-primary-button class="!py-3 !bg-blue-700 hover:!bg-blue-800 !transition-colors max-sm:!w-1/3 max-sm:m-2 max-sm:!h-14 justify-center items-center">Edit Stock</x-primary-button>
             </form>
                 <x-primary-button data-modal-target="img{{$product->product_id}}" data-modal-toggle="img{{$product->product_id}}" data-modal-hide="edit{{$product->product_id}}" class="!py-3 !bg-blue-700 hover:!bg-blue-800 !transition-colors max-sm:!w-1/3 max-sm:m-2 max-sm:!h-14 justify-center items-center ">Image Upload</x-primary-button>
-                @if($editRoute == 'dashboard.update')
+                @if($editRoute == 'stocks.update')
+                    <div class="sm:hidden flex justify-center items-center">
+                        <form method="POST" action="{{ route('stocks.destroy', $product->product_id) }}" class="w-full flex justify-center items-center">
+                            @csrf
+                            @method('DELETE')
+                            <x-danger-button class="!py-3 hover:!bg-red-800 !transition-colors max-sm:!w-full max-sm:m-2 max-sm:!h-14 flex justify-center items-center" onclick="return confirm('Are you sure you would like to delete this product')" >Delete Stock</x-danger-button>
+                        </form>
+                    </div>
+                @else
                     <form action="{{route('dashboard.destroy', $product)}}" method="post" class="max-sm:w-1/3 flex justify-center items-center">
                         @method('delete')
                         @csrf

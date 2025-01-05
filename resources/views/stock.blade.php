@@ -44,13 +44,13 @@
                             <x-th >
                                 <p>Name</p>
                             </x-th>
-                            <x-th>
+                            <x-th class="max-sm:hidden">
                                 <p >Quant</p>
                             </x-th>
                             <x-th class="max-sm:hidden">
                                 <p >Unit Price</p>
                             </x-th>
-                            <x-th class="max-sm:hidden">
+                            <x-th class="">
                                 Action
                             </x-th>
                         </x-tr>
