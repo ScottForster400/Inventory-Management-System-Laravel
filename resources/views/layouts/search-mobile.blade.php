@@ -35,11 +35,11 @@
                 <x-accordion-body>
                 <ul class="max-sm:flex max-sm:justify-center max-sm:items-center">
                     <li class="py-2 mx-2 max-sm:w-52">
-                        <x-sidebar-dropdown-button data-collapse-toggle="price">
+                        <x-sidebar-dropdown-button>
                             <x-sidebar-img src="{{asset('imgs/price.svg')}}"></x-sidebar-img>
                             <x-sidebar-dropdown-info>Price</x-sidebar-dropdown-info>
                         </x-sidebar-dropdown-button>
-                        <ul id="price" class="hidden py-2 space-y-2">
+                        <ul  class="py-2 space-y-2">
                             <x-sidebar-list>
                                 <div class="w-2/5">
                                     <x-input-label for="min_price" :value="__('Min Price(£)')">Min Price(£)</x-input-label>
@@ -52,10 +52,8 @@
                             </x-sidebar-list>
                         </ul>
                     </li>
-                @if($searchRoute == 'stocks.search')
                 </ul>
                 <ul class="flex flex-row flex-wrap justify-evenly">
-                @endif
                     <li class="py-2 mx-2 max-md:w-52">
                         <x-sidebar-selection-label>
                             <x-sidebar-img src="{{asset('imgs/age.svg')}}"></x-sidebar-img>

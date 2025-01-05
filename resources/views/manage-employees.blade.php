@@ -55,7 +55,7 @@
                                     <x-th>Edit</x-th>
                                 </x-tr>
 
-                                <tr class="sm:hidden">
+                                <tr class="md:hidden">
                                     <x-th>Emp</x-th>
                                     <x-th>Edit</x-th>
                                 </tr>
@@ -75,7 +75,7 @@
                                     </x-tr>
 
                                     <!-- Mobile View -->
-                                    <x-tr class="sm:hidden">
+                                    <x-tr class="md:hidden">
                                         <x-th>{{ $user->name }}</x-th>
                                         <x-th>
                                             <x-nav-link :href="route('profile.edit', $user)" :active="request()->routeIs('profile.edit')">

@@ -22,7 +22,7 @@
                 @foreach ($carts as $cart)
                     <x-tr>
                         <x-th class="font-bold text-gray-500">
-                            {{$products[$int]->name}}
+                            {{Str::limit($products[$int]->name,15, '...')}}
                         </x-th>
                         <x-th class="font-bold text-gray-500">
                             £{{$products[$int]->Price}}

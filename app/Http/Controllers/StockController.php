@@ -330,7 +330,7 @@ class StockController extends Controller
                 ['game_type','like',"%$request->game_type%"],
                 ['game_genre','like',"%$request->game_genre%"]
 
-                ])->whereIn('product_id', $lowProductIdVals)->orderBy('name', 'asc')->get();
+                ])->whereIn('product_id', $lowProductIdVals)->get();
 
             //fetches the stock info in the requested order which allows the amount of product to be displayed correctly
             $sortedStocks = collect();
@@ -344,8 +344,7 @@ class StockController extends Controller
             $sortedLowStocks->push(Stock::where('product_id',$product->product_id)->first());
             }
 
-
-        return view('stock')->with('products',$products)->with('stock',$stocks)->with('lowStockProducts',$lowStockProducts)->with('lowStock',$sortedLowStocks);
+        return view('stock')->with('products',$products)->with('stock',$sortedStocks)->with('lowStockProducts',$lowStockProducts)->with('lowStock',$sortedLowStocks);
     }
     public function sort(){
 
@@ -424,6 +423,7 @@ class StockController extends Controller
                     ['price','<=',$searchRequest['max_price']],
                     ['age_rating','<=',$searchRequest['age']],
                     ['maximum_player_count','<=',$searchRequest['player_count']],
+                    ['game_length','<=', $searchRequest['game_length']],
                     ['game_type','like',"%$searchRequest[game_type]%"],
                     ['game_genre','like',"%$searchRequest[game_genre]%"]
 
@@ -435,6 +435,7 @@ class StockController extends Controller
                     ['price','<=',$searchRequest['max_price']],
                     ['age_rating','<=',$searchRequest['age']],
                     ['maximum_player_count','<=',$searchRequest['player_count']],
+                    ['game_length','<=', $searchRequest['game_length']],
                     ['game_type','like',"%$searchRequest[game_type]%"],
                     ['game_genre','like',"%$searchRequest[game_genre]%"]
 
@@ -447,6 +448,7 @@ class StockController extends Controller
                     ['price','<=',$searchRequest['max_price']],
                     ['age_rating','<=',$searchRequest['age']],
                     ['maximum_player_count','<=',$searchRequest['player_count']],
+                    ['game_length','<=', $searchRequest['game_length']],
                     ['game_type','like',"%$searchRequest[game_type]%"],
                     ['game_genre','like',"%$searchRequest[game_genre]%"]
 
@@ -458,6 +460,7 @@ class StockController extends Controller
                         ['price','<=',$searchRequest['max_price']],
                         ['age_rating','<=',$searchRequest['age']],
                         ['maximum_player_count','<=',$searchRequest['player_count']],
+                        ['game_length','<=', $searchRequest['game_length']],
                         ['game_type','like',"%$searchRequest[game_type]%"],
                         ['game_genre','like',"%$searchRequest[game_genre]%"]
 
@@ -470,6 +473,7 @@ class StockController extends Controller
                     ['price','<=',$searchRequest['max_price']],
                     ['age_rating','<=',$searchRequest['age']],
                     ['maximum_player_count','<=',$searchRequest['player_count']],
+                    ['game_length','<=', $searchRequest['game_length']],
                     ['game_type','like',"%$searchRequest[game_type]%"],
                     ['game_genre','like',"%$searchRequest[game_genre]%"]
 
@@ -481,6 +485,7 @@ class StockController extends Controller
                         ['price','<=',$searchRequest['max_price']],
                         ['age_rating','<=',$searchRequest['age']],
                         ['maximum_player_count','<=',$searchRequest['player_count']],
+                        ['game_length','<=', $searchRequest['game_length']],
                         ['game_type','like',"%$searchRequest[game_type]%"],
                         ['game_genre','like',"%$searchRequest[game_genre]%"]
 
@@ -493,6 +498,7 @@ class StockController extends Controller
                     ['price','<=',$searchRequest['max_price']],
                     ['age_rating','<=',$searchRequest['age']],
                     ['maximum_player_count','<=',$searchRequest['player_count']],
+                    ['game_length','<=', $searchRequest['game_length']],
                     ['game_type','like',"%$searchRequest[game_type]%"],
                     ['game_genre','like',"%$searchRequest[game_genre]%"]
 
@@ -504,6 +510,7 @@ class StockController extends Controller
                         ['price','<=',$searchRequest['max_price']],
                         ['age_rating','<=',$searchRequest['age']],
                         ['maximum_player_count','<=',$searchRequest['player_count']],
+                        ['game_length','<=', $searchRequest['game_length']],
                         ['game_type','like',"%$searchRequest[game_type]%"],
                         ['game_genre','like',"%$searchRequest[game_genre]%"]
 

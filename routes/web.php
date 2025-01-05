@@ -16,6 +16,9 @@ use App\Http\Middleware\AddSecurityHeaders;
 use App\Models\Cart;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
+
+// Applying security headers to all pages
+
 Route::middleware([AddSecurityHeaders::class])->group(function () {
     Route::get('/checkout', [CartController::class, 'index']);
     Route::get('/dashboard', [DashboardController::class, 'index']);
