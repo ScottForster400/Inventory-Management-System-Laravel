@@ -5,16 +5,15 @@ Composer
 NodeJS
 
 Start-Up Instructions
-1.Clone git repository
-2.Run 'composer install' in terminal within cloned folder or in IDE
-3.Copy .env.example and rename the copy to .env
-4.Alter DB_CONNECTION to use MySQL or sqlLite
-5.Run 'php artisan key:generate' in terminal within cloned folder or in IDE
-6.Run 'php artisan storage:link' in terminal within cloned folder or in IDE
-7.Run 'php artisan breeze:install' in terminal within cloned folder or in IDE
-7.Run 'npm install' in terminal within cloned folder or in IDE
-8.Run 'npm install flowbite' in terminal within cloned folder or in IDE
-9.Run 'php artisan migrate' in terminal within cloned folder or in IDE
+1. Clone git repository
+2. Run 'composer install' in terminal within cloned folder or in IDE
+3. Copy .env.example and rename the copy to .env
+4. Alter DB_CONNECTION to use MySQL or sqlLite
+5. Run 'php artisan key:generate' in terminal within cloned folder or in IDE
+6. Run 'php artisan storage:link' in terminal within cloned folder or in IDE
+7. Run 'npm install' in terminal within cloned folder or in IDE
+8. Run 'npm install flowbite' in terminal within cloned folder or in IDE
+9. Run 'php artisan migrate' in terminal within cloned folder or in IDE
 10. Run 'php artisan db:seed' in terminal within cloned folder or in IDE
 
 The project is now set up to run.
